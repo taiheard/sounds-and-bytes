@@ -163,7 +163,21 @@ const videoData = {
       object-fit: cover;
       filter: blur(1px);
     }
-    
+
+    .video-fallback {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      filter: blur(1px);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.8s ease-in-out;
+    }
+
     .theme-background.active {
       opacity: 0.2;
     }
@@ -1397,21 +1411,24 @@ const videoData = {
 
     <!-- Dynamic Theme Background Videos -->
     <div class="theme-background chill-bg">
-    <video autoplay muted loop playsinline preload="metadata" style="opacity: 0; transition: opacity 0.8s ease-in-out;">
+    <video autoplay muted loop playsinline preload="metadata" style="opacity: 0; transition: opacity 0.8s ease-in-out;" poster="/sounds-and-bytes/images/curtain_image.jpg">
       <source src="/sounds-and-bytes/Midjourney loops for website/Upresed loops/Tunnel Loop_treasure.mp4" type="video/mp4">
     </video>
+    <div class="video-fallback" style="background-image: url('/sounds-and-bytes/images/curtain_image.jpg');"></div>
     </div>
 
     <div class="theme-background dance-bg">
-    <video autoplay muted loop playsinline preload="metadata" style="opacity: 0; transition: opacity 0.8s ease-in-out;">
+    <video autoplay muted loop playsinline preload="metadata" style="opacity: 0; transition: opacity 0.8s ease-in-out;" poster="/sounds-and-bytes/images/curtain_image.jpg">
       <source src="/sounds-and-bytes/Midjourney loops for website/Upresed loops/Building_loop_avalon.mp4" type="video/mp4">
     </video>
+    <div class="video-fallback" style="background-image: url('/sounds-and-bytes/images/curtain_image.jpg');"></div>
     </div>
 
     <div class="theme-background strange-bg">
-    <video autoplay muted loop playsinline preload="metadata" style="opacity: 0; transition: opacity 0.8s ease-in-out;">
+    <video autoplay muted loop playsinline preload="metadata" style="opacity: 0; transition: opacity 0.8s ease-in-out;" poster="/sounds-and-bytes/images/curtain_image.jpg">
       <source src="/sounds-and-bytes/Midjourney loops for website/Upresed loops/Astronaut_loop_cyclone.mp4" type="video/mp4">
     </video>
+    <div class="video-fallback" style="background-image: url('/sounds-and-bytes/images/curtain_image.jpg');"></div>
     </div>
 
   <!-- Animated Background -->
@@ -2149,34 +2166,72 @@ const videoData = {
 
     // Update background videos based on theme
     function updateBackgroundVideos(mode) {
-      const allVideos = document.querySelectorAll('.theme-background');
-      const allVideoElements = document.querySelectorAll('.theme-background video');
-      
-      allVideoElements.forEach(video => {
-        video.pause();
-        video.playbackRate = 0.5;
-      });
-      
-      allVideos.forEach(bg => {
-        bg.classList.remove('active');
-      });
-      
-      const activeVideo = document.querySelector(`.theme-background.${mode}-bg`);
-      const activeVideoElement = activeVideo?.querySelector('video');
-      
-      if (activeVideo && activeVideoElement) {
-        activeVideo.classList.add('active');
-        
-        const playPromise = activeVideoElement.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(error => {
-            console.log('Video autoplay prevented:', error);
-            document.addEventListener('click', () => {
-              activeVideoElement.play().catch(() => {});
-            }, { once: true });
-          });
+        const allVideos = document.querySelectorAll('.theme-background');
+        const allVideoElements = document.querySelectorAll('.theme-background video');
+        const allFallbacks = document.querySelectorAll('.video-fallback');
+
+        // Pause all videos and hide fallbacks
+        allVideoElements.forEach(video => {
+          video.pause();
+          video.style.opacity = '0';
+        });
+
+        allFallbacks.forEach(fallback => {
+          fallback.style.opacity = '0';
+        });
+
+        allVideos.forEach(bg => {
+          bg.classList.remove('active');
+        });
+
+        const activeVideo = document.querySelector(`.theme-background.${mode}-bg`);
+        const activeVideoElement = activeVideo?.querySelector('video');
+        const activeFallback = activeVideo?.querySelector('.video-fallback');
+
+        if (activeVideo && activeVideoElement && activeFallback) {
+          activeVideo.classList.add('active');
+
+          // Try to play the video
+          const playPromise = activeVideoElement.play();
+          if (playPromise !== undefined) {
+            playPromise.then(() => {
+              // Video started successfully
+              console.log('Video autoplay successful for mode:', mode);
+              activeVideoElement.style.opacity = '1';
+              activeFallback.style.opacity = '0';
+              activeVideoElement.playbackRate = 0.7;
+            }).catch(error => {
+              // Video autoplay failed, show fallback
+              console.log('Video autoplay prevented for mode:', mode, error);
+              activeVideoElement.style.opacity = '0';
+              activeFallback.style.opacity = '1';
+
+              // Add click listener to try playing on user interaction
+              const tryPlayOnClick = () => {
+                activeVideoElement.play().then(() => {
+                  activeVideoElement.style.opacity = '1';
+                  activeFallback.style.opacity = '0';
+                  activeVideoElement.playbackRate = 0.7;
+                  document.removeEventListener('click', tryPlayOnClick);
+                }).catch(() => {
+                  // Still can't play, keep fallback
+                  console.log('Video still cannot autoplay after user interaction');
+                });
+              };
+
+              document.addEventListener('click', tryPlayOnClick, { once: true });
+            });
+          } else {
+            // Browser doesn't support promises, fallback to basic handling
+            setTimeout(() => {
+              if (activeVideoElement.paused) {
+                activeFallback.style.opacity = '1';
+              } else {
+                activeVideoElement.style.opacity = '1';
+              }
+            }, 100);
+          }
         }
-      }
     }
 
     // Setup parallax effects
