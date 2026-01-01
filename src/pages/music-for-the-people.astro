@@ -162,6 +162,7 @@ const videoData = {
       height: 100%;
       object-fit: cover;
       filter: blur(1px);
+      background: rgba(5, 5, 8, 0.95); /* Prevent white flash during loading */
     }
     
     .theme-background.active {
@@ -1397,19 +1398,19 @@ const videoData = {
 
   <!-- Dynamic Theme Background Videos -->
   <div class="theme-background chill-bg">
-    <video autoplay muted loop playsinline>
+    <video autoplay muted loop playsinline preload="metadata" style="opacity: 0; transition: opacity 0.8s ease-in-out;">
       <source src="/sounds-and-bytes/Midjourney loops for website/Upresed loops/Tunnel Loop_treasure.mp4" type="video/mp4">
     </video>
   </div>
 
   <div class="theme-background dance-bg">
-    <video autoplay muted loop playsinline>
+    <video autoplay muted loop playsinline preload="metadata" style="opacity: 0; transition: opacity 0.8s ease-in-out;">
       <source src="/sounds-and-bytes/Midjourney loops for website/Upresed loops/Building_loop_avalon.mp4" type="video/mp4">
     </video>
   </div>
 
   <div class="theme-background strange-bg">
-    <video autoplay muted loop playsinline>
+    <video autoplay muted loop playsinline preload="metadata" style="opacity: 0; transition: opacity 0.8s ease-in-out;">
       <source src="/sounds-and-bytes/Midjourney loops for website/Upresed loops/Astronaut_loop_cyclone.mp4" type="video/mp4">
     </video>
   </div>
@@ -2131,7 +2132,7 @@ const videoData = {
       const flashKeyframes = `
         @keyframes flash {
           0% { opacity: 0; }
-          50% { opacity: 0.15; }
+          50% { opacity: 0.08; }
           100% { opacity: 0; }
         }
       `;
@@ -2151,31 +2152,42 @@ const videoData = {
     function updateBackgroundVideos(mode) {
       const allVideos = document.querySelectorAll('.theme-background');
       const allVideoElements = document.querySelectorAll('.theme-background video');
-      
+
+      // Fade out all videos first
       allVideoElements.forEach(video => {
+        video.style.opacity = '0';
         video.pause();
-        video.playbackRate = 0.5;
       });
-      
+
       allVideos.forEach(bg => {
         bg.classList.remove('active');
       });
-      
+
       const activeVideo = document.querySelector(`.theme-background.${mode}-bg`);
       const activeVideoElement = activeVideo?.querySelector('video');
-      
+
       if (activeVideo && activeVideoElement) {
         activeVideo.classList.add('active');
-        
-        const playPromise = activeVideoElement.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(error => {
-            console.log('Video autoplay prevented:', error);
-            document.addEventListener('click', () => {
-              activeVideoElement.play().catch(() => {});
-            }, { once: true });
-          });
-        }
+
+        // Wait a bit for the fade out, then fade in the new video
+        setTimeout(() => {
+          activeVideoElement.style.opacity = '1';
+          activeVideoElement.playbackRate = 0.7; // Slightly faster for smoother feel
+
+          const playPromise = activeVideoElement.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(error => {
+              console.log('Video autoplay prevented:', error);
+              // Only add click listener once
+              if (!document.hasVideoClickListener) {
+                document.hasVideoClickListener = true;
+                document.addEventListener('click', () => {
+                  activeVideoElement.play().catch(() => {});
+                }, { once: true });
+              }
+            });
+          }
+        }, 400); // Wait for fade out transition
       }
     }
 
