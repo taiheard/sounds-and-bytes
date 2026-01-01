@@ -1,0 +1,2217 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+
+const videoData = {
+  chill: [
+    { 
+      id: 'XaT_Ix7_7Nw', 
+      title: 'I Cling to the Light', 
+      description: "Singing 'I Cling to the light' in the studio",
+      thumbnail: 'https://img.youtube.com/vi/XaT_Ix7_7Nw/maxresdefault.jpg'
+    },
+    { 
+      id: '5T7xmYwTE7Y', 
+      title: 'Good Other', 
+      description: "Singing 'Good Other' in the studio",
+      thumbnail: 'https://img.youtube.com/vi/5T7xmYwTE7Y/maxresdefault.jpg'
+    },
+    { 
+      id: 'EJNbNBYgnRc', 
+      title: 'Hearts in the Wild', 
+      description: "Singing 'Hearts in the wild' in the studio",
+      thumbnail: 'https://img.youtube.com/vi/EJNbNBYgnRc/maxresdefault.jpg'
+    }
+  ],
+  dance: [
+    { 
+      id: 'O7joIkQtK68', 
+      title: 'Avalon', 
+      description: 'Dance rock vibes, feel the rush.',
+      thumbnail: 'https://img.youtube.com/vi/O7joIkQtK68/maxresdefault.jpg'
+    },
+    { 
+      id: 'bQMoUaI4RYg', 
+      title: 'Treasure FreqSmasher Dance Remix', 
+      description: 'Dance remix time! Party in a tunnel.',
+      thumbnail: 'https://img.youtube.com/vi/bQMoUaI4RYg/maxresdefault.jpg'
+    },
+    { 
+      id: 'MVnWxgzOTHY', 
+      title: 'Cyclone FreqSmasher Dance Remix', 
+      description: 'Freqsmasher re-imagines "Cyclone" with a tropical dance pop vibe.',
+      thumbnail: 'https://img.youtube.com/vi/MVnWxgzOTHY/maxresdefault.jpg'
+    }
+  ],
+  strange: [
+    { 
+      id: 'KlZfX4FIyug', 
+      title: 'Desert Bus', 
+      description: 'Classic 8-bit video game Desert Bus with chiptune from Taiwo',
+      thumbnail: 'https://img.youtube.com/vi/KlZfX4FIyug/maxresdefault.jpg'
+    },
+    { 
+      id: 'o7A5cuqUE3E', 
+      title: 'Gaming Sketches', 
+      description: 'Psychedelic Visualizations over fast paced video game music',
+      thumbnail: 'https://img.youtube.com/vi/o7A5cuqUE3E/maxresdefault.jpg'
+    },
+    { 
+      id: 'kT_O3uBtIVk', 
+      title: 'Testing Baby Synths', 
+      description: 'Me and my buddy Wolfgang Dilla testing out some mini synthesizers.',
+      thumbnail: 'https://img.youtube.com/vi/kT_O3uBtIVk/maxresdefault.jpg'
+    },
+    { 
+      id: 'sFJKBz8b26U', 
+      title: 'Synth Jam with Wolfgang Dilla', 
+      description: "A warm and fuzzy jam session with my pal Wolfgang Dilla, man's got synths for days.",
+      thumbnail: 'https://img.youtube.com/vi/sFJKBz8b26U/maxresdefault.jpg'
+    }
+  ]
+};
+---
+
+<BaseLayout
+  title="Music for the People · A Morphing Experience"
+  description="An immersive web experience where music and visuals transform across three distinct moods: Chill, Dance Party, and Strange."
+>
+  <style slot="head">
+    /* CSS Custom Properties for Dynamic Theming */
+    :root {
+      /* Index.html Color Scheme */
+      --bg-dark: #050505;
+      --card-bg: #121212;
+      --text-main: #ffffff;
+      --text-muted: #888888;
+      --accent-primary: #ff6b6b;
+      --accent-secondary: #ffd93d;
+      --accent-tertiary: #6bffb8;
+      --accent-playful: #7ec4ff;
+      --accent-playful2: #ffb3ec;
+      --font-heading: 'Outfit', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-playful: 'Fredoka', sans-serif;
+      --gradient-main: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      
+      /* Chill Theme */
+      --chill-primary: #6366f1;
+      --chill-secondary: #a855f7;
+      --chill-accent: #06b6d4;
+      --chill-bg-start: #0f0f23;
+      --chill-bg-end: #1e1b4b;
+      --chill-text: #e2e8f0;
+      --chill-text-soft: #94a3b8;
+      
+      /* Dance Party Theme */
+      --dance-primary: #fbbf24;
+      --dance-secondary: #f59e0b;
+      --dance-accent: #10b981;
+      --dance-bg-start: #000000;
+      --dance-bg-end: #111111;
+      --dance-text: #fbbf24;
+      --dance-text-soft: #fde047;
+      
+      /* Strange Theme */
+      --strange-primary: #8b5cf6;
+      --strange-secondary: #06ffa5;
+      --strange-accent: #ff006e;
+      --strange-bg-start: #1a0033;
+      --strange-bg-end: #004d00;
+      --strange-text: #00ff88;
+      --strange-text-soft: #ff0080;
+      
+      /* Current Theme Variables */
+      --current-primary: var(--chill-primary);
+      --current-secondary: var(--chill-secondary);
+      --current-accent: var(--chill-accent);
+      --current-bg-start: var(--chill-bg-start);
+      --current-bg-end: var(--chill-bg-end);
+      --current-text: var(--chill-text);
+      --current-text-soft: var(--chill-text-soft);
+      
+      /* Layout */
+      --container-max: 1400px;
+      --gutter: clamp(16px, 3vw, 32px);
+      --border-radius: 16px;
+      --shadow-soft: 0 10px 40px rgba(0,0,0,0.3);
+      --transition-smooth: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --transition-quick: all 0.3s ease-out;
+    }
+
+    /* Base Styles */
+    body {
+      background: linear-gradient(135deg, var(--current-bg-start), var(--current-bg-end));
+      transition: var(--transition-smooth);
+    }
+
+    /* Dynamic Theme Background Videos */
+    .theme-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+    }
+    
+    .theme-background video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: blur(1px);
+    }
+    
+    .theme-background.active {
+      opacity: 0.2;
+    }
+    
+    /* Chill theme - Tunnel video for flow state */
+    .theme-chill .theme-background.chill-bg {
+      opacity: 0.15;
+    }
+    
+    /* Dance theme - Disco ball energy */
+    .theme-dance .theme-background.dance-bg {
+      opacity: 0.25;
+    }
+    
+    /* Strange theme - Astronaut surreal vibes */
+    .theme-strange .theme-background.strange-bg {
+      opacity: 0.2;
+    }
+    
+    /* Reduce motion for accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      .theme-background video {
+        animation-play-state: paused;
+      }
+      .theme-background {
+        opacity: 0.1 !important;
+      }
+    }
+
+    /* Animated Background Particles */
+    .particles {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      opacity: 0.4;
+      pointer-events: none;
+    }
+    
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: var(--current-accent);
+      border-radius: 50%;
+      animation: float 20s infinite linear;
+      transition: var(--transition-smooth);
+    }
+    
+    /* Disco Ball Mirror Particles for Dance Mode */
+    .theme-dance .particle {
+      background: linear-gradient(45deg, #ffd700, #ffffff, #ffd700);
+      box-shadow: 
+        0 0 4px rgba(255, 215, 0, 0.8),
+        0 0 8px rgba(255, 255, 255, 0.4);
+      animation: float 20s infinite linear, mirror-flash 2s infinite;
+    }
+    
+    @keyframes mirror-flash {
+      0%, 50%, 100% { 
+        opacity: 0.6;
+        transform: scale(1);
+      }
+      25% { 
+        opacity: 1;
+        transform: scale(1.5);
+        box-shadow: 
+          0 0 8px rgba(255, 215, 0, 1),
+          0 0 16px rgba(255, 255, 255, 0.8);
+      }
+      75% { 
+        opacity: 1;
+        transform: scale(1.2);
+        box-shadow: 
+          0 0 6px rgba(255, 215, 0, 0.9),
+          0 0 12px rgba(255, 255, 255, 0.6);
+      }
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Mode Selector Knob */
+    .mode-selector {
+      position: fixed;
+      top: 50%;
+      right: 2rem;
+      transform: translateY(-50%);
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .knob-container {
+      position: relative;
+      width: 120px;
+      height: 120px;
+    }
+    
+    .knob {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: 
+        conic-gradient(from 0deg, 
+          var(--current-primary) 0deg 120deg,
+          var(--current-secondary) 120deg 240deg,
+          var(--current-accent) 240deg 360deg
+        );
+      border: 4px solid rgba(255,255,255,0.2);
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      position: relative;
+      box-shadow: var(--shadow-soft);
+      user-select: none;
+    }
+    
+    .knob:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px var(--current-accent);
+    }
+    
+    .knob:active {
+      transform: scale(0.95);
+    }
+    
+    .knob::after {
+      content: '';
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 20px;
+      background: #fff;
+      border-radius: 2px;
+      box-shadow: 0 0 10px rgba(255,255,255,0.8);
+      transition: var(--transition-quick);
+    }
+    
+    .knob.rotating {
+      transform: scale(1.1);
+      box-shadow: 0 0 30px var(--current-accent);
+    }
+    
+    .mode-labels {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      text-align: center;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    
+    .mode-label {
+      opacity: 0.6;
+      transition: var(--transition-quick);
+      cursor: pointer;
+    }
+    
+    .mode-label.active {
+      opacity: 1;
+      color: var(--current-accent);
+      font-weight: 600;
+      text-shadow: 0 0 10px currentColor;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem var(--gutter);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero-bg {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(circle at 50% 50%, rgba(255, 107, 107, 0.15), transparent 60%),
+                  radial-gradient(circle at 80% 20%, rgba(255, 217, 61, 0.1), transparent 40%);
+      z-index: 1;
+    }
+    .hero-svg-waves {
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 130%;
+      height: 180px;
+      z-index: 2;
+      pointer-events: none;
+      opacity: 0.85;
+    }
+    .hero-svg-waves svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    @keyframes waveMove {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-60px); }
+    }
+    .hero-svg-waves .wave1 {
+      animation: waveMove 8s linear infinite alternate;
+    }
+    .hero-svg-waves .wave2 {
+      animation: waveMove 12s linear infinite alternate-reverse;
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 3;
+    }
+    
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(3.5rem, 10vw, 9rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 0.9;
+      text-transform: uppercase;
+      margin: 0 0 1rem;
+      background: linear-gradient(to right, #fff, #aaa);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      transition: var(--transition-smooth);
+    }
+    .hero h1 .playful {
+      font-family: var(--font-playful);
+      background: linear-gradient(90deg, var(--accent-playful2), var(--accent-playful), var(--accent-primary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: 0.01em;
+      font-size: 1.1em;
+      display: inline-block;
+    }
+    
+    .hero p {
+      font-family: var(--font-mono);
+      font-size: clamp(1.1rem, 2.5vw, 1.8rem);
+      color: var(--text-muted);
+      max-width: 600px;
+      line-height: 1.6;
+      margin-bottom: 3rem;
+      transition: var(--transition-smooth);
+    }
+    .scroll-indicator {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: bounce 2s infinite;
+      opacity: 0.5;
+      z-index: 4;
+    }
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {transform: translateY(0) translateX(-50%);}
+      40% {transform: translateY(-10px) translateX(-50%);}
+      60% {transform: translateY(-5px) translateX(-50%);}
+    }
+
+    /* Music Player - Sleek Modern Design */
+    .music-player {
+      position: fixed;
+      bottom: 2rem;
+      left: 2rem;
+      z-index: 50;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(40px);
+      -webkit-backdrop-filter: blur(40px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 1.25rem 2.5rem;
+      box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        0 2px 8px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      min-width: 320px;
+      max-width: 420px;
+    }
+
+    .music-player.autoplay-blocked {
+      animation: pulse-glow 2s infinite;
+      border-color: var(--current-accent);
+      box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        0 2px 8px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 0 20px rgba(255, 107, 107, 0.3);
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% {
+        box-shadow:
+          0 8px 32px rgba(0, 0, 0, 0.4),
+          0 2px 8px rgba(0, 0, 0, 0.2),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1),
+          0 0 20px rgba(255, 107, 107, 0.2);
+      }
+      50% {
+        box-shadow:
+          0 8px 32px rgba(0, 0, 0, 0.4),
+          0 2px 8px rgba(0, 0, 0, 0.2),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1),
+          0 0 30px rgba(255, 107, 107, 0.5);
+      }
+    }
+
+    .music-player:hover {
+      background: rgba(0, 0, 0, 0.85);
+      border-color: rgba(255, 255, 255, 0.15);
+      transform: translateY(-5px);
+      box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.5),
+        0 4px 12px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+    
+    .player-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .track-info h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.95);
+      transition: var(--transition-quick);
+      letter-spacing: -0.01em;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .track-info p {
+      margin: 0.25rem 0 0;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.6);
+      transition: var(--transition-quick);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-size: 0.7rem;
+    }
+    
+    .player-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+    
+    .control-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      color: var(--current-text);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .control-btn svg {
+      width: 20px;
+      height: 20px;
+      display: block;
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 2;
+    }
+
+    .control-btn.play-pause svg {
+      width: 24px;
+      height: 24px;
+      color: #fff;
+    }
+
+    .control-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--current-primary), var(--current-secondary));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border-radius: inherit;
+    }
+
+    .control-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.25);
+      transform: translateY(-1px);
+      box-shadow:
+        0 6px 16px rgba(0, 0, 0, 0.3),
+        0 0 25px var(--current-primary),
+        0 0 40px var(--current-accent);
+    }
+
+    .control-btn:hover::before {
+      opacity: 0.1;
+    }
+
+    .control-btn:active {
+      transform: translateY(0);
+      transition: transform 0.1s ease;
+    }
+
+    .control-btn.play-pause {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--current-accent), var(--current-secondary));
+      border: none;
+      border-radius: 16px;
+      font-size: 1.3rem;
+      margin: 0 0.5rem;
+      box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.3),
+        0 2px 8px rgba(255, 107, 107, 0.3);
+    }
+
+    .control-btn.play-pause::before {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+    }
+
+    .control-btn.play-pause:hover {
+      background: linear-gradient(135deg, var(--current-accent), var(--current-secondary));
+      box-shadow:
+        0 6px 20px rgba(0, 0, 0, 0.4),
+        0 3px 12px rgba(255, 107, 107, 0.5);
+      transform: translateY(-2px);
+    }
+
+    /* Navigation buttons styling */
+    #prevBtn:hover::before {
+      background: linear-gradient(135deg, var(--current-secondary), var(--current-primary));
+      opacity: 0.08;
+    }
+
+    #nextBtn:hover::before {
+      background: linear-gradient(135deg, var(--current-primary), var(--current-secondary));
+      opacity: 0.08;
+    }
+
+    /* Shuffle button special styling */
+    #shuffleBtn {
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    #shuffleBtn.active {
+      background: linear-gradient(135deg, var(--current-accent), var(--current-secondary));
+      border-color: var(--current-accent);
+      box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.3),
+        0 0 20px var(--current-accent);
+      transform: rotate(180deg);
+    }
+
+    #shuffleBtn.active:hover {
+      background: linear-gradient(135deg, var(--current-accent), var(--current-secondary));
+      box-shadow:
+        0 6px 20px rgba(0, 0, 0, 0.4),
+        0 0 30px var(--current-accent);
+      transform: rotate(180deg) translateY(-1px);
+    }
+    
+    .progress-container {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 500;
+      font-family: var(--font-mono);
+      letter-spacing: 0.5px;
+    }
+
+    .progress-bar {
+      flex: 1;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .progress-bar:hover {
+      background: rgba(255, 255, 255, 0.15);
+      height: 8px;
+      border-radius: 4px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--current-accent), var(--current-secondary));
+      width: 0%;
+      transition: width 0.2s ease;
+      border-radius: inherit;
+      position: relative;
+    }
+
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 1px;
+    }
+
+    /* Autoplay Toggle */
+    .autoplay-toggle {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.3rem;
+      font-size: 0.65rem;
+      color: rgba(255, 255, 255, 0.6);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+      transition: var(--transition-quick);
+    }
+    
+    .autoplay-toggle:hover {
+      color: rgba(255, 255, 255, 0.9);
+    }
+    
+    .autoplay-toggle input {
+      display: none;
+    }
+    
+    .toggle-switch {
+      width: 32px;
+      height: 18px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      position: relative;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .autoplay-toggle input:checked + .toggle-switch {
+      background: var(--current-accent);
+      border-color: var(--current-accent);
+      box-shadow: 0 0 10px var(--current-accent);
+    }
+    
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 12px;
+      height: 12px;
+      background: #fff;
+      border-radius: 50%;
+      transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+    
+    .autoplay-toggle input:checked + .toggle-switch::after {
+      left: 16px;
+    }
+
+    /* Video Grid */
+    .video-section {
+      padding: 2rem var(--gutter);
+      max-width: var(--container-max);
+      margin: 0 auto;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    .section-title {
+      text-align: center;
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--current-accent);
+      transition: var(--transition-smooth);
+    }
+    
+    .section-description {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      font-size: 1rem;
+      color: var(--current-text-soft);
+      line-height: 1.4;
+      opacity: 0.8;
+      transition: var(--transition-smooth);
+    }
+    
+    .video-grid {
+      display: grid;
+      gap: 2rem;
+      transition: var(--transition-smooth);
+    }
+    
+    /* Grid Layouts for Different Modes */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .video-card {
+      display: none; /* Hidden by default, toggled via JS */
+      position: relative;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255,255,255,0.1);
+      aspect-ratio: 16/9;
+    }
+
+    .video-card.active {
+      display: block;
+    }
+    
+    .video-card:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--current-accent);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    
+    /* Mode Specific Video Card Styles */
+    .video-grid.chill .video-card,
+    .video-grid.dance .video-card {
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+    
+    .video-grid.strange .video-card {
+      border-radius: 4px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+    
+    .video-thumbnail {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition-smooth);
+    }
+    
+    /* Colored tints for chill vibes video thumbnails */
+    .video-card.chill-tint-1::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255, 193, 7, 0.7), rgba(255, 235, 59, 0.5));
+      mix-blend-mode: overlay;
+      pointer-events: none;
+      transition: var(--transition-smooth);
+      z-index: 1;
+      border-radius: inherit;
+    }
+    
+    .video-card.chill-tint-2::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255, 69, 0, 0.6), rgba(220, 20, 60, 0.4));
+      mix-blend-mode: multiply;
+      pointer-events: none;
+      transition: var(--transition-smooth);
+      z-index: 1;
+      border-radius: inherit;
+    }
+    
+    .video-card.chill-tint-3::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255, 165, 0, 0.4), rgba(255, 140, 0, 0.3));
+      mix-blend-mode: overlay;
+      pointer-events: none;
+      transition: var(--transition-smooth);
+      z-index: 1;
+      border-radius: inherit;
+    }
+    
+    /* Hover effects for tinted thumbnails */
+    .video-card.chill-tint-1:hover::before {
+      background: linear-gradient(135deg, rgba(255, 193, 7, 0.9), rgba(255, 235, 59, 0.7));
+    }
+    
+    .video-card.chill-tint-2:hover::before {
+      background: linear-gradient(135deg, rgba(255, 69, 0, 0.8), rgba(220, 20, 60, 0.6));
+    }
+    
+    .video-card.chill-tint-3:hover::before {
+      background: linear-gradient(135deg, rgba(255, 165, 0, 0.6), rgba(255, 140, 0, 0.5));
+    }
+    
+    /* Ensure overlay content appears above tint */
+    .video-card .video-overlay {
+      z-index: 2;
+      position: relative;
+    }
+    
+    .video-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.5rem;
+      padding-top: 3rem;
+      transition: all 0.3s ease;
+    }
+    
+    .video-card:hover .video-overlay {
+      background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 50%, transparent 100%);
+    }
+    
+    .video-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      color: #fff;
+      letter-spacing: -0.01em;
+    }
+    
+    .video-description {
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.4;
+      max-width: 90%;
+    }
+    
+    .play-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.9);
+      width: 80px;
+      height: 80px;
+      background: rgba(0,0,0,0.6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      opacity: 0.7;
+      z-index: 3;
+    }
+    
+    .video-card:hover .play-overlay {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.1);
+      background: rgba(0,0,0,0.8);
+    }
+    
+    .play-icon {
+      width: 0;
+      height: 0;
+      border-left: 20px solid #fff;
+      border-top: 12px solid transparent;
+      border-bottom: 12px solid transparent;
+      margin-left: 4px;
+      filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
+    }
+
+    /* Bio Section */
+    .bio-container {
+      margin-top: 5rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: var(--border-radius);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: var(--transition-smooth);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .bio-image-wrapper {
+      width: 100%;
+      height: 400px;
+      overflow: hidden;
+      position: relative;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .bio-image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+      opacity: 0.75;
+      transition: var(--transition-smooth);
+      display: block;
+    }
+
+    /* Filters for different states on the bio image */
+    .theme-dance .bio-image-wrapper img {
+      filter: contrast(1.2) saturate(1.5) drop-shadow(0 0 15px var(--dance-primary));
+    }
+    
+    .theme-strange .bio-image-wrapper img {
+      filter: hue-rotate(280deg) invert(0.1) drop-shadow(0 0 20px var(--strange-accent));
+    }
+
+    .theme-chill .bio-image-wrapper img {
+      filter: grayscale(0.2) brightness(0.9);
+    }
+
+    .bio-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--current-accent);
+      opacity: 0.5;
+      transition: var(--transition-smooth);
+      z-index: 2;
+    }
+    
+    .bio-content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3.5rem;
+    }
+    
+    .bio-mode-title {
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--current-accent);
+      margin-bottom: 2rem;
+      opacity: 0.7;
+      transition: var(--transition-smooth);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .bio-mode-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .bio-text {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      line-height: 1.9;
+      color: var(--current-text-soft);
+      font-weight: 300;
+      transition: var(--transition-smooth);
+      letter-spacing: 0.3px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .video-grid {
+        gap: 1.5rem;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .mode-selector {
+        top: auto;
+        bottom: 8rem;
+        right: 1rem;
+        transform: none;
+      }
+      
+      .knob-container {
+        width: 80px;
+        height: 80px;
+      }
+      
+      .music-player {
+        left: 1rem;
+        right: 1rem;
+        bottom: 1rem;
+        transform: none;
+        min-width: auto;
+        max-width: none;
+      }
+      
+      .video-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .bio-container {
+        padding: 2rem 1.5rem;
+        margin-top: 3rem;
+      }
+
+      .bio-text {
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+      
+      /* Mobile Video Modal */
+      .video-modal-content {
+        width: 95%;
+        margin: 1rem;
+        border-radius: 12px;
+        max-height: 90vh;
+      }
+      
+      .video-modal-header {
+        padding: 0.75rem 1rem;
+      }
+      
+      .video-modal-title {
+        font-size: 1rem;
+      }
+      
+      .video-modal-close {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+      }
+      
+      .video-modal-info {
+        padding: 1rem;
+      }
+      
+      .video-modal-description {
+        font-size: 0.9rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .video-modal-content {
+        width: 98%;
+        margin: 0.5rem;
+        border-radius: 8px;
+      }
+      
+      .video-modal-header {
+        padding: 0.5rem 0.75rem;
+      }
+      
+      .video-modal-title {
+        font-size: 0.9rem;
+      }
+      
+      .video-modal-close {
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+      }
+      
+      .video-modal-info {
+        padding: 0.75rem;
+      }
+      
+      .video-modal-description {
+        font-size: 0.85rem;
+      }
+    }
+
+    /* Theme Transition Classes */
+    .theme-chill {
+      --current-primary: var(--chill-primary);
+      --current-secondary: var(--chill-secondary);
+      --current-accent: var(--chill-accent);
+      --current-bg-start: var(--chill-bg-start);
+      --current-bg-end: var(--chill-bg-end);
+      --current-text: var(--chill-text);
+      --current-text-soft: var(--chill-text-soft);
+    }
+    
+    .theme-dance {
+      --current-primary: var(--dance-primary);
+      --current-secondary: var(--dance-secondary);
+      --current-accent: var(--dance-accent);
+      --current-bg-start: var(--dance-bg-start);
+      --current-bg-end: var(--dance-bg-end);
+      --current-text: var(--dance-text);
+      --current-text-soft: var(--dance-text-soft);
+    }
+    
+    .theme-strange {
+      --current-primary: var(--strange-primary);
+      --current-secondary: var(--strange-secondary);
+      --current-accent: var(--strange-accent);
+      --current-bg-start: var(--strange-bg-start);
+      --current-bg-end: var(--strange-bg-end);
+      --current-text: var(--strange-text);
+      --current-text-soft: var(--strange-text-soft);
+    }
+
+    /* Video Modal Overlay */
+    .video-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(20px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    
+    .video-modal.active {
+      display: flex;
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .video-modal-content {
+      position: relative;
+      width: 90%;
+      max-width: 1200px;
+      aspect-ratio: 16/9;
+      background: #000;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.8),
+        0 0 100px var(--current-accent);
+      transform: scale(0.8) translateY(50px);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      border: 2px solid var(--current-accent);
+    }
+    
+    .video-modal.active .video-modal-content {
+      transform: scale(1) translateY(0);
+    }
+    
+    .video-modal iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    
+    .video-modal-header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 1rem 1.5rem;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .video-modal:hover .video-modal-header {
+      opacity: 1;
+    }
+    
+    .video-modal-title {
+      color: var(--current-text);
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 0;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    }
+    
+    .video-modal-close {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--current-text);
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+    
+    .video-modal-close:hover {
+      background: var(--current-accent);
+      transform: scale(1.1);
+      box-shadow: 0 0 20px var(--current-accent);
+    }
+    
+    .video-modal-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1.5rem;
+      background: linear-gradient(transparent, rgba(0,0,0,0.9));
+      color: var(--current-text-soft);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 10;
+    }
+    
+    .video-modal:hover .video-modal-info {
+      opacity: 1;
+    }
+    
+    .video-modal-description {
+      margin: 0;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    /* Special Effects for Strange Mode */
+    .theme-strange .video-card {
+      animation: glitch 6s infinite;
+    }
+    
+    .theme-strange .video-modal-content {
+      animation: strange-glow 2s infinite alternate;
+    }
+    
+    @keyframes strange-glow {
+      0% { box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), 0 0 100px var(--current-accent); }
+      100% { box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), 0 0 150px var(--current-accent), 0 0 200px var(--strange-secondary); }
+    }
+    
+    /* Disco Ball Effects for Dance Mode */
+    .theme-dance {
+      position: relative;
+    }
+    
+    .theme-dance::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(255, 215, 0, 0.025) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+      animation: disco-lights 4s ease-in-out infinite;
+    }
+    
+    @keyframes disco-lights {
+      0%, 100% { 
+        background: 
+          radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.05) 0%, transparent 50%),
+          radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+          radial-gradient(circle at 40% 40%, rgba(255, 215, 0, 0.025) 0%, transparent 50%);
+      }
+      25% { 
+        background: 
+          radial-gradient(circle at 70% 30%, rgba(255, 215, 0, 0.075) 0%, transparent 50%),
+          radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.06) 0%, transparent 50%),
+          radial-gradient(circle at 80% 80%, rgba(255, 215, 0, 0.04) 0%, transparent 50%);
+      }
+      50% { 
+        background: 
+          radial-gradient(circle at 60% 20%, rgba(255, 215, 0, 0.06) 0%, transparent 50%),
+          radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+          radial-gradient(circle at 20% 20%, rgba(255, 215, 0, 0.03) 0%, transparent 50%);
+      }
+      75% { 
+        background: 
+          radial-gradient(circle at 30% 50%, rgba(255, 215, 0, 0.07) 0%, transparent 50%),
+          radial-gradient(circle at 90% 40%, rgba(255, 255, 255, 0.055) 0%, transparent 50%),
+          radial-gradient(circle at 60% 90%, rgba(255, 215, 0, 0.035) 0%, transparent 50%);
+      }
+    }
+  </style>
+
+  <!-- Dynamic Theme Background Videos -->
+  <div class="theme-background chill-bg">
+    <video autoplay muted loop playsinline>
+      <source src="/Midjourney loops for website/Upresed loops/Tunnel Loop_treasure.mp4" type="video/mp4">
+    </video>
+  </div>
+  
+  <div class="theme-background dance-bg">
+    <video autoplay muted loop playsinline>
+      <source src="/Midjourney loops for website/Upresed loops/Building_loop_avalon.mp4" type="video/mp4">
+    </video>
+  </div>
+  
+  <div class="theme-background strange-bg">
+    <video autoplay muted loop playsinline>
+      <source src="/Midjourney loops for website/Upresed loops/Astronaut_loop_cyclone.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <!-- Animated Background -->
+  <div class="particles" id="particles"></div>
+
+  <!-- Mode Selector Knob -->
+  <div class="mode-selector">
+    <div class="knob-container">
+      <div class="knob" id="modeKnob" data-rotation="0"></div>
+    </div>
+    <div class="mode-labels">
+      <div class="mode-label active" data-mode="chill">Chill</div>
+      <div class="mode-label" data-mode="dance">Dance</div>
+      <div class="mode-label" data-mode="strange">Strange</div>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-svg-waves">
+      <svg viewBox="0 0 2000 180" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <path class="wave1" d="M0,120 Q360,180 720,120 T1440,120 T2000,120 V180 H0 Z" fill="#7ec4ff" fill-opacity="0.18"/>
+        <path class="wave2" d="M0,140 C200,140 400,100 600,140 C800,180 1000,100 1200,140 C1400,180 1600,100 1800,140 C1900,160 1950,150 2000,140 V180 H0 Z" fill="#ffb3ec" fill-opacity="0.13"/>
+        <path d="M0,160 Q360,100 720,160 T1440,160 T2000,160 V180 H0 Z" fill="#ffd93d" fill-opacity="0.10"/>
+      </svg>
+    </div>
+    <div class="hero-content">
+      <h1 id="heroTitle"><span class="playful">Chill</span> Vibes</h1>
+      <p id="heroSubtitle">Down-tempo textures and skeletal melodies for deep headspace.</p>
+    </div>
+    <div class="scroll-indicator">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+        <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- Music Player -->
+  <div class="music-player">
+    <div class="player-header">
+      <div class="track-info">
+        <h3 id="trackTitle">Select a track...</h3>
+        <p id="trackArtist">Taiwo Heard</p>
+      </div>
+      <label class="autoplay-toggle">
+        <span>Auto</span>
+        <input type="checkbox" id="autoplayCheck">
+        <div class="toggle-switch"></div>
+      </label>
+    </div>
+    <div class="player-controls">
+      <button class="control-btn" id="prevBtn" aria-label="Previous Track">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 20L9 12L19 4V20ZM5 19H7V5H5V19Z" fill="currentColor"/></svg>
+      </button>
+      <button class="control-btn play-pause" id="playBtn" aria-label="Play">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" id="playIcon"><path d="M8 5V19L19 12L8 5Z" fill="currentColor"/></svg>
+      </button>
+      <button class="control-btn" id="nextBtn" aria-label="Next Track">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 4L15 12L5 20V4ZM17 5H19V19H17V5Z" fill="currentColor"/></svg>
+      </button>
+      <button class="control-btn" id="shuffleBtn" aria-label="Shuffle">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.59 9.17L5.41 4L4 5.41L9.17 10.58L10.59 9.17ZM14.5 4L16.54 6.04L4 18.59L5.41 20L17.96 7.46L20 9.5V4H14.5ZM14.83 13.41L13.42 14.82L16.55 17.95L14.5 20H20V14.5L17.96 16.54L14.83 13.41Z" fill="currentColor"/></svg>
+      </button>
+    </div>
+    <div class="progress-container">
+      <span id="currentTime">0:00</span>
+      <div class="progress-bar" id="progressBar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <span id="duration">0:00</span>
+    </div>
+    <audio id="audioPlayer" preload="metadata"></audio>
+  </div>
+
+  <!-- Video Section -->
+  <section class="video-section">
+    <h2 class="section-title" id="sectionTitle">Chill Vibes</h2>
+    <p class="section-description" id="sectionDescription">Simple atmospheric loops that breathe with the music.</p>
+    <div class="video-grid" id="videoGrid">
+      {Object.entries(videoData).map(([mode, videos]) => 
+        videos.map((video, index) => (
+          <div 
+            class={`video-card mode-${mode} ${mode === 'chill' ? 'active' : ''} ${mode === 'chill' ? `chill-tint-${index + 1}` : ''}`} 
+            data-mode={mode}
+            data-video-id={video.id}
+            data-video-title={video.title}
+            data-video-description={video.description}
+          >
+            <Image 
+              src={video.thumbnail} 
+              alt={video.title} 
+              width={800} 
+              height={450} 
+              class="video-thumbnail"
+            />
+            <div class="play-overlay">
+              <div class="play-icon"></div>
+            </div>
+            <div class="video-overlay">
+              <h3 class="video-title">{video.title}</h3>
+              <p class="video-description">{video.description}</p>
+            </div>
+          </div>
+        ))
+      )}
+    </div>
+
+    <!-- Bio Section -->
+    <div class="bio-container" id="bioContainer">
+      <div class="bio-image-wrapper">
+        <img id="modeImage" src="/images/Taiwo Heard InstaBub1.JPG" alt="Taiwo Heard Artistic Vision">
+      </div>
+      <div class="bio-content">
+        <h3 class="bio-mode-title" id="bioTitle">CHILL MODE (The Solid Foundation)</h3>
+        <p class="bio-text" id="bioText">
+          At six, Taiwo learned piano by eavesdropping—siblings' lessons through the wall, notes absorbed like osmosis. Classical training felt like constraint until his father's wisdom reframed it: rules aren't walls, they're launch pads. Chill is the bedrock state. Simple arrangements where negative space does the work. Studio recordings that refuse polish because the imperfections *are* the story. Guitar, voice, maybe keys. No layering to hide behind. This is where the instrument and the body become the same thing—breath control, string tension, the physics of vibration translated through bone.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Video Modal -->
+  <div class="video-modal" id="videoModal">
+    <div class="video-modal-content">
+      <div class="video-modal-header">
+        <h3 class="video-modal-title" id="modalVideoTitle">Video Title</h3>
+        <button class="video-modal-close" id="modalCloseBtn" aria-label="Close video">✕</button>
+      </div>
+      <iframe id="modalVideoFrame" src="" title="Video Player" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <div class="video-modal-info">
+        <p class="video-modal-description" id="modalVideoDescription">Video description will appear here.</p>
+      </div>
+    </div>
+  </div>
+
+  <script is:inline>
+    // Music and Video Data
+    const musicData = {
+      chill: [
+        { file: '/Music tracks/Chill/Hearts in the Wild ( Master ) 48kHz 24Bit.m4a', title: 'Hearts in the Wild', artist: 'Taiwo Heard' },
+        { file: '/Music tracks/Chill/04 Eternal Night.mp3', title: 'Eternal Night', artist: 'Taiwo Heard' },
+        { file: '/Music tracks/Chill/DL acoustic Feb 5.mp3', title: 'DL Acoustic', artist: 'Taiwo Heard' },
+        { file: '/Music tracks/Chill/How To Survive.mp3', title: 'How To Survive', artist: 'Taiwo Heard' },
+        { file: '/Music tracks/Chill/I Cling To The Light.mp3', title: 'I Cling To The Light', artist: 'Taiwo Heard' },
+        { file: '/Music tracks/Chill/ToTheLightAcoustic.mp3', title: 'To The Light (Acoustic)', artist: 'Taiwo Heard' }
+      ],
+      dance: [
+        { file: '/Music tracks/Dance Rave/AVALON ver.2 (YouTube).mp3', title: 'Avalon v2', artist: 'Taiwo Heard' },
+        { file: '/Music tracks/Dance Rave/01 Cyclone.mp3', title: 'Cyclone', artist: 'Taiwo Heard' },
+        { file: '/Music tracks/Dance Rave/03 Ticket.mp3', title: 'Ticket', artist: 'Taiwo Heard' },
+        { file: '/Music tracks/Dance Rave/AVALON ( Master ) 48kHz 24Bit.m4a', title: 'Avalon', artist: 'Taiwo Heard' },
+        { file: '/Music tracks/Dance Rave/Cyclone Dance_astro.m4a', title: 'Cyclone Dance', artist: 'Taiwo Heard' },
+        { file: '/Music tracks/Dance Rave/Treasure ( Master ) 48kHz 24Bit.m4a', title: 'Treasure', artist: 'Taiwo Heard' }
+      ],
+      strange: [
+        { file: '/Music tracks/Strange/KISSES LIE  - INSTRUMENTAL.m4a', title: 'Kisses Lie (Instrumental)', artist: 'Taiwo Heard' },
+        { file: '/Music tracks/Strange/8-BIT MORE FINAL.mp3', title: '8-Bit More', artist: 'Taiwo Heard' },
+        { file: '/Music tracks/Strange/Good Other 8-bit final.mp3', title: 'Good Other 8-bit', artist: 'Taiwo Heard' },
+        { file: '/Music tracks/Strange/Spacewalk.mp3', title: 'Spacewalk', artist: 'Taiwo Heard' },
+        { file: '/Music tracks/Strange/TaiwoCamiloSynthJam.mp3', title: 'Synth Jam', artist: 'Taiwo Heard' },
+        { file: '/Music tracks/Strange/AnanthamaJamStudioB.m4a', title: 'Ananthama Jam', artist: 'Taiwo Heard' }
+      ]
+    };
+
+    // --- Optimized Video Logic (Relay & Thumbnails) ---
+    function toggleBackgroundVideos(shouldPlay) {
+      const activeVideo = document.querySelector(`.theme-background.${currentMode}-bg video`);
+      if (activeVideo) {
+        if (shouldPlay) {
+          activeVideo.play().catch(() => {});
+        } else {
+          activeVideo.pause();
+        }
+      }
+    }
+    // ------------------------------------------------
+
+    // Application State
+    let currentMode = 'chill';
+    let currentTrackIndex = 0;
+    let isPlaying = false;
+    let isShuffled = false;
+    let currentPlaylist = [];
+    let autoplayEnabled = false;
+
+    // Local Storage Functions
+    function saveCurrentMode(mode) {
+      try {
+        localStorage.setItem('musicPlayerMode', mode);
+      } catch (e) {
+        console.warn('Failed to save mode to localStorage:', e);
+      }
+    }
+
+    function loadSavedMode() {
+      try {
+        const savedMode = localStorage.getItem('musicPlayerMode');
+        if (savedMode && ['chill', 'dance', 'strange'].includes(savedMode)) {
+          return savedMode;
+        }
+      } catch (e) {
+        console.warn('Failed to load mode from localStorage:', e);
+      }
+      return 'chill'; // Default fallback
+    }
+
+    // DOM Elements
+    const body = document.body;
+    const modeKnob = document.getElementById('modeKnob');
+    const modeLabels = document.querySelectorAll('.mode-label');
+    const heroTitle = document.getElementById('heroTitle');
+    const heroSubtitle = document.getElementById('heroSubtitle');
+    const sectionTitle = document.getElementById('sectionTitle');
+    const sectionDescription = document.getElementById('sectionDescription');
+    const videoGrid = document.getElementById('videoGrid');
+    const audioPlayer = document.getElementById('audioPlayer');
+    const playBtn = document.getElementById('playBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const shuffleBtn = document.getElementById('shuffleBtn');
+    const trackTitle = document.getElementById('trackTitle');
+    const trackArtist = document.getElementById('trackArtist');
+    const progressFill = document.getElementById('progressFill');
+    const progressBar = document.getElementById('progressBar');
+    const currentTime = document.getElementById('currentTime');
+    const duration = document.getElementById('duration');
+    
+    // Video Modal Elements
+    const videoModal = document.getElementById('videoModal');
+    const modalVideoTitle = document.getElementById('modalVideoTitle');
+    const modalVideoDescription = document.getElementById('modalVideoDescription');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+
+    // Initialize Application
+    function init() {
+      createParticles();
+      setupModeSelector();
+      setupMusicPlayer();
+      setupVideoModal();
+      setupVideoGridEvents();
+      
+      // Load autoplay preference
+      autoplayEnabled = localStorage.getItem('autoplayEnabled') === 'true';
+      const autoplayCheck = document.getElementById('autoplayCheck');
+      if (autoplayCheck) {
+        autoplayCheck.checked = autoplayEnabled;
+        autoplayCheck.addEventListener('change', (e) => {
+          autoplayEnabled = e.target.checked;
+          localStorage.setItem('autoplayEnabled', autoplayEnabled);
+        });
+      }
+
+      // Load saved mode from localStorage or use default
+      const savedMode = loadSavedMode();
+      
+      // Force initial load by temporarily setting currentMode to null
+      currentMode = null;
+      loadMode(savedMode);
+
+      // Initialize background videos for the current mode
+      updateBackgroundVideos(savedMode);
+
+      // Add parallax effect
+      setupParallax();
+
+      // Attempt initial autoplay after everything is loaded
+      setTimeout(() => {
+        attemptAutoPlay();
+      }, 1000);
+    }
+
+    // Create animated background particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 20 + 's';
+        particle.style.animationDuration = (Math.random() * 20 + 10) + 's';
+        particlesContainer.appendChild(particle);
+      }
+    }
+
+    // Setup mode selector knob
+    function setupModeSelector() {
+      const positions = [0, 120, 240];
+      const positionModes = ['chill', 'dance', 'strange'];
+      let currentPositionIndex = 0;
+
+      function updateKnobRotation(rotation) {
+        modeKnob.style.transform = `rotate(${rotation}deg)`;
+        modeKnob.dataset.rotation = rotation;
+      }
+      
+      window.updateKnobRotation = (rotation) => {
+        for (let i = 0; i < positions.length; i++) {
+          if (Math.abs(rotation - positions[i]) < 30) {
+            currentPositionIndex = i;
+            break;
+          }
+        }
+        modeKnob.style.transform = `rotate(${rotation}deg)`;
+        modeKnob.dataset.rotation = rotation;
+      };
+
+      function moveToNextPosition() {
+        currentPositionIndex = (currentPositionIndex + 1) % positions.length;
+        const newMode = positionModes[currentPositionIndex];
+        const targetPosition = positions[currentPositionIndex];
+        
+        modeKnob.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        updateKnobRotation(targetPosition);
+        
+        if (navigator.vibrate) {
+          navigator.vibrate(50);
+        }
+        
+        loadMode(newMode);
+
+        setTimeout(() => {
+          modeKnob.style.transition = '';
+        }, 300);
+      }
+
+      modeKnob.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        moveToNextPosition();
+      });
+
+      modeKnob.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        moveToNextPosition();
+      });
+
+      modeLabels.forEach(label => {
+        label.addEventListener('click', () => {
+          const mode = label.dataset.mode;
+          loadMode(mode);
+        });
+      });
+    }
+
+    // Load and transition to new mode
+    function loadMode(mode) {
+      if (mode === currentMode) return;
+      
+      currentMode = mode;
+      
+      saveCurrentMode(mode);
+      
+      body.className = `theme-${mode}`;
+      
+      updateBackgroundVideos(mode);
+      
+      modeLabels.forEach(label => {
+        label.classList.toggle('active', label.dataset.mode === mode);
+      });
+      
+      updateContent(mode);
+      updateVideoGrid(mode);
+      loadPlaylist(mode);
+
+      setTimeout(() => {
+        if (!isPlaying) {
+          attemptAutoPlay();
+        }
+      }, 500);
+
+      const rotations = { chill: 0, dance: 120, strange: 240 };
+      const targetRotation = rotations[mode];
+      modeKnob.style.transform = `rotate(${targetRotation}deg)`;
+      modeKnob.dataset.rotation = targetRotation;
+      
+      modeKnob.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+      
+      if (window.updateKnobRotation) {
+        window.updateKnobRotation(targetRotation);
+      }
+      
+      setTimeout(() => {
+        modeKnob.style.transition = '';
+      }, 300);
+      
+      triggerTransitionEffects(mode);
+    }
+
+    // Update hero content based on mode
+    function updateContent(mode) {
+      const content = {
+        chill: {
+          title: 'Chill Vibes',
+          titlePlayful: 'Chill',
+          subtitle: 'Down-tempo textures and skeletal melodies for deep headspace.',
+          section: 'Chill Vibes',
+          description: 'Stripped-back studio captures where the room noise is as intentional as the notes. Minimalist energy for quiet focus.',
+          bioTitle: 'CHILL MODE',
+          bioText: 'At six, Taiwo learned piano by eavesdropping on siblings\' lessons through the wall, the notes absorbed through osmosis. Classical training felt like constraint until his father\'s wisdom reframed it: rules aren\'t walls, they\'re launch pads. Chill is the bedrock state. Simple arrangements where negative space does the work. Studio recordings that refuse polish because the imperfections are part of the story. This is where the instrument and the body become the same thing—breath control, string tension, the physics of vibration translated through tone.',
+          image: '/images/Taiwo Heard InstaBub1.JPG'
+        },
+        dance: {
+          title: 'Dance Party',
+          titlePlayful: 'Dance',
+          subtitle: 'Kinetic rhythms and driving synths for the high-velocity moments.',
+          section: 'Big Dance Energy',
+          description: 'High-powered visual loops over driving basslines. Constant motion, no friction, pure momentum.',
+          bioTitle: 'DANCE MODE',
+          bioText: 'Moving to LA meant joining a sonic ecosystem—bands, producers, the exchange of energy in real time. Playing live taught him arrangement as conversation; producing others taught him listening as technology. At Universal, Taiwo learned to think in algorithms: what characteristics make a song undeniable? Dance mode is fluidity—tracks that adapt, morph, refuse to stay still. Electronic pioneers like Brian Eno showed him sound could be sculptural. Now it\'s about momentum: building basslines that move bodies, beats that don\'t ask permission. Indie rock  music, composition, video game soundtracks—all have asked the same question: how quickly can you get people into the groove?',
+          image: '/images/Taiwo Heard InstaBub2.JPG'
+        },
+        strange: {
+          title: 'Strange Worlds',
+          titlePlayful: 'Strange',
+          subtitle: 'Sonic anomalies and fragmented frequencies from the outer edges.',
+          section: 'Strange Dimensions',
+          description: 'A collection of glitches, abstract layers, and sensory detours. For when you need the music to feel like a destination you\'ve never visited.',
+          bioTitle: 'STRANGE MODE ',
+          bioText: 'Strange is where boundaries evaporate. Coding meets composition. Taiwo\'s ear can reverse-engineer pop songs near instantly, but the real skill is *reconstruction*—taking apart the familiar to reveal its alien skeleton. Strange mode rejects categories. It\'s chiptune soundtracks over psychedelic visuals. It\'s using AI  to better understand music\'s emotional architecture. It\'s treating some projects like a controlled detonation: see what survives, keep the shrapnel.',
+          image: '/images/Taiwo Heard Laugh.JPG'
+        }
+      };
+      
+      heroTitle.innerHTML = `<span class="playful">${content[mode].titlePlayful}</span> ${content[mode].title.replace(content[mode].titlePlayful, '').trim()}`;
+      heroSubtitle.textContent = content[mode].subtitle;
+      sectionTitle.textContent = content[mode].section;
+      sectionDescription.textContent = content[mode].description;
+
+      const modeImage = document.getElementById('modeImage');
+      if (modeImage) {
+        modeImage.src = content[mode].image;
+      }
+
+      const bioTitle = document.getElementById('bioTitle');
+      const bioText = document.getElementById('bioText');
+      if (bioTitle && bioText) {
+        bioTitle.textContent = content[mode].bioTitle;
+        bioText.textContent = content[mode].bioText;
+      }
+    }
+
+    // Update video grid layout and content
+    function updateVideoGrid(mode) {
+      const allCards = document.querySelectorAll('.video-card');
+      allCards.forEach(card => {
+        if (card.dataset.mode === mode) {
+          card.classList.add('active');
+        } else {
+          card.classList.remove('active');
+        }
+      });
+    }
+
+    function setupVideoGridEvents() {
+      const cards = document.querySelectorAll('.video-card');
+      cards.forEach(card => {
+        card.addEventListener('click', () => {
+          const video = {
+            id: card.dataset.videoId,
+            title: card.dataset.videoTitle,
+            description: card.dataset.videoDescription
+          };
+          openVideoModal(video);
+        });
+      });
+    }
+
+    // Setup video modal functionality
+    function setupVideoModal() {
+      modalCloseBtn.addEventListener('click', closeVideoModal);
+      
+      videoModal.addEventListener('click', (e) => {
+        if (e.target === videoModal) {
+          closeVideoModal();
+        }
+      });
+      
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && videoModal.classList.contains('active')) {
+          closeVideoModal();
+        }
+      });
+    }
+
+    // Open video in modal
+    function openVideoModal(video) {
+      const frame = document.getElementById('modalVideoFrame');
+      modalVideoTitle.textContent = video.title;
+      modalVideoDescription.textContent = video.description;
+      
+      const embedUrl = `/embed.html?id=${video.id}`; 
+      if (frame) frame.src = embedUrl;
+      
+      videoModal.classList.add('active');
+      
+      document.body.style.overflow = 'hidden';
+      
+      toggleBackgroundVideos(false);
+      
+      if (isPlaying) {
+        audioPlayer.pause();
+        updatePlayPauseUI(false);
+        isPlaying = false;
+      }
+    }
+
+    // Close video modal
+    function closeVideoModal() {
+      videoModal.classList.remove('active');
+      
+      const frame = document.getElementById('modalVideoFrame');
+      if (frame) {
+        // Aggressively stop the video for Firefox and other browsers
+        // by resetting the src and replacing the element entirely
+        frame.src = 'about:blank';
+        const newFrame = frame.cloneNode(true);
+        newFrame.src = 'about:blank';
+        frame.parentNode.replaceChild(newFrame, frame);
+      }
+      
+      document.body.style.overflow = '';
+
+      toggleBackgroundVideos(true);
+    }
+
+    // Setup music player functionality
+    function setupMusicPlayer() {
+      playBtn.addEventListener('click', togglePlay);
+      prevBtn.addEventListener('click', () => previousTrack(true));
+      nextBtn.addEventListener('click', () => nextTrack(true));
+      shuffleBtn.addEventListener('click', toggleShuffle);
+      
+      progressBar.addEventListener('click', (e) => {
+        const rect = progressBar.getBoundingClientRect();
+        const percent = (e.clientX - rect.left) / rect.width;
+        audioPlayer.currentTime = percent * audioPlayer.duration;
+      });
+      
+      audioPlayer.addEventListener('timeupdate', updateProgress);
+      audioPlayer.addEventListener('loadedmetadata', updateDuration);
+      audioPlayer.addEventListener('ended', () => nextTrack(false));
+    }
+
+    // Load playlist for current mode
+    function loadPlaylist(mode) {
+      currentPlaylist = [...musicData[mode]];
+      if (isShuffled) {
+        shuffleArray(currentPlaylist);
+      }
+      currentTrackIndex = 0;
+      loadTrack(currentTrackIndex, false);
+    }
+
+    // Load specific track
+    function loadTrack(index, forcePlay = false) {
+      if (!currentPlaylist[index]) return;
+
+      const track = currentPlaylist[index];
+      const wasPlaying = isPlaying;
+
+      audioPlayer.src = track.file;
+      trackTitle.textContent = track.title;
+      trackArtist.textContent = track.artist;
+
+      progressFill.style.width = '0%';
+      currentTime.textContent = '0:00';
+      duration.textContent = '0:00';
+
+      audioPlayer.addEventListener('loadedmetadata', function onLoaded() {
+        duration.textContent = formatTime(audioPlayer.duration);
+        audioPlayer.removeEventListener('loadedmetadata', onLoaded);
+
+        if (forcePlay || (wasPlaying && autoplayEnabled)) {
+          setTimeout(() => attemptAutoPlay(true), 50);
+        } else if (wasPlaying && !autoplayEnabled) {
+          isPlaying = false;
+          updatePlayPauseUI(false);
+          audioPlayer.pause();
+        }
+      });
+    }
+
+    // SVG Icon Paths
+    const playIconPath = "M8 5V19L19 12L8 5Z";
+    const pauseIconPath = "M6 19H10V5H6V19ZM14 5V19H18V5H14Z";
+
+    function updatePlayPauseUI(playing) {
+      const playIcon = document.getElementById('playIcon');
+      if (playIcon) {
+        const path = playIcon.querySelector('path');
+        path.setAttribute('d', playing ? pauseIconPath : playIconPath);
+        playBtn.setAttribute('aria-label', playing ? 'Pause' : 'Play');
+      }
+    }
+
+    // Attempt to auto-play
+    function attemptAutoPlay(force = false) {
+      if (!audioPlayer.src) return;
+
+      if (!autoplayEnabled && !force) {
+        console.log('Autoplay prevented by user preference');
+        return;
+      }
+
+      const playPromise = audioPlayer.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          updatePlayPauseUI(true);
+          isPlaying = true;
+          document.querySelector('.music-player').classList.remove('autoplay-blocked');
+          console.log('Auto-play successful');
+        }).catch(error => {
+          console.log('Auto-play prevented:', error);
+          updatePlayPauseUI(false);
+          isPlaying = false;
+          document.querySelector('.music-player').classList.add('autoplay-blocked');
+          setTimeout(() => {
+            document.querySelector('.music-player').classList.remove('autoplay-blocked');
+          }, 3000);
+        });
+      }
+    }
+
+    // Toggle play/pause
+    function togglePlay() {
+      if (isPlaying) {
+        audioPlayer.pause();
+        updatePlayPauseUI(false);
+        isPlaying = false;
+      } else {
+        const playPromise = audioPlayer.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            updatePlayPauseUI(true);
+            isPlaying = true;
+            document.querySelector('.music-player').classList.remove('autoplay-blocked');
+          }).catch(error => {
+            console.log('Audio play prevented:', error);
+            updatePlayPauseUI(false);
+            isPlaying = false;
+          });
+        }
+      }
+    }
+
+    // Next track
+    function nextTrack(forcePlay = false) {
+      currentTrackIndex = (currentTrackIndex + 1) % currentPlaylist.length;
+      loadTrack(currentTrackIndex, forcePlay);
+    }
+
+    // Previous track
+    function previousTrack(forcePlay = false) {
+      currentTrackIndex = currentTrackIndex === 0 ? currentPlaylist.length - 1 : currentTrackIndex - 1;
+      loadTrack(currentTrackIndex, forcePlay);
+    }
+
+    // Toggle shuffle
+    function toggleShuffle() {
+      isShuffled = !isShuffled;
+      shuffleBtn.classList.toggle('active', isShuffled);
+
+      if (isShuffled) {
+        shuffleArray(currentPlaylist);
+      } else {
+        currentPlaylist = [...musicData[currentMode]];
+      }
+
+      currentTrackIndex = 0;
+      loadTrack(currentTrackIndex);
+    }
+
+    // Shuffle array utility
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    // Update progress bar
+    function updateProgress() {
+      if (audioPlayer.duration) {
+        const percent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+        progressFill.style.width = percent + '%';
+        currentTime.textContent = formatTime(audioPlayer.currentTime);
+      }
+    }
+
+    // Update duration display
+    function updateDuration() {
+      duration.textContent = formatTime(audioPlayer.duration);
+    }
+
+    // Format time utility
+    function formatTime(seconds) {
+      const mins = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    // Trigger transition effects
+    function triggerTransitionEffects(mode) {
+      const flash = document.createElement('div');
+      flash.style.cssText = `
+        position: fixed;
+        inset: 0;
+        background: var(--current-accent);
+        opacity: 0.10;
+        z-index: 1000;
+        pointer-events: none;
+        animation: flash 0.2s ease-out;
+      `;
+
+      const flashKeyframes = `
+        @keyframes flash {
+          0% { opacity: 0; }
+          50% { opacity: 0.15; }
+          100% { opacity: 0; }
+        }
+      `;
+
+      if (!document.querySelector('#flash-styles')) {
+        const style = document.createElement('style');
+        style.id = 'flash-styles';
+        style.textContent = flashKeyframes;
+        document.head.appendChild(style);
+      }
+
+      document.body.appendChild(flash);
+      setTimeout(() => flash.remove(), 200);
+    }
+
+    // Update background videos based on theme
+    function updateBackgroundVideos(mode) {
+      const allVideos = document.querySelectorAll('.theme-background');
+      const allVideoElements = document.querySelectorAll('.theme-background video');
+      
+      allVideoElements.forEach(video => {
+        video.pause();
+        video.playbackRate = 0.5;
+      });
+      
+      allVideos.forEach(bg => {
+        bg.classList.remove('active');
+      });
+      
+      const activeVideo = document.querySelector(`.theme-background.${mode}-bg`);
+      const activeVideoElement = activeVideo?.querySelector('video');
+      
+      if (activeVideo && activeVideoElement) {
+        activeVideo.classList.add('active');
+        
+        const playPromise = activeVideoElement.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(error => {
+            console.log('Video autoplay prevented:', error);
+            document.addEventListener('click', () => {
+              activeVideoElement.play().catch(() => {});
+            }, { once: true });
+          });
+        }
+      }
+    }
+
+    // Setup parallax effects
+    function setupParallax() {
+      let ticking = false;
+      
+      function updateParallax() {
+        const scrolled = window.pageYOffset;
+        const rate = scrolled * -0.5;
+        
+        document.getElementById('particles').style.transform = `translateY(${rate}px)`;
+        
+        ticking = false;
+      }
+      
+      function requestTick() {
+        if (!ticking) {
+          requestAnimationFrame(updateParallax);
+          ticking = true;
+        }
+      }
+      
+      window.addEventListener('scroll', requestTick, { passive: true });
+    }
+
+    // Initialize when DOM is ready
+    document.addEventListener('DOMContentLoaded', init);
+
+    // Respect reduced motion preferences
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll('*').forEach(el => {
+        el.style.animationDuration = '0.01ms';
+        el.style.animationIterationCount = '1';
+        el.style.transitionDuration = '0.01ms';
+      });
+    }
+  </script>
+</BaseLayout>

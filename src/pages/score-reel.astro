@@ -1,0 +1,730 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Score Reel · Taiwo Heard" description="Musical compositions for film, games, and commercials. From high-energy car commercials to epic documentary trailers.">
+    <style slot="head">
+        :root {
+            /* Page-specific variable overrides */
+            --accent: #ff6b35;
+            --accent-soft: #ff8a5b;
+            --panel-bg: rgba(8,8,15,0.85);
+            --panel-stroke: rgba(255,255,255,0.12);
+            --gutter: clamp(20px, 3vw, 40px);
+            --container-max: 1600px;
+        }
+
+        /* Cinematic background */
+        .background {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background: 
+                radial-gradient(ellipse at 30% 20%, rgba(255, 107, 53, 0.15) 0%, rgba(255,107,53,0.0) 70%),
+                radial-gradient(ellipse at 70% 80%, rgba(138, 43, 226, 0.12) 0%, rgba(138,43,226,0.0) 70%),
+                linear-gradient(135deg, #050508 0%, #0a0a0f 50%, #050508 100%);
+        }
+        .background::before {
+            content: "";
+            position: absolute; 
+            inset: 0;
+            background: 
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 98px,
+                    rgba(255,255,255,0.01) 100px
+                ),
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 98px,
+                    rgba(255,255,255,0.01) 100px
+                );
+            opacity: 0.3;
+        }
+
+        /* Subtle grain texture */
+        .grain {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            opacity: 0.08;
+            pointer-events: none;
+            background-image: 
+                radial-gradient(circle at 25% 25%, transparent 50%, rgba(255,255,255,0.1) 51%),
+                radial-gradient(circle at 75% 75%, transparent 50%, rgba(255,255,255,0.1) 51%);
+            background-size: 4px 4px;
+            animation: grain 8s steps(10) infinite;
+        }
+        @keyframes grain {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            10% { transform: translate(-1px, 1px) rotate(1deg); }
+            20% { transform: translate(1px, -1px) rotate(-1deg); }
+            30% { transform: translate(-1px, -1px) rotate(1deg); }
+            40% { transform: translate(1px, 1px) rotate(-1deg); }
+            50% { transform: translate(0, -1px) rotate(0deg); }
+            60% { transform: translate(-1px, 0) rotate(1deg); }
+            70% { transform: translate(1px, 0) rotate(-1deg); }
+            80% { transform: translate(0, 1px) rotate(0deg); }
+            90% { transform: translate(1px, -1px) rotate(1deg); }
+        }
+
+        /* Hero Section */
+        .hero { 
+            min-height: 100vh; 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            align-items: center;
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 var(--gutter);
+            gap: var(--gutter);
+            position: relative;
+        }
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 107, 107, 0.15), transparent 60%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 217, 61, 0.1), transparent 40%);
+            z-index: 1;
+        }
+        .hero-svg-waves {
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 130%;
+            height: 180px;
+            z-index: 2;
+            pointer-events: none;
+            opacity: 0.85;
+        }
+        .hero-svg-waves svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        @keyframes waveMove {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-60px); }
+        }
+        .hero-svg-waves .wave1 {
+            animation: waveMove 8s linear infinite alternate;
+        }
+        .hero-svg-waves .wave2 {
+            animation: waveMove 12s linear infinite alternate-reverse;
+        }
+        .hero-content {
+            padding: 2rem 0;
+            position: relative;
+            z-index: 3;
+        }
+        .hero h1 { 
+            font-family: var(--font-heading);
+            font-weight: 900; 
+            letter-spacing: -0.02em; 
+            font-size: clamp(3.5rem, 10vw, 9rem); 
+            margin: 0 0 1.5rem; 
+            line-height: 0.9;
+            text-transform: uppercase;
+            background: linear-gradient(to right, #fff, #aaa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .hero h1 .playful {
+            font-family: var(--font-playful);
+            background: linear-gradient(90deg, var(--accent-playful2), var(--accent-playful), var(--accent-primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 0.01em;
+            font-size: 1.1em;
+            display: inline-block;
+        }
+        .hero-subtitle {
+            font-family: var(--font-mono);
+            font-size: clamp(1.1rem, 2.5vw, 1.8rem);
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            line-height: 1.4;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+        .hero-reel {
+            position: relative;
+            aspect-ratio: 16/9;
+            border-radius: 16px;
+            overflow: hidden;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            min-height: 400px;
+            z-index: 3;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .hero-reel:hover {
+            transform: translateY(-10px) scale(1.01);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            border-color: rgba(255,255,255,0.3);
+        }
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            opacity: 0.5;
+            z-index: 4;
+        }
+
+        /* Kinetic Typography */
+        .kinetic-text {
+            overflow: hidden;
+        }
+        .kinetic-text .line {
+            display: block;
+            animation: slideInUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(100%);
+        }
+        .kinetic-text .line:nth-child(2) { animation-delay: 0.2s; }
+        .kinetic-text .line:nth-child(3) { animation-delay: 0.4s; }
+        .kinetic-text .line:nth-child(4) { animation-delay: 0.6s; }
+
+        @keyframes slideInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Compositions Grid */
+        .compositions {
+            max-width: var(--container-max);
+            margin: 8rem auto;
+            padding: 0 var(--gutter);
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 6rem;
+        }
+        .section-header h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 100;
+            letter-spacing: 6px;
+            margin: 0 0 1rem;
+            text-transform: uppercase;
+        }
+        .section-header p {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            color: #c7c4d8;
+            max-width: 600px;
+            margin: 0 auto;
+            letter-spacing: 1px;
+        }
+
+        /* Asymmetric Composition Items */
+        .composition {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: calc(var(--gutter) * 1.5);
+            margin-bottom: 6rem;
+            min-height: 90vh;
+            align-items: center;
+            padding: 3rem;
+            border-radius: 24px;
+            background: linear-gradient(135deg, rgba(255,107,53,0.03) 0%, rgba(138,43,226,0.03) 100%);
+            border: 1px solid rgba(255,107,53,0.15);
+            position: relative;
+            overflow: visible;
+        }
+        
+        .composition::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            background: linear-gradient(135deg, rgba(255,107,53,0.02) 0%, rgba(138,43,226,0.02) 100%);
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        /* Alternating layouts */
+        .composition:nth-child(odd) {
+            grid-template-columns: 1fr 1fr;
+        }
+        .composition:nth-child(even) {
+            grid-template-columns: 1fr 1fr;
+        }
+        .composition:nth-child(even) .comp-content {
+            order: 2;
+        }
+        .composition:nth-child(even) .comp-media {
+            order: 1;
+        }
+
+        .comp-media {
+            position: relative;
+            aspect-ratio: 16/9;
+            border-radius: 16px;
+            overflow: hidden;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            min-height: 400px;
+        }
+        .comp-media:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        .comp-content {
+            padding: 2.5rem;
+            background: rgba(8,8,15,0.6);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            backdrop-filter: blur(8px);
+            position: relative;
+            overflow: hidden;
+        }
+        .comp-content::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-soft));
+        }
+
+        .comp-title {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 200;
+            letter-spacing: 4px;
+            margin: 0 0 1rem;
+            text-transform: uppercase;
+            color: var(--accent-soft);
+        }
+        .comp-genre {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(255,107,53,0.15);
+            border: 1px solid rgba(255,107,53,0.3);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+        .comp-description {
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            line-height: 1.8;
+            color: #e8e5f3;
+            margin-bottom: 2rem;
+            letter-spacing: 0.5px;
+        }
+
+        .play-button { 
+            position: relative; 
+            z-index: 2; 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 1rem; 
+            padding: 1.2rem 1.8rem; 
+            border-radius: 50px; 
+            border: 2px solid rgba(255,255,255,0.8); 
+            background: rgba(5,5,8,0.8); 
+            backdrop-filter: blur(12px); 
+            font-weight: 600; 
+            letter-spacing: 2px; 
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            transition: all 300ms ease;
+        }
+        .play-button:hover {
+            background: rgba(255,107,53,0.2);
+            border-color: var(--accent);
+            transform: scale(1.05);
+        }
+        .play-icon { 
+            width: 0; 
+            height: 0; 
+            border-left: 18px solid #ffffff; 
+            border-top: 12px solid transparent; 
+            border-bottom: 12px solid transparent; 
+            filter: drop-shadow(0 0 8px rgba(255,255,255,0.6)); 
+        }
+
+        /* Animated elements */
+        .reveal { 
+            opacity: 0; 
+            transform: translateY(50px); 
+            transition: opacity 800ms ease, transform 800ms ease; 
+        }
+        .reveal.visible { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+
+        /* Stats/Skills section */
+        .skills {
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-stroke);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 8rem auto;
+            max-width: var(--container-max);
+            backdrop-filter: blur(12px);
+            text-align: center;
+        }
+        .skills h3 {
+            font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+            font-weight: 200;
+            letter-spacing: 4px;
+            margin: 0 0 2rem;
+            text-transform: uppercase;
+        }
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .skill-item {
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--panel-stroke);
+            border-radius: 12px;
+            transition: all 300ms ease;
+        }
+        .skill-item:hover {
+            background: rgba(255,107,53,0.05);
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+        .skill-name {
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent-soft);
+        }
+
+        @media (max-width: 1024px) {
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+                text-align: center;
+                padding: 4rem var(--gutter);
+            }
+            
+            .composition:nth-child(odd),
+            .composition:nth-child(even) {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                margin-bottom: 3rem;
+                min-height: auto;
+                padding: 2rem;
+            }
+            .composition:nth-child(even) .comp-content,
+            .composition:nth-child(even) .comp-media {
+                order: initial;
+            }
+            
+            .comp-media {
+                min-height: 250px;
+            }
+
+            .skills {
+                margin: 4rem var(--gutter);
+                padding: 2rem;
+            }
+            .skills-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 1rem;
+            }
+
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: clamp(2rem, 8vw, 3rem);
+                letter-spacing: 4px;
+            }
+            .comp-content {
+                padding: 1.5rem;
+            }
+            .comp-title {
+                font-size: clamp(1.4rem, 6vw, 2rem);
+                letter-spacing: 2px;
+            }
+        }
+    </style>
+
+    <div class="background" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-svg-waves">
+            <svg viewBox="0 0 2000 180" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                <path class="wave1" d="M0,120 Q360,180 720,120 T1440,120 T2000,120 V180 H0 Z" fill="#7ec4ff" fill-opacity="0.18"/>
+                <path class="wave2" d="M0,140 C200,140 400,100 600,140 C800,180 1000,100 1200,140 C1400,180 1600,100 1800,140 C1900,160 1950,150 2000,140 V180 H0 Z" fill="#ffb3ec" fill-opacity="0.13"/>
+                <path d="M0,160 Q360,100 720,160 T1440,160 T2000,160 V180 H0 Z" fill="#ffd93d" fill-opacity="0.10"/>
+            </svg>
+        </div>
+        <div class="hero-content">
+            <div class="kinetic-text">
+                <h1>
+                    <span class="line"><span class="playful">Score</span></span>
+                    <span class="line">Reel</span>
+                </h1>
+            </div>
+            <div class="hero-subtitle kinetic-text">
+                <span class="line">Musical compositions for</span>
+                <span class="line">film, games, and commercials</span>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+            </svg>
+        </div>
+        <div class="hero-reel">
+            <div class="video-proxy" data-yt="4YkkJBexH9k">
+                <div class="video-thumb"></div>
+                <div class="play-button">
+                    <span class="play-icon"></span>
+                    <span>Watch Reel</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="compositions">
+        <div class="section-header reveal">
+            <h2>Featured Works</h2>
+            <p>From high-energy commercial spots to epic cinematic trailers</p>
+        </div>
+
+        <!-- VECTR GT6 -->
+        <article class="composition reveal">
+            <div class="comp-media">
+                <div class="video-proxy" data-yt="4YkkJBexH9k">
+                    <div class="video-thumb"></div>
+                    <div class="play-button">
+                        <span class="play-icon"></span>
+                        <span>Play</span>
+                    </div>
+                </div>
+            </div>
+            <div class="comp-content">
+                <h3 class="comp-title">VECTR GT6 Cruiser</h3>
+                <div class="comp-genre">Car Commercial</div>
+                <p class="comp-description">
+                    A high-energy car commercial featuring driving sequences, live action with actors, and graphic inserts of cutting-edge technology. The score drives the narrative forward with pulsating rhythms and soaring melodies that capture the thrill of the open road.
+                </p>
+            </div>
+        </article>
+
+        <!-- Footi 2023 -->
+        <article class="composition reveal">
+            <div class="comp-media">
+                <div class="video-proxy" data-yt="o5EY0RTbwKU">
+                    <div class="video-thumb"></div>
+                    <div class="play-button">
+                        <span class="play-icon"></span>
+                        <span>Play</span>
+                    </div>
+                </div>
+            </div>
+            <div class="comp-content">
+                <h3 class="comp-title">Footi 2023</h3>
+                <div class="comp-genre">Gaming Commercial</div>
+                <p class="comp-description">
+                    High-energy soccer video game advertisement that combines electronic beats with orchestral elements. The composition builds tension and excitement, perfectly synchronized with fast-paced gameplay footage and dynamic camera movements.
+                </p>
+            </div>
+        </article>
+
+        <!-- The Ocean -->
+        <article class="composition reveal">
+            <div class="comp-media">
+                <div class="video-proxy" data-yt="HCNy8_5EjGY">
+                    <div class="video-thumb"></div>
+                    <div class="play-button">
+                        <span class="play-icon"></span>
+                        <span>Play</span>
+                    </div>
+                </div>
+            </div>
+            <div class="comp-content">
+                <h3 class="comp-title">The Ocean</h3>
+                <div class="comp-genre">Documentary Trailer</div>
+                <p class="comp-description">
+                    An epic trailer for an ocean documentary featuring sweeping arrangements that mirror the vastness and mystery of the deep sea. The score builds from intimate moments, capturing both the beauty and power of marine life
+                </p>
+            </div>
+        </article>
+
+        <!-- Tears of Steel -->
+        <article class="composition reveal">
+            <div class="comp-media">
+                <div class="video-proxy" data-yt="RTSgUuILZKU">
+                    <div class="video-thumb"></div>
+                    <div class="play-button">
+                        <span class="play-icon"></span>
+                        <span>Play</span>
+                    </div>
+                </div>
+            </div>
+            <div class="comp-content">
+                <h3 class="comp-title">Tears of Steel</h3>
+                <div class="comp-genre">Sci-Fi Trailer</div>
+                <p class="comp-description">
+                    A dystopian sci-fi robot action film trailer featuring intense electronic music infused with hip-hop elements. The composition creates a futuristic atmosphere while building tension through aggressive rhythms and haunting melodic themes.        </p>
+            </div>
+        </article>
+
+        <!-- Sule -->
+        <article class="composition reveal">
+            <div class="comp-media">
+                <div class="video-proxy" data-yt="2qgfGK5g60I">
+                    <div class="video-thumb"></div>
+                    <div class="play-button">
+                        <span class="play-icon"></span>
+                        <span>Play</span>
+                    </div>
+                </div>
+            </div>
+            <div class="comp-content">
+                <h3 class="comp-title">Sule</h3>
+                <div class="comp-genre">Animation Short</div>
+                <p class="comp-description">
+                    A fun cartoon short about a child detective named Sule. The playful score combines whimsical melodies with detective-style musical motifs, creating an engaging soundtrack that appeals to both children and adults while supporting the narrative adventure.      </p>
+            </div>
+        </article>
+
+    </main>
+
+    <section class="skills reveal">
+        <h3>Composition Expertise</h3>
+        <div class="skills-grid">
+            <div class="skill-item">
+                <div class="skill-name">Orchestral</div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-name">Electronic</div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-name">Hybrid Scoring</div>
+            </div>
+
+            <div class="skill-item">
+                <div class="skill-name">Commercial Music</div>
+            </div>
+        </div>
+    </section>
+
+    <script is:inline>
+        // Kinetic typography animation trigger
+        function initKineticText() {
+            const kineticElements = document.querySelectorAll('.kinetic-text');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate');
+                    }
+                });
+            }, { threshold: 0.3 });
+            
+            kineticElements.forEach(el => observer.observe(el));
+        }
+
+        // Progressive reveal on scroll
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    revealObserver.unobserve(e.target);
+                }
+            });
+        }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+        
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // Video thumbnail proxies with click-to-load YouTube
+        function buildThumbUrl(id) {
+            return `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+        }
+        
+        function buildIframe(id) {
+            // Validate YouTube video ID format (11 characters, alphanumeric + hyphens/underscores)
+            const youtubeIdRegex = /^[a-zA-Z0-9_-]{11}$/;
+            if (!youtubeIdRegex.test(id)) {
+                console.error('Invalid YouTube video ID:', id);
+                return document.createElement('div'); // Return empty div for invalid IDs
+            }
+
+            const src = `/embed.html?id=${id}`;
+            const wrap = document.createElement('div');
+            wrap.className = 'iframe-wrap';
+            const iframe = document.createElement('iframe');
+            iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+            iframe.setAttribute('allowfullscreen', '');
+            iframe.setAttribute('loading', 'lazy');
+            iframe.src = src;
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+            iframe.style.border = 'none';
+            wrap.appendChild(iframe);
+            return wrap;
+        }
+        
+        function loadThumb(el) {
+            const id = el.getAttribute('data-yt');
+            const thumb = el.querySelector('.video-thumb');
+            const hi = new Image();
+            const fallback = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+            hi.src = buildThumbUrl(id);
+            hi.onload = () => thumb.style.backgroundImage = `url('${hi.src}')`;
+            hi.onerror = () => thumb.style.backgroundImage = `url('${fallback}')`;
+        }
+        
+        function enableProxy(el) {
+            loadThumb(el);
+            el.addEventListener('click', () => {
+                const id = el.getAttribute('data-yt');
+                const parent = el.parentElement;
+                parent.replaceChild(buildIframe(id), el);
+            }, { once: true });
+        }
+        
+        document.querySelectorAll('.video-proxy').forEach(enableProxy);
+
+        initKineticText();
+
+        // Parallax effect for background elements
+        let ticking = false;
+        function updateParallax() {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.background');
+            if (parallax) {
+                const rate = scrolled * -0.5;
+                parallax.style.transform = `translate3d(0, ${rate}px, 0)`;
+            }
+            ticking = false;
+        }
+
+        function requestParallaxTick() {
+            if (!ticking) {
+                requestAnimationFrame(updateParallax);
+                ticking = true;
+            }
+        }
+
+        window.addEventListener('scroll', requestParallaxTick, { passive: true });
+    </script>
+</BaseLayout>
+

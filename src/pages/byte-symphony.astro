@@ -1,0 +1,651 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Byte Symphony - AI & Analytics | Taiwo Heard" description="AI-powered analytics tools for content creators. Dreamy chatbot interprets YouTube metrics in plain English. Interactive Bayesian statistics learning platform.">
+    <style slot="head">
+        /* Page-specific styles */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding: 0 2rem;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(107, 255, 184, 0.1), transparent 60%),
+                        radial-gradient(circle at 20% 80%, rgba(126, 196, 255, 0.1), transparent 40%);
+            z-index: 1;
+        }
+
+        .hero-svg-waves {
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 130%;
+            height: 180px;
+            z-index: 2;
+            pointer-events: none;
+            opacity: 0.85;
+        }
+        .hero-svg-waves svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        @keyframes waveMove {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-60px); }
+        }
+        .hero-svg-waves .wave1 {
+            animation: waveMove 8s linear infinite alternate;
+        }
+        .hero-svg-waves .wave2 {
+            animation: waveMove 12s linear infinite alternate-reverse;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 0.9;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #fff, #888);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero h1 .playful {
+            font-family: var(--font-playful);
+            background: linear-gradient(90deg, var(--accent-tertiary), var(--accent-playful), var(--accent-playful2));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-subtitle {
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 3rem auto;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0.5;
+            z-index: 4;
+        }
+
+        .intro-section {
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .intro-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .intro-text {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            line-height: 1.6;
+            color: var(--text-main);
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .intro-section {
+                padding: 2rem 1rem;
+            }
+            .intro-text {
+                font-size: 1.1rem;
+            }
+        }
+
+        .main-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2.5rem;
+        }
+
+        @media (max-width: 600px) {
+            .main-grid { grid-template-columns: 1fr; }
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .project-card.featured {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 1fr 1.8fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        @media (max-width: 1024px) {
+            .project-card.featured {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--gradient-main);
+            color: #000;
+            font-size: 0.7rem;
+            font-weight: 800;
+            border-radius: 20px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            width: fit-content;
+        }
+
+        .project-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .project-meta {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--accent-tertiary);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Ensure bottom elements align */
+        .project-card > .project-meta:last-child,
+        .project-card > .project-link:last-child,
+        .project-card > .project-links:last-child {
+            margin-top: auto;
+            margin-bottom: 0;
+        }
+
+        .project-desc {
+            font-size: 1.1rem;
+            color: #ccc;
+            margin-bottom: 2rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: auto;
+        }
+
+        .project-link {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: opacity 0.3s;
+        }
+
+        .project-link:hover {
+            opacity: 0.7;
+        }
+
+        .project-link::after {
+            content: '→';
+        }
+
+        .dreamy-images {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            width: 100%;
+        }
+
+        .dreamy-img {
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            object-fit: cover;
+            cursor: zoom-in;
+        }
+
+        .dreamy-img:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 5, 5, 0.85);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(10px);
+            cursor: zoom-out;
+        }
+
+        .lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 85%;
+            max-height: 85%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10001;
+            cursor: default;
+        }
+
+        .lightbox-img {
+            max-width: 100%;
+            max-height: 85vh;
+            width: auto;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 30px 100px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.1);
+            object-fit: contain;
+            animation: lightboxZoom 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        @keyframes lightboxZoom {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            z-index: 10002;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg) scale(1.1);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .lightbox {
+                padding: 2rem;
+            }
+            .lightbox-content {
+                max-width: 95%;
+                max-height: 90%;
+            }
+            .lightbox-img {
+                max-width: 100%;
+                max-height: 80vh;
+                border-radius: 12px;
+            }
+            .lightbox-close {
+                top: 15px;
+                right: 15px;
+                width: 44px;
+                height: 44px;
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .dreamy-images {
+                gap: 1.5rem;
+            }
+        }
+
+        .project-icon-wrapper {
+            width: 100%;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-icon-wrapper svg {
+            width: 60px;
+            height: 60px;
+            z-index: 1;
+        }
+
+        .biographer-icon { color: var(--accent-playful2); }
+        .biographer-icon::after {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at center, var(--accent-playful2), transparent 70%);
+            opacity: 0.15;
+        }
+
+        .octopus-icon { color: var(--accent-tertiary); }
+        .octopus-icon::after {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at center, var(--accent-tertiary), transparent 70%);
+            opacity: 0.15;
+        }
+
+        .mixa-icon { color: var(--accent-primary); }
+        .mixa-icon::after {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at center, var(--accent-primary), transparent 70%);
+            opacity: 0.15;
+        }
+
+        .section-header {
+            max-width: 1400px;
+            margin: 4rem auto 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-weight: 300;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1rem;
+        }
+
+        .animate {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose" aria-label="Close lightbox">×</button>
+        <div class="lightbox-content">
+            <img class="lightbox-img" id="lightboxImg" src="" alt="Expanded view">
+        </div>
+    </div>
+
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-svg-waves">
+            <svg viewBox="0 0 2000 180" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                <path class="wave1" d="M0,120 Q360,180 720,120 T1440,120 T2000,120 V180 H0 Z" fill="#7ec4ff" fill-opacity="0.18"/>
+                <path class="wave2" d="M0,140 C200,140 400,100 600,140 C800,180 1000,100 1200,140 C1400,180 1600,100 1800,140 C1900,160 1950,150 2000,140 V180 H0 Z" fill="#ffb3ec" fill-opacity="0.13"/>
+                <path d="M0,160 Q360,100 720,160 T1440,160 T2000,160 V180 H0 Z" fill="#ffd93d" fill-opacity="0.10"/>
+            </svg>
+        </div>
+        <div class="hero-content">
+            <h1 class="animate">Byte <span class="playful">Symphony</span></h1>
+            <p class="hero-subtitle animate" style="animation-delay: 0.2s;">
+                A collection of tools, experiments, and data-driven projects that explore the intersection of creative technology and human insights.
+            </p>
+        </div>
+        <div class="scroll-indicator">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Intro Section -->
+    <section class="intro-section animate" style="animation-delay: 0.3s;">
+        <div class="intro-content">
+            <p class="intro-text">
+                Where AI meets audio intelligence. These projects represent Taiwo Heard's R&D side—tools built to solve real problems, experiments that push technical boundaries, and data-driven explorations that reveal hidden patterns. From YouTube analytics to Bayesian statistics education, each project demonstrates what happens when you combine a problem-solving mindset with creative curiosity.
+            </p>
+        </div>
+    </section>
+
+    <div class="section-header">
+        <h2>Featured Project</h2>
+    </div>
+
+    <main class="main-grid">
+        <!-- Dreamy -->
+        <div class="project-card featured animate" style="animation-delay: 0.4s;">
+            <div class="dreamy-images">
+                <img src="/images/Screen Shot 2025-12-21 at 9.53.44 AM.png" alt="Dreamy Screenshot 1" class="dreamy-img">
+                <img src="/images/Screen Shot 2025-12-21 at 9.59.21 AM.png" alt="Dreamy Screenshot 2" class="dreamy-img">
+            </div>
+            <div>
+                <div class="badge">AI Analytics</div>
+                <h2 class="project-title">DREAMY</h2>
+                <div class="project-meta">Python • LangChain • Supabase • YouTube Data API v3</div>
+                <p class="project-desc">
+                    Specialized analytics intelligence platform designed for YouTube creators. Here's the real magic: DREAMY moves beyond static dashboards to provide a <strong>personable, interactive consultant</strong> that interprets complex metrics in plain English.
+                </p>
+                <p class="project-desc" style="font-size: 0.95rem; opacity: 0.8;">
+                    Ask natural questions like "Why did my views drop last month?" or "Which videos should I promote?" and get contextual answers grounded in your actual channel data. Built with <strong>custom Hybrid RAG architecture (TF-IDF + BM25)</strong> for semantic search that understands creator intent.
+                </p>
+                <p class="project-desc" style="font-size: 0.95rem; opacity: 0.8; margin-top: 1rem;">
+                    <strong>Status:</strong> Live Demo Available
+                </p>
+                <div class="project-links">
+                    <a href="/contact" class="project-link">Request DREAMY access</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header" style="grid-column: 1 / -1; margin-top: 2rem;">
+            <h2>Development & Data Tools</h2>
+        </div>
+
+        <!-- Sweetspot -->
+        <a href="/sweetspot" class="project-card animate" style="animation-delay: 0.5s;">
+            <div class="badge">Audio Tech</div>
+            <h2 class="project-title">Sweetspot</h2>
+            <div class="project-meta">Python • PyQt5 • NumPy</div>
+            <p class="project-desc">
+                Real-time microphone distance trainer using audio level analysis and visual color feedback. Helps podcasters and vocalists build muscle memory for optimal mic technique.
+            </p>
+            <div class="project-link">View Project</div>
+        </a>
+
+        <!-- BayesQuest -->
+        <a href="https://taiheard.github.io/BayesQuest/" target="_blank" class="project-card animate" style="animation-delay: 0.6s;">
+            <div class="badge">Teaching Tool</div>
+            <h2 class="project-title">BayesQuest</h2>
+            <div class="project-meta">JavaScript • Educational Design</div>
+            <p class="project-desc">
+                Interactive teaching tool designed to demystify Bayesian statistics through gamified exploration. Historical intuition replaces abstract formulas, making probability theory accessible to students and non-mathematicians.
+            </p>
+            <div class="project-links">
+                <span class="project-link">Live Tool</span>
+                <object><a href="https://github.com/taiheard/BayesQuest" target="_blank" class="project-link">GitHub</a></object>
+            </div>
+        </a>
+
+        <!-- Cognate Analysis -->
+        <a href="https://taiheard.github.io/english-spanish-cognate-analysis-site/index.html" target="_blank" class="project-card animate" style="animation-delay: 0.7s;">
+            <div class="badge">Data Analysis</div>
+            <h2 class="project-title">Cognate Analysis</h2>
+            <div class="project-meta">NLP • Linguistics • Data Vis</div>
+            <p class="project-desc">
+                A deep dive into linguistic overlaps between English and Spanish. Analyzes cognates to uncover patterns in language evolution and accelerate exploration through data visualization.
+            </p>
+            <div class="project-link">Explore Data</div>
+        </a>
+
+        <div class="section-header" style="grid-column: 1 / -1; margin-top: 2rem;">
+            <h2>In Progress</h2>
+        </div>
+
+        <!-- Biographer -->
+        <div class="project-card animate" style="animation-delay: 0.8s;">
+            <div class="project-icon-wrapper biographer-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 5C4 3.89543 4.89543 3 6 3H18C19.1046 3 20 3.89543 20 5V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V5Z" fill="currentColor" fill-opacity="0.1" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M7 3V21" stroke="currentColor" stroke-width="1.5"/>
+                    <circle cx="13.5" cy="9.5" r="2.5" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M10 15C10 13.3431 11.3431 12 13 12H14C15.6569 12 17 13.3431 17 15V16H10V15Z" fill="currentColor" fill-opacity="0.2" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+            </div>
+            <div class="badge">Writing AI</div>
+            <h2 class="project-title">Biographer</h2>
+            <p class="project-desc">
+                A faster, more intuitive way to draft factual narrative writing, leveraging AI to organize research and maintain narrative flow.—designed for journalists, biographers, and long-form writers.
+            </p>
+            <div class="project-meta">Alpha Development</div>
+        </div>
+
+        <!-- Octopus Agent -->
+        <div class="project-card animate" style="animation-delay: 0.9s;">
+            <div class="project-icon-wrapper octopus-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 4C8.5 4 6 6.5 6 10C6 12.5 7.5 14.5 10 15.5V17H14V15.5C16.5 14.5 18 12.5 18 10C18 6.5 15.5 4 12 4Z" fill="currentColor" fill-opacity="0.1" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M8 15L4 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M10 17L7 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M12 17V22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M14 17L17 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M16 15L20 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M6 10H2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M18 10H22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M12 4V2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <circle cx="9.5" cy="9.5" r="1.5" stroke="currentColor" stroke-width="1"/>
+                    <circle cx="14.5" cy="9.5" r="1.5" stroke="currentColor" stroke-width="1"/>
+                </svg>
+            </div>
+            <div class="badge">AI Persona</div>
+            <h2 class="project-title">Octopus Agent</h2>
+            <p class="project-desc">
+                A chatbot designed to provide unique multi-perspective experiences. The goal: move beyond simple Q&A into complex perspective-taking that helps users see problems from multiple angles.
+            </p>
+            <div class="project-meta">Concept & Prototyping</div>
+        </div>
+
+        <!-- Mixa -->
+        <div class="project-card animate" style="animation-delay: 1.0s;">
+            <div class="project-icon-wrapper mixa-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="4" y="10" width="3" height="10" rx="1" fill="currentColor" fill-opacity="0.3" stroke="currentColor" stroke-width="1.5"/>
+                    <rect x="10" y="4" width="3" height="16" rx="1" fill="currentColor" fill-opacity="0.3" stroke="currentColor" stroke-width="1.5"/>
+                    <rect x="16" y="7" width="3" height="13" rx="1" fill="currentColor" fill-opacity="0.3" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M3 15H8M9 10H14M15 13H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <div class="badge">Audio SaaS</div>
+            <h2 class="project-title">Mixa</h2>
+            <p class="project-desc">
+                AI-powered mixing app designed for end-to-end multitrack mixing. Streamlines the path from raw tracks to polished masters using intelligent automation based on professional mixing decisions.
+            </p>
+            <div class="project-meta">R&D Phase</div>
+        </div>
+    </main>
+
+    <script is:inline>
+        // Lightbox functionality
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxClose = document.getElementById('lightboxClose');
+        const dreamyImages = document.querySelectorAll('.dreamy-img');
+
+        dreamyImages.forEach(img => {
+            img.addEventListener('click', () => {
+                lightboxImg.src = img.src;
+                lightboxImg.alt = img.alt;
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+        if (lightbox) {
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) closeLightbox();
+            });
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                closeLightbox();
+            }
+        });
+    </script>
+</BaseLayout>
+

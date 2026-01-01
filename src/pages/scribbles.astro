@@ -1,0 +1,520 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Scribbles - Code, Sound & Random Thoughts | Taiwo Heard" description="Blog featuring honest takes on coding adventures, audio production techniques, and creative technology insights. From Python automation to music production workflows.">
+    <style slot="head">
+        :root {
+            /* Page-specific variable overrides */
+            --accent-primary: #a78bfa; 
+            --container-max: 1400px;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 0 2rem;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(167, 139, 250, 0.15), transparent 60%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 217, 61, 0.1), transparent 40%);
+            z-index: 1;
+        }
+        .hero-svg-waves {
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 130%;
+            height: 180px;
+            z-index: 2;
+            pointer-events: none;
+            opacity: 0.85;
+        }
+        .hero-svg-waves svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        @keyframes waveMove {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-60px); }
+        }
+        .hero-svg-waves .wave1 {
+            animation: waveMove 8s linear infinite alternate;
+        }
+        .hero-svg-waves .wave2 {
+            animation: waveMove 12s linear infinite alternate-reverse;
+        }
+
+        .hero-content {
+            text-align: center;
+            position: relative;
+            z-index: 3;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-family: var(--font-heading);
+            font-size: clamp(3.5rem, 10vw, 9rem);
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            line-height: 0.9;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeInUp 1s 0.5s forwards;
+            background: linear-gradient(to right, #fff, #aaa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .hero-title .playful {
+            font-family: var(--font-playful);
+            background: linear-gradient(90deg, var(--accent-playful2), var(--accent-playful), var(--accent-primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 0.01em;
+            font-size: 1.1em;
+            display: inline-block;
+        }
+
+        .hero-subtitle {
+            font-family: var(--font-mono);
+            font-size: clamp(1.1rem, 2vw, 1.5rem);
+            font-weight: 400;
+            letter-spacing: 1px;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeInUp 1s 1s forwards;
+            color: var(--text-muted);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            opacity: 0.5;
+            z-index: 4;
+        }
+
+        /* Blog Content */
+        .blog-container {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .blog-intro {
+            text-align: center;
+            margin-bottom: 4rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            animation: fadeInUp 1s 1.5s forwards;
+        }
+
+        .blog-intro p {
+            font-size: 1.15rem;
+            color: #cccccc;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            margin: 4rem 0 2rem 0;
+            opacity: 0;
+            animation: fadeInUp 1s 1.7s forwards;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-weight: 300;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1rem;
+        }
+
+        /* Article Cards */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 3rem;
+        }
+
+        @media (max-width: 1100px) {
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .article-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .article-card:hover {
+            transform: translateY(-10px) scale(1.01);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .article-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .article-card:hover::before {
+            left: 100%;
+        }
+
+        .article-image {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .article-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .article-card:hover .article-image img {
+            transform: scale(1.05);
+        }
+
+        .article-content {
+            padding: 2.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #888888;
+        }
+
+        .article-date {
+            letter-spacing: 1px;
+        }
+
+        .article-readtime {
+            background: #222222;
+            padding: 0.3rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+
+        .article-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 1.2rem;
+            color: #ffffff;
+            line-height: 1.1;
+            transition: color 0.3s ease;
+        }
+
+        .article-card:hover .article-title {
+            color: var(--accent-playful);
+        }
+
+        .article-excerpt {
+            color: #cccccc;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .article-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .tag {
+            background: rgba(167, 139, 250, 0.1);
+            color: var(--accent-primary);
+            padding: 0.3rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(167, 139, 250, 0.2);
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            background: rgba(167, 139, 250, 0.2);
+            border-color: rgba(167, 139, 250, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .read-more {
+            color: var(--accent-primary);
+            text-decoration: none;
+            letter-spacing: 1px;
+            font-weight: 300;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: auto;
+        }
+
+        .read-more:hover {
+            color: #ffffff;
+        }
+
+        .read-more::after {
+            content: '→';
+            transition: transform 0.3s ease;
+        }
+
+        .read-more:hover::after {
+            transform: translateX(5px);
+        }
+
+        /* Medium Link */
+        .medium-link {
+            text-align: center;
+            margin: 4rem auto;
+            max-width: 1000px;
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+        }
+
+        .medium-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 2rem;
+            background: transparent;
+            border: 1px solid #ffffff;
+            color: #ffffff;
+            text-decoration: none;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .medium-cta:hover {
+            background: #ffffff;
+            color: #0a0a0a;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .blog-container {
+                padding: 2rem 1rem;
+            }
+
+            .article-content {
+                padding: 2rem;
+            }
+
+            /* Scroll animations */
+            .fade-in {
+                opacity: 0;
+                transform: translateY(30px);
+                transition: opacity 0.6s ease, transform 0.6s ease;
+            }
+
+            .fade-in.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-svg-waves">
+            <svg viewBox="0 0 2000 180" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                <path class="wave1" d="M0,120 Q360,180 720,120 T1440,120 T2000,120 V180 H0 Z" fill="#7ec4ff" fill-opacity="0.18"/>
+                <path class="wave2" d="M0,140 C200,140 400,100 600,140 C800,180 1000,100 1200,140 C1400,180 1600,100 1800,140 C1900,160 1950,150 2000,140 V180 H0 Z" fill="#ffb3ec" fill-opacity="0.13"/>
+                <path d="M0,160 Q360,100 720,160 T1440,160 T2000,160 V180 H0 Z" fill="#ffd93d" fill-opacity="0.10"/>
+            </svg>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title"><span class="playful">SCRIBBLES</span></h1>
+            <p class="hero-subtitle">Code, Sound & Random Thoughts</p>
+        </div>
+        <div class="scroll-indicator">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Blog Content -->
+    <main class="blog-container">
+        <!-- Introduction -->
+        <section class="blog-intro">
+            <p>Direct accounts from building apps, making music, exploring new technologies, and general reflections on the intersection of creativity and code. Real stories from the trenches of both audio work and software development.</p>
+        </section>
+
+        <div class="section-header">
+            <h2>Recent Scribbles</h2>
+        </div>
+
+        <!-- Articles Grid -->
+        <section class="articles-grid" id="articles-container">
+            <!-- Articles will be loaded dynamically from blogData script below -->
+        </section>
+
+        <!-- Medium CTA -->
+        <section class="medium-link fade-in">
+            <h3 style="margin-bottom: 1rem; color: #ffffff; letter-spacing: 2px;">More Stories & Insights</h3>
+            <p style="color: #cccccc; margin-bottom: 2rem;">Follow me on Medium for deeper dives into technology, music production, and the creative process.</p>
+            <a href="https://taiheard.medium.com" class="medium-cta" target="_blank">
+                <span>Follow on Medium</span>
+                <span>→</span>
+            </a>
+        </section>
+    </main>
+
+    <script is:inline>
+        // Blog data embedded directly
+        const blogData = {
+            "posts": [
+                {
+                    "id": 1,
+                    "title": "Python Decorator Confusion <span class='subtitle'>The Mix-Up That Trips Up Developers</span>",
+                    "date": "Published Aug 9, 2024",
+                    "readTime": "6 min read",
+                    "excerpt": "Is it a design pattern or just syntax? Here’s where it gets interesting: Python decorators are both—and that’s exactly why they trip up so many developers. Breaking down the conceptual pattern versus the syntactic sugar with practical examples.",
+                    "image": "/images/blog/python-decorators.png",
+                    "imageAlt": "Python Code Decorators",
+                    "tags": ["Python", "Programming", "Decorators", "Software Design"],
+                    "link": "https://medium.com/@taiheard/the-python-decorator-confusion-pattern-vs-syntax-explained-dc6185e3b25b",
+                    "external": true
+                },
+                {
+                    "id": 2,
+                    "title": "Introduction to Cinematic Sound Design <span class='subtitle'>Crafting soundscapes for film and television</span>",
+                    "date": "Published Oct 9, 2023",
+                    "readTime": "8 min read",
+                    "excerpt": "Sound design involves crafting audio elements—from a car engine to the dramatic rumble of thunder—to immerse viewers in the cinematic experience. This guide introduces the fundamentals of cinematic sound design and its role in visual storytelling.",
+                    "image": "/images/blog/cinematic-sound-design.png",
+                    "imageAlt": "Cinematic Sound Design Studio",
+                    "tags": ["Sound Design", "Film", "Audio Production", "Storytelling"],
+                    "link": "https://taiheard.medium.com/introduction-to-cinematic-sound-design-94dd9daafab7",
+                    "external": true
+                },
+                {
+                    "id": 3,
+                    "title": "From Script to Screen <span class='subtitle'>The Art of Dialogue Editing</span>",
+                    "date": "Published Oct 23, 2022",
+                    "readTime": "10 min read",
+                    "excerpt": "Smooth and articulate dialogue is the foundation of any film— it is what allows audiences to focus on the story without distraction. This guide covers the essential stages of dialogue editing and the techniques that transform rough location recordings into polished, professional soundtracks.",
+                    "image": "/images/blog/audio-post-production.png",
+                    "imageAlt": "Audio Post Production Equipment",
+                    "tags": ["Post Production", "Audio Engineering", "Dialogue Editing", "Professional Audio"],
+                    "link": "https://taiheard.medium.com/audio-post-production-8722eb19d8da",
+                    "external": true
+                }
+            ]
+        };
+
+        function loadBlogContent() {
+            try {
+                const data = blogData;
+                const articlesContainer = document.getElementById('articles-container');
+                if (!articlesContainer) return;
+                
+                articlesContainer.innerHTML = '';
+                
+                data.posts.forEach(post => {
+                    const article = document.createElement('article');
+                    article.className = 'article-card fade-in';
+                    
+                    const tagsHtml = post.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+                    const linkTarget = post.external ? 'target="_blank"' : '';
+                    const linkText = post.external ? 'Read on Medium' : 'Read More';
+                    
+                    article.innerHTML = `
+                        <div class="article-image">
+                            <img src="${post.image}" alt="${post.imageAlt}" loading="lazy">
+                        </div>
+                        <div class="article-content">
+                            <div class="article-meta">
+                                <span class="article-date">${post.date}</span>
+                                <span class="article-readtime">${post.readTime}</span>
+                            </div>
+                            <h2 class="article-title">${post.title}</h2>
+                            <p class="article-excerpt">${post.excerpt}</p>
+                            <div class="article-tags">${tagsHtml}</div>
+                            <a href="${post.link}" class="read-more" ${linkTarget}>${linkText}</a>
+                        </div>
+                    `;
+                    articlesContainer.appendChild(article);
+                });
+                
+                if (window.observeNewElements) {
+                    window.observeNewElements('.article-card');
+                }
+                
+            } catch (error) {
+                console.error('Error loading blog content:', error);
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', loadBlogContent);
+    </script>
+</BaseLayout>
+

@@ -1,0 +1,36 @@
+---
+// Header.astro
+---
+<header class="site-header">
+    <div class="header-container">
+        <a href="/" class="logo">Taiwo<span>.Heard</span></a>
+        
+        <nav class="desktop-nav">
+            <a href="/scribbles" class="nav-item">Scribbles</a>
+            <a href="/byte-symphony" class="nav-item">Byte Symphony</a>
+            <a href="/post-production-audio-reel" class="nav-item">Post Audio</a>
+            <a href="/soundtracks" class="nav-item">Soundtracks</a>
+            <a href="/flow-states" class="nav-item">Flow States</a>
+        </nav>
+
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <a href="/contact" class="header-btn">Let's Talk</a>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- Mobile Menu Overlay -->
+<div class="nav-overlay" id="navOverlay">
+    <a href="/scribbles">Scribbles</a>
+    <a href="/byte-symphony">Byte Symphony</a>
+    <a href="/post-production-audio-reel">Post Audio</a>
+    <a href="/soundtracks">Soundtracks</a>
+    <a href="/flow-states">Flow States</a>
+    <a href="/contact">Contact</a>
+</div>
+

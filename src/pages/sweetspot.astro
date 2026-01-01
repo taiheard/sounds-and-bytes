@@ -1,0 +1,636 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Sweetspot - Real-time Mic Positioning Tool | Taiwo Heard" description="Real-time microphone positioning trainer with visual feedback. Learn proper mic technique through color-coded indicators and distance guidance for professional audio recording.">
+    <style slot="head">
+        /* Page-specific styles */
+        .back-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .back-link:hover { color: #fff; }
+        .back-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-main);
+            transition: width 0.3s ease;
+        }
+        .back-link:hover::after { width: 100%; }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding: 0 2rem;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 107, 107, 0.15), transparent 60%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 217, 61, 0.1), transparent 40%);
+            z-index: 1;
+        }
+
+        .hero-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            max-width: 1200px;
+            height: 100%;
+            background-image: url('/images/playful_doughnut-shaped_vector.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0.08;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 0.9;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #fff, #888);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero h1 .playful {
+            font-family: var(--font-playful);
+            background: linear-gradient(90deg, var(--accent-playful2), var(--accent-playful), var(--accent-primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-subtitle {
+            font-family: var(--font-mono);
+            font-size: 1.4rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 800px;
+            margin: 0 auto 3rem auto;
+            letter-spacing: 1px;
+        }
+
+        .animate {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            opacity: 0.5;
+            z-index: 4;
+        }
+
+        /* Section Headers */
+        .section-header {
+            max-width: 1400px;
+            margin: 4rem auto 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-weight: 300;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1rem;
+        }
+
+        /* Update Section Cards to match Project Cards more closely */
+        .section-card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 3.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            max-width: 1400px;
+            margin: 2rem auto;
+        }
+
+        /* Interactive Sweetspot Demo Styles */
+        .demo-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4rem;
+        }
+
+        .slider-mic-container {
+            display: flex;
+            align-items: flex-end;
+            gap: 5px;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .slider-section {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .mic-visual {
+            width: 60px !important;
+            height: 60px !important;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            align-self: flex-start;
+            margin-top: 0.2rem;
+            margin-left: -32px !important;
+        }
+
+        .sweetspot-circle {
+            width: 300px;
+            height: 300px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-image: url('/images/playful_doughnut-shaped_vector.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .color-dot {
+            width: 62px;
+            height: 62px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            background: radial-gradient(circle at center, 
+                hsla(120, 85%, 75%, 1) 0%,
+                hsla(120, 85%, 65%, 0.8) 40%,
+                hsla(120, 85%, 55%, 0.4) 80%,
+                transparent 100%);
+        }
+
+        .sweetspot-circle.too-close .color-dot {
+            background: radial-gradient(circle at center, 
+                hsla(0, 85%, 75%, 1) 0%,
+                hsla(0, 85%, 65%, 0.8) 40%,
+                hsla(0, 85%, 55%, 0.4) 80%,
+                transparent 100%);
+        }
+
+        .sweetspot-circle.too-far .color-dot {
+            background: radial-gradient(circle at center, 
+                hsla(240, 85%, 75%, 1) 0%,
+                hsla(240, 85%, 65%, 0.8) 40%,
+                hsla(240, 85%, 55%, 0.4) 80%,
+                transparent 100%);
+        }
+
+        .distance-indicator {
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1rem;
+            letter-spacing: 1px;
+            text-align: center;
+            font-family: var(--font-mono);
+        }
+
+        .distance-slider {
+            width: 390px;
+            height: 8px;
+            background: transparent;
+            border-radius: 4px;
+            outline: none;
+            margin: 1rem auto;
+            cursor: pointer;
+            display: block;
+            -webkit-appearance: none;
+            appearance: none;
+            position: relative;
+            z-index: 3;
+        }
+
+        .distance-slider::before {
+            content: '';
+            position: absolute;
+            left: 45px;
+            top: 0;
+            width: 300px;
+            height: 8px;
+            background: #333;
+            border-radius: 4px;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .slider-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gray-bar {
+            position: absolute;
+            width: 350px;
+            height: 12px;
+            background: #555;
+            border-radius: 6px;
+            z-index: 1;
+        }
+
+        .distance-slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 90px;
+            height: 90px;
+            background: url('/images/slider_icon2.png') no-repeat center;
+            background-size: contain;
+            border-radius: 0;
+            cursor: pointer;
+            border: none;
+            margin-top: -41px;
+        }
+
+        .distance-slider::-moz-range-thumb {
+            width: 90px;
+            height: 90px;
+            background: url('/images/slider_icon2.png') no-repeat center;
+            background-size: contain;
+            border-radius: 0;
+            cursor: pointer;
+            border: none;
+            margin-top: -41px;
+        }
+
+        .section-card:hover {
+            transform: translateY(-10px) scale(1.01);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .section-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ff6b9d, transparent);
+            transition: left 0.5s ease;
+        }
+
+        .section-card:hover::before {
+            left: 100%;
+        }
+
+        .section-subtitle {
+            font-size: 1rem;
+            color: #888888;
+            margin-bottom: 2rem;
+            letter-spacing: 1px;
+        }
+
+        /* Technical specs grid */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .tech-item {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-left: 3px solid var(--accent-tertiary);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .tech-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .tech-item h4 {
+            color: var(--accent-tertiary);
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .tech-item p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Get More Info Button */
+        .info-button-container {
+            max-width: 1400px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+
+        .info-button {
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--accent-playful) 0%, var(--accent-playful2) 100%);
+            color: #000;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 50px;
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: visible;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 
+                0 4px 15px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+        }
+        .info-button::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50px;
+            background: linear-gradient(135deg, var(--accent-playful), var(--accent-playful2));
+            opacity: 0;
+            filter: blur(12px);
+            transition: all 0.4s ease;
+            z-index: -1;
+            transform: scale(0.9);
+        }
+        .info-button:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 
+                0 6px 20px rgba(126, 196, 255, 0.3),
+                0 0 10px rgba(255, 179, 236, 0.2);
+        }
+        .info-button:hover::before {
+            opacity: 0.5;
+            inset: -2px;
+            transform: scale(1.05);
+        }
+        .info-button:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .demo-container {
+                gap: 4rem;
+            }
+
+            .slider-mic-container {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .mic-visual {
+                width: 15px !important;
+                height: 15px !important;
+                margin-top: 0.1rem;
+                margin-left: 0;
+            }
+
+            .sweetspot-circle {
+                width: 225px;
+                height: 225px;
+            }
+
+            .color-dot {
+                width: 30px;
+                height: 30px;
+            }
+
+            .distance-slider {
+                width: 340px;
+            }
+
+            .distance-slider::before {
+                left: 45px;
+                width: 250px;
+            }
+
+            .gray-bar {
+                width: 300px;
+                height: 12px;
+            }
+
+            .content-grid {
+                padding: 2rem 1rem;
+                gap: 2rem;
+            }
+
+            .section-card {
+                padding: 2rem;
+            }
+        }
+    </style>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-image"></div>
+        <div class="hero-content">
+            <h1 class="animate">SWEET<span class="playful">SPOT</span></h1>
+            <p class="hero-subtitle animate" style="animation-delay: 0.2s;">Master Your Mic Technique in Real-Time</p>
+        </div>
+        <div class="scroll-indicator">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+            </svg>
+        </div>
+    </section>
+
+    <div class="section-header animate" style="animation-delay: 0.4s;">
+        <h2>How It Works</h2>
+    </div>
+
+    <!-- Main Content -->
+    <main class="content-grid">
+        <!-- How It Works -->
+        <section class="section-card animate" style="animation-delay: 0.5s;">
+            <p class="section-subtitle">Real-time Microphone Distance Trainer</p>
+            
+            <p style="margin-bottom: 2rem; color: #cccccc;">Train your microphone instincts with intelligent color-coded feedback. Built from scratch with Python and real-time audio analysis, Sweetspot helps podcasters, vocalists, and voice actors develop muscle memory for that perfect recording distance—no guesswork, just instant visual guidance.<br><br>The system uses color psychology to create an intuitive feedback loop—green means you're in the sweet spot, red signals you're too close, and blue means you've drifted too far. No learning curve. No manual calibration. Just launch, select your mic, and start building professional recording habits that stick.</p>
+
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <h4>Audio Processing</h4>
+                    <p>30 FPS real-time RMS calculation using NumPy delivers surgical precision for voice level detection—far more reliable than peak detection, which misses the subtle dynamics of speech.</p>
+                </div>
+                <div class="tech-item">
+                    <h4>Smart Averaging</h4>
+                    <p>Sliding window buffer smooths audio fluctuations for stable, jitter-free feedback that won't distract you mid-performance.</p>
+                </div>
+                <div class="tech-item">
+                    <h4>Visual Feedback</h4>
+                    <p>HSV color mapping provides intuitive distance guidance using universal color language—no technical knowledge required.</p>
+                </div>
+                <div class="tech-item">
+                    <h4>Cross-Platform</h4>
+                    <p>Built with PyQt5 for seamless compatibility across Windows, macOS, and Linux. One codebase, zero platform headaches.</p>
+                </div>
+            </div>
+
+            <!-- Intro to Demo -->
+            <div style="margin: 3rem 0; text-align: center; max-width: 800px; margin-left: auto; margin-right: auto;">
+                <p style="color: #cccccc; font-size: 1.1rem; line-height: 1.7; margin-bottom: 1rem; font-style: italic;">
+                    Most recording tutorials will tell you to stay about six inches from the mic—but what does that actually feel like when you're in the moment? Sweetspot solves this by giving you real-time, color-coded feedback that trains your instincts. By the end of your first session, you'll have started building the muscle memory for consistent professional-quality recording.
+                </p>
+                <p style="color: var(--accent-tertiary); font-weight: 600; font-size: 1.1rem; letter-spacing: 1px; text-transform: uppercase; margin-top: 4rem;">Try the interactive demo:</p>
+            </div>
+
+            <!-- Interactive Demo -->
+            <div style="margin-top: 2rem; text-align: center;">
+                <div class="demo-container">
+                    <!-- Color circle centered above -->
+                    <div class="sweetspot-circle" id="sweetspotCircle">
+                        <div class="color-dot" id="colorDot"></div>
+                        <div class="distance-indicator" id="distanceText">Perfect Distance</div>
+                    </div>
+                    
+                    <!-- Slider and mic container -->
+                    <div class="slider-mic-container">
+                        <div class="slider-section">
+                            <div class="slider-wrapper">
+                                <div class="gray-bar"></div>
+                                <input type="range" min="0" max="100" value="85" class="distance-slider" id="distanceSlider">
+                            </div>
+                            <p style="margin-top: 4rem; color: #888888; letter-spacing: 1px; font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase;">Move the slider to simulate distance:</p>
+                        </div>
+                        <img src="/images/Dynamic mic.png" alt="Microphone" class="mic-visual" id="micIcon">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-header animate" style="animation-delay: 0.6s;">
+            <h2>Technical Highlights</h2>
+        </div>
+
+        <!-- Technical Highlights -->
+        <section class="section-card animate" style="animation-delay: 0.7s;">
+            <div style="color: #cccccc; line-height: 1.8;">
+                <h3 style="color: #4ade80; margin-bottom: 1rem; font-family: var(--font-heading); font-weight: 700;">User Experience Design</h3>
+                <ul style="margin-left: 1.5rem; margin-bottom: 2rem; list-style-type: none;">
+                    <li style="margin-bottom: 0.5rem;"><span style="color: var(--accent-playful);">▹</span> <strong>Instant Visual Feedback:</strong> Universal color language means zero learning curve. Green means perfect, red or blue means adjust—your brain understands it instinctively.</li>
+                    <li style="margin-bottom: 0.5rem;"><span style="color: var(--accent-playful);">▹</span> <strong>Zero-Distraction Interface:</strong> Clean, minimal design keeps you focused on your performance, not fumbling with sliders and settings. The interface disappears when you don't need it.</li>
+                    <li style="margin-bottom: 0.5rem;"><span style="color: var(--accent-playful);">▹</span> <strong>Plug-and-Play Ready:</strong> Automatically detects every microphone on your system—USB, XLR interface, built-in laptop mic, wireless—just launch, select from the dropdown, and go.</li>
+                    <li style="margin-bottom: 0.5rem;"><span style="color: var(--accent-playful);">▹</span> <strong>Invisible When You Need It:</strong> Minimized mode shrinks to a tiny color indicator in your screen corner—get real-time feedback without cluttering your recording workspace or blocking your DAW.</li>
+                </ul>
+
+                <h3 style="color: #4ade80; margin-bottom: 1rem; font-family: var(--font-heading); font-weight: 700;">Audio Engineering</h3>
+                <ul style="margin-left: 1.5rem; list-style-type: none;">
+                    <li style="margin-bottom: 0.5rem;"><span style="color: var(--accent-playful2);">▹</span> <strong>Smart Voice Analysis:</strong> Unlike peak detection that reacts to every mouth click and breath, RMS focuses on the even, sustained energy that actually matters for sound quality and speech intelligibility.</li>
+                    <li style="margin-bottom: 0.5rem;"><span style="color: var(--accent-playful2);">▹</span> <strong>Human-Tuned Scaling:</strong> Logarithmic processing mirrors your ear's natural response to loudness changes. What you hear is what you get—no confusing linear meters that don't match your perception.</li>
+                    <li style="margin-bottom: 0.5rem;"><span style="color: var(--accent-playful2);">▹</span> <strong>Intelligent Noise Rejection:</strong> Automatically filters out background noise below -50dB. The real magic: Sweetspot focuses purely on your voice, ignoring AC hum, computer fans, and room tone that might trigger false positives.</li>
+                    <li style="margin-bottom: 0.5rem;"><span style="color: var(--accent-playful2);">▹</span> <strong>Lightning-Fast Response:</strong> Ultra-low latency processing delivers feedback so fast it feels like a natural extension of your voice. No lag, no delay—just instant guidance that keeps you in flow state.</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- Get More Info Button -->
+    <div class="info-button-container animate" style="animation-delay: 0.8s;">
+        <a href="/contact" class="info-button">Get More Info</a>
+    </div>
+
+    <script is:inline>
+        // Interactive demo functionality
+        const slider = document.getElementById('distanceSlider');
+        const circle = document.getElementById('sweetspotCircle');
+        const distanceText = document.getElementById('distanceText');
+        const micIcon = document.getElementById('micIcon');
+
+        function updateSweetspot(value) {
+            if (value >= 75 && value <= 95) {
+                circle.className = 'sweetspot-circle';
+                distanceText.textContent = 'Perfect Distance';
+                distanceText.style.color = '#4ade80';
+                micIcon.style.filter = 'brightness(1.2)';
+            } else if (value < 75) {
+                circle.className = 'sweetspot-circle too-far';
+                distanceText.textContent = 'Move Closer';
+                distanceText.style.color = '#6b9dff';
+                micIcon.style.filter = 'brightness(0.8)';
+            } else {
+                circle.className = 'sweetspot-circle too-close';
+                distanceText.textContent = 'Move Back';
+                distanceText.style.color = '#ff6b6b';
+                micIcon.style.filter = 'brightness(0.7)';
+            }
+        }
+
+        if (slider) {
+            slider.addEventListener('input', (e) => {
+                updateSweetspot(parseInt(e.target.value));
+            });
+            updateSweetspot(parseInt(slider.value));
+        }
+    </script>
+</BaseLayout>
+

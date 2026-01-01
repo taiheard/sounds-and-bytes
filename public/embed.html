@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Embed Relay</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            overflow: hidden;
+        }
+        .iframe-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="iframe-container">
+        <iframe 
+            id="yt-embed"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            loading="lazy"
+        ></iframe>
+    </div>
+
+    <script>
+        // Get YouTube video ID from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const videoId = urlParams.get('id');
+
+        // Validate YouTube video ID format (11 characters, alphanumeric + hyphens/underscores)
+        const youtubeIdRegex = /^[a-zA-Z0-9_-]{11}$/;
+
+        if (videoId && youtubeIdRegex.test(videoId)) {
+            // Construct YouTube embed URL with privacy-enhanced mode
+            const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
+            document.getElementById('yt-embed').src = embedUrl;
+        } else {
+            // Handle missing or invalid video ID
+            document.body.innerHTML = '<div style="color: white; padding: 20px; text-align: center;">Error: Invalid or missing video ID</div>';
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+

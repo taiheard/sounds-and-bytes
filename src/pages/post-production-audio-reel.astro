@@ -1,0 +1,218 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Post-Production Audio Reel - Dialogue, Sound Design, Foley | Taiwo Heard" description="Professional audio post-production for film and media. Watch Taiwo Heard's reel showcasing dialogue editing, sound design, Foley, ADR, and final mix work.">
+    <style slot="head">
+        :root {
+            --accent: #ff6b35;
+            --panel-bg: rgba(8,8,15,0.85);
+            --panel-stroke: rgba(255,255,255,0.12);
+            --gutter: clamp(20px, 3vw, 40px);
+            --container-max: 1600px;
+        }
+
+        .background {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background: 
+                radial-gradient(ellipse at 30% 20%, rgba(255, 107, 53, 0.15) 0%, rgba(255,107,53,0.0) 70%),
+                radial-gradient(ellipse at 70% 80%, rgba(138, 43, 226, 0.12) 0%, rgba(138,43,226,0.0) 70%),
+                linear-gradient(135deg, #050508 0%, #0a0a0f 50%, #050508 100%);
+        }
+
+        .grain {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            opacity: 0.08;
+            pointer-events: none;
+            background-image: 
+                radial-gradient(circle at 25% 25%, transparent 50%, rgba(255,255,255,0.1) 51%),
+                radial-gradient(circle at 75% 75%, transparent 50%, rgba(255,255,255,0.1) 51%);
+            background-size: 4px 4px;
+            animation: grain 8s steps(10) infinite;
+        }
+        @keyframes grain {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-1px, 1px); }
+            20% { transform: translate(1px, -1px); }
+        }
+
+        .hero { 
+            min-height: 100vh; 
+            display: grid; 
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); 
+            align-items: center;
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 var(--gutter);
+            gap: var(--gutter);
+            position: relative;
+        }
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 107, 107, 0.15), transparent 60%);
+            z-index: 1;
+        }
+
+        .hero-content { position: relative; z-index: 3; }
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6.8rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 0.9;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #fff, #888);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .hero h1 .playful {
+            font-family: var(--font-playful);
+            background: linear-gradient(90deg, var(--accent-playful2), var(--accent-playful), var(--accent-primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-reel {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #08080c;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            z-index: 3;
+        }
+
+        .hero-list {
+            list-style: none;
+            margin: 2rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+        .hero-list li { font-size: 0.9rem; color: var(--text-muted); }
+        .hero-list li strong { color: #fff; text-transform: uppercase; margin-right: 10px; }
+
+        .imdb-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 0.6rem 1.2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+        }
+
+        .play-button { 
+            position: relative; z-index: 3; display: inline-flex; align-items: center; gap: 1rem; 
+            padding: 1.2rem 1.8rem; border-radius: 50px; border: 2px solid rgba(255,255,255,0.8); 
+            background: rgba(5,5,8,0.8); backdrop-filter: blur(12px); font-weight: 600; 
+            text-transform: uppercase; 
+        }
+        .play-icon { width: 0; height: 0; border-left: 18px solid #ffffff; border-top: 12px solid transparent; border-bottom: 12px solid transparent; }
+
+        .hero-svg-waves {
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 130%;
+            height: 180px;
+            z-index: 2;
+            pointer-events: none;
+            opacity: 0.85;
+        }
+        .hero-svg-waves svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        @keyframes waveMove {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-60px); }
+        }
+        .hero-svg-waves .wave1 {
+            animation: waveMove 8s linear infinite alternate;
+        }
+        .hero-svg-waves .wave2 {
+            animation: waveMove 12s linear infinite alternate-reverse;
+        }
+
+        @media (max-width: 1024px) {
+            .hero { grid-template-columns: 1fr; text-align: center; }
+        }
+    </style>
+
+    <div class="background" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-svg-waves">
+            <svg viewBox="0 0 2000 180" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                <path class="wave1" d="M0,120 Q360,180 720,120 T1440,120 T2000,120 V180 H0 Z" fill="#7ec4ff" fill-opacity="0.18"/>
+                <path class="wave2" d="M0,140 C200,140 400,100 600,140 C800,180 1000,100 1200,140 C1400,180 1600,100 1800,140 C1900,160 1950,150 2000,140 V180 H0 Z" fill="#ffb3ec" fill-opacity="0.13"/>
+                <path d="M0,160 Q360,100 720,160 T1440,160 T2000,160 V180 H0 Z" fill="#ffd93d" fill-opacity="0.10"/>
+            </svg>
+        </div>
+        <div class="hero-content">
+            <h1>Post-Production <span class="playful">Audio</span> Reel</h1>
+            <p class="hero-subtitle">Dialogue Editing • Sound Design • Foley • ADR • Mixing</p>
+            
+            <ul class="hero-list">
+                <li><strong>Dialogue</strong> Noise removal and seamless conversations</li>
+                <li><strong>Sound Design</strong> Atmosphere and emotional impact</li>
+                <li><strong>Foley</strong> Custom movement and prop sounds</li>
+                <li><strong>Final Mix</strong> Balancing for theatrical and streaming</li>
+            </ul>
+
+            <a href="https://www.imdb.com/name/nm2533255/" target="_blank" class="imdb-link">IMDb Profile</a>
+        </div>
+
+        <div class="hero-reel">
+            <div class="video-proxy" id="reelProxy" data-yt="0hI-Kz98IoA">
+                <div class="video-thumb"></div>
+                <div class="play-button">
+                    <span class="play-icon"></span>
+                    <span>Watch Reel</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script is:inline>
+        const proxy = document.getElementById('reelProxy');
+        if (proxy) {
+            proxy.onclick = () => {
+                const id = proxy.dataset.yt;
+                // Validate YouTube video ID format (11 characters, alphanumeric + hyphens/underscores)
+                const youtubeIdRegex = /^[a-zA-Z0-9_-]{11}$/;
+                if (!youtubeIdRegex.test(id)) {
+                    console.error('Invalid YouTube video ID:', id);
+                    return;
+                }
+
+                const wrap = document.createElement('div');
+                wrap.className = 'iframe-wrap';
+                // Using privacy-enhanced mode and ensuring it fills container
+                wrap.innerHTML = `<iframe
+                    src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1"
+                    allow="autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    style="width: 100%; height: 100%; border: none;"
+                ></iframe>`;
+                proxy.parentElement.replaceChild(wrap, proxy);
+            };
+        }
+    </script>
+</BaseLayout>
+
