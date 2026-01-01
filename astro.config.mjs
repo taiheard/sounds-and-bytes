@@ -2,9 +2,9 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-  // Since you're likely hosting on a custom domain or root,
-  // we'll keep the site configuration simple for now.
-  site: 'https://taiwoheard.com',
+  // Configure for GitHub Pages deployment
+  site: 'https://taiheard.github.io',
+  base: '/',
   image: {
     domains: ['img.youtube.com'],
   },
