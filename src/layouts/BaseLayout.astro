@@ -22,26 +22,25 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title}</title>
 
-    <!-- Prevent FOUC: Base dark layer behind all content -->
+    <!-- Prevent FOUC: Set body background immediately -->
     <style>
-      /* Create base dark layer with lowest z-index */
-      html::before {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: #050505;
-        z-index: -10;
-        pointer-events: none;
-      }
-
       html, body {
+        background: #050505 !important;
         color: #ffffff;
         margin: 0;
         padding: 0;
         min-height: 100vh;
+      }
+
+      /* Ensure background images and videos appear above body background */
+      [style*="background-image"],
+      [style*="background"],
+      video,
+      .main-background,
+      .theme-background,
+      .background {
+        position: relative !important;
+        z-index: 0 !important;
       }
 
       /* Ensure no white flashes during loading */
