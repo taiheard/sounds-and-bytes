@@ -32,11 +32,20 @@ const {
         min-height: 100vh;
       }
 
-      /* Ensure background elements are properly positioned */
+      /* Ensure background images appear above body background */
+      [style*="background-image"],
+      [style*="background"],
       .main-background,
       .theme-background,
       .background {
+        position: relative !important;
+        z-index: 0 !important;
+      }
+
+      /* Video backgrounds in music-for-the-people page should remain fixed */
+      .theme-background video {
         position: fixed !important;
+        z-index: -2 !important;
       }
 
       /* Ensure no white flashes during loading */
