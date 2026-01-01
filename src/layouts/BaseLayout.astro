@@ -32,14 +32,11 @@ const {
         min-height: 100vh;
       }
 
-      /* Ensure background images and videos appear above body background */
-      [style*="background-image"],
-      [style*="background"],
-      video,
+      /* Ensure background elements are properly positioned */
       .main-background,
       .theme-background,
       .background {
-        position: relative !important;
+        position: fixed !important;
       }
 
       /* Ensure no white flashes during loading */
