@@ -4,7 +4,7 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   // Configure for GitHub Pages project repository
   site: 'https://taiheard.github.io',
-  base: '/sounds-and-bytes/',
+  base: '/',
   image: {
     domains: ['img.youtube.com'],
   },
@@ -13,7 +13,7 @@ export default defineConfig({
   },
   // Add Content Security Policy headers
   headers: {
-    'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.youtube.com https://www.youtube-nocookie.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://www.youtube.com/embed/; connect-src 'self' https://formspree.io; font-src 'self' data:; media-src 'self' https: data:; object-src 'none'; base-uri 'self'; form-action 'self' https://formspree.io;",
+    'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.youtube.com https://www.youtube-nocookie.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: blob:; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://www.youtube.com/embed/; connect-src 'self' https://formspree.io; font-src 'self' data:; media-src 'self' https: data: blob:; object-src 'none'; base-uri 'self'; form-action 'self' https://formspree.io;",
     'X-Frame-Options': 'DENY',
     'X-Content-Type-Options': 'nosniff',
     'Referrer-Policy': 'strict-origin-when-cross-origin',
