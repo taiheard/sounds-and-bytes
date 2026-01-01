@@ -13,7 +13,7 @@ export default defineConfig({
   },
   // Add Content Security Policy headers
   headers: {
-    'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.youtube.com https://www.youtube-nocookie.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: blob:; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://www.youtube.com/embed/; connect-src 'self' https://formspree.io; font-src 'self' data:; media-src 'self' https: data: blob:; object-src 'none'; base-uri 'self'; form-action 'self' https://formspree.io;",
+    'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.youtube.com https://www.youtube-nocookie.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: blob:; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://www.youtube.com/embed/; connect-src 'self' https://formspree.io; font-src 'self' data: https://fonts.gstatic.com; media-src 'self' https: data: blob:; object-src 'none'; base-uri 'self'; form-action 'self' https://formspree.io;",
     'X-Frame-Options': 'DENY',
     'X-Content-Type-Options': 'nosniff',
     'Referrer-Policy': 'strict-origin-when-cross-origin',
