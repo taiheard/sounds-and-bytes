@@ -17,37 +17,10 @@ const {
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title}</title>
-
-    <!-- Prevent FOUC: Set body background immediately -->
-    <style>
-      html, body {
-        background: #050505 !important;
-        color: #ffffff;
-        margin: 0;
-        padding: 0;
-        min-height: 100vh;
-      }
-
-      /* Ensure background images and videos appear above body background */
-      [style*="background-image"],
-      [style*="background"],
-      video,
-      .main-background,
-      .theme-background,
-      .background {
-        position: relative !important;
-        z-index: 0 !important;
-      }
-
-      /* Ensure no white flashes during loading */
-      * {
-        box-sizing: border-box;
-      }
-    </style>
     <meta name="description" content={description}>
 
     <!-- SEO Meta Tags -->
