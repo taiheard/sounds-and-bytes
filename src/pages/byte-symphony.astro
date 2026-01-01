@@ -429,21 +429,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
         .animate {
             opacity: 0;
-            visibility: hidden;
             animation: fadeInUp 0.8s ease forwards;
         }
 
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                visibility: hidden;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                visibility: visible;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 
@@ -466,7 +457,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
         <div class="hero-content">
             <h1 class="animate">Byte <span class="playful">Symphony</span></h1>
-            <p class="hero-subtitle animate" style="animation-delay: 0.2s;">
+            <p class="hero-subtitle animate">
                 A collection of tools, experiments, and data-driven projects that explore the intersection of creative technology and human insights.
             </p>
         </div>
