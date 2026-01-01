@@ -21,6 +21,18 @@ const {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title}</title>
+    <style>
+        /* Prevent white flash during page loads */
+        html, body {
+            background-color: #050505 !important;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        /* Hide content until CSS loads to prevent FOUC */
+        body { visibility: hidden; }
+        body.loaded { visibility: visible; }
+    </style>
     <meta name="description" content={description}>
 
     <!-- SEO Meta Tags -->
@@ -98,6 +110,22 @@ const {
 
     <Footer />
 
+    <script is:inline>
+        // Prevent white flash by showing content once loaded
+        function showContent() {
+            document.body.classList.add('loaded');
+        }
+
+        // Show content immediately if DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', showContent);
+        } else {
+            showContent();
+        }
+
+        // Also show content after a short delay as fallback
+        setTimeout(showContent, 100);
+    </script>
     <script src="/sounds-and-bytes/js/common.js" is:inline></script>
 </body>
 </html>
