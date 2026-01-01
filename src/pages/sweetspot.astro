@@ -293,17 +293,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         }
 
         .distance-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
             appearance: none;
             width: 90px;
             height: 90px;
             background: url('/sounds-and-bytes/images/slider_icon2.png') no-repeat center;
             background-size: contain;
+            background-position: center;
             border-radius: 0;
             cursor: pointer;
             border: none;
             margin-top: -41px;
             z-index: 10;
             position: relative;
+            box-sizing: border-box;
         }
 
         .distance-slider::-moz-range-thumb {
