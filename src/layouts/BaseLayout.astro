@@ -36,14 +36,13 @@ const {
       [style*="background-image"],
       [style*="background"],
       .main-background,
-      .theme-background,
       .background {
         position: relative !important;
         z-index: 0 !important;
       }
 
-      /* Video backgrounds in music-for-the-people page should remain fixed */
-      .theme-background video {
+      /* Theme backgrounds should remain fixed positioned */
+      .theme-background {
         position: fixed !important;
         z-index: -2 !important;
       }
