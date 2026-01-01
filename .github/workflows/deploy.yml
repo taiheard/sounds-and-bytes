@@ -25,15 +25,10 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Move build output
-        run: |
-          rm -rf docs
-          mv dist docs
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./docs
+          path: ./dist
 
   deploy:
     environment:

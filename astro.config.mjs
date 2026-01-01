@@ -4,7 +4,7 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   // Configure for GitHub Pages project repository
   site: 'https://taiheard.github.io',
-  base: '/',
+  base: '/sounds-and-bytes/',
   image: {
     domains: ['img.youtube.com'],
   },
