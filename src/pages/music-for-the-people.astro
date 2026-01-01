@@ -1397,20 +1397,20 @@ const videoData = {
   </style>
 
   <!-- Dynamic Theme Background Videos -->
-  <div class="theme-background chill-bg">
-    <video autoplay muted loop playsinline preload="metadata" style="opacity: 0; transition: opacity 0.8s ease-in-out;">
+  <div class="theme-background chill-bg active">
+    <video autoplay muted loop playsinline preload="metadata">
       <source src="/sounds-and-bytes/Midjourney loops for website/Upresed loops/Tunnel Loop_treasure.mp4" type="video/mp4">
     </video>
   </div>
 
   <div class="theme-background dance-bg">
-    <video autoplay muted loop playsinline preload="metadata" style="opacity: 0; transition: opacity 0.8s ease-in-out;">
+    <video autoplay muted loop playsinline preload="metadata">
       <source src="/sounds-and-bytes/Midjourney loops for website/Upresed loops/Building_loop_avalon.mp4" type="video/mp4">
     </video>
   </div>
 
   <div class="theme-background strange-bg">
-    <video autoplay muted loop playsinline preload="metadata" style="opacity: 0; transition: opacity 0.8s ease-in-out;">
+    <video autoplay muted loop playsinline preload="metadata">
       <source src="/sounds-and-bytes/Midjourney loops for website/Upresed loops/Astronaut_loop_cyclone.mp4" type="video/mp4">
     </video>
   </div>
@@ -1668,23 +1668,13 @@ const videoData = {
 
       // Load saved mode from localStorage or use default
       const savedMode = loadSavedMode();
-
+      
       // Force initial load by temporarily setting currentMode to null
       currentMode = null;
       loadMode(savedMode);
 
       // Initialize background videos for the current mode
       updateBackgroundVideos(savedMode);
-
-      // Ensure the initial video background is visible
-      setTimeout(() => {
-        const initialVideo = document.querySelector(`.theme-background.${savedMode}-bg video`);
-        if (initialVideo) {
-          initialVideo.style.opacity = '1';
-          initialVideo.style.visibility = 'visible';
-          console.log('Initial video background set visible:', savedMode);
-        }
-      }, 100);
 
       // Add parallax effect
       setupParallax();
@@ -2163,9 +2153,8 @@ const videoData = {
       const allVideos = document.querySelectorAll('.theme-background');
       const allVideoElements = document.querySelectorAll('.theme-background video');
 
-      // Fade out all videos first
+      // Pause all videos first
       allVideoElements.forEach(video => {
-        video.style.opacity = '0';
         video.pause();
       });
 
@@ -2179,31 +2168,26 @@ const videoData = {
       if (activeVideo && activeVideoElement) {
         activeVideo.classList.add('active');
 
-        // Wait a bit for the fade out, then fade in the new video
-        setTimeout(() => {
-          // Ensure the video is visible by setting opacity to 1
-          activeVideoElement.style.opacity = '1';
-          activeVideoElement.style.visibility = 'visible';
-          activeVideoElement.playbackRate = 0.7; // Slightly faster for smoother feel
+        // Set playback rate and try to play
+        activeVideoElement.playbackRate = 0.7;
+        activeVideoElement.currentTime = 0; // Reset to beginning for smooth transition
 
-          console.log('Activating video background:', mode, activeVideoElement);
-
-          const playPromise = activeVideoElement.play();
-          if (playPromise !== undefined) {
-            playPromise.then(() => {
-              console.log('Video started playing successfully');
-            }).catch(error => {
-              console.log('Video autoplay prevented:', error);
-              // Only add click listener once
-              if (!document.hasVideoClickListener) {
-                document.hasVideoClickListener = true;
-                document.addEventListener('click', () => {
-                  activeVideoElement.play().catch(() => {});
-                }, { once: true });
-              }
-            });
-          }
-        }, 400); // Wait for fade out transition
+        const playPromise = activeVideoElement.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(error => {
+            console.log('Video autoplay prevented:', error);
+            // Only add click listener once
+            if (!document.hasVideoClickListener) {
+              document.hasVideoClickListener = true;
+              document.addEventListener('click', () => {
+                // Try to play all videos that should be active
+                document.querySelectorAll('.theme-background.active video').forEach(video => {
+                  video.play().catch(() => {});
+                });
+              }, { once: true });
+            }
+          });
+        }
       }
     }
 
