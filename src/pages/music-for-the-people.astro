@@ -1668,13 +1668,23 @@ const videoData = {
 
       // Load saved mode from localStorage or use default
       const savedMode = loadSavedMode();
-      
+
       // Force initial load by temporarily setting currentMode to null
       currentMode = null;
       loadMode(savedMode);
 
       // Initialize background videos for the current mode
       updateBackgroundVideos(savedMode);
+
+      // Ensure the initial video background is visible
+      setTimeout(() => {
+        const initialVideo = document.querySelector(`.theme-background.${savedMode}-bg video`);
+        if (initialVideo) {
+          initialVideo.style.opacity = '1';
+          initialVideo.style.visibility = 'visible';
+          console.log('Initial video background set visible:', savedMode);
+        }
+      }, 100);
 
       // Add parallax effect
       setupParallax();
@@ -2171,12 +2181,18 @@ const videoData = {
 
         // Wait a bit for the fade out, then fade in the new video
         setTimeout(() => {
+          // Ensure the video is visible by setting opacity to 1
           activeVideoElement.style.opacity = '1';
+          activeVideoElement.style.visibility = 'visible';
           activeVideoElement.playbackRate = 0.7; // Slightly faster for smoother feel
+
+          console.log('Activating video background:', mode, activeVideoElement);
 
           const playPromise = activeVideoElement.play();
           if (playPromise !== undefined) {
-            playPromise.catch(error => {
+            playPromise.then(() => {
+              console.log('Video started playing successfully');
+            }).catch(error => {
               console.log('Video autoplay prevented:', error);
               // Only add click listener once
               if (!document.hasVideoClickListener) {
