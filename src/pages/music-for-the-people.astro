@@ -1156,6 +1156,17 @@ const videoData = {
           display: none !important;
         }
       }
+
+      .knob-container {
+        width: 50px;
+        height: 50px;
+      }
+
+      .mode-labels {
+        flex-direction: row;
+        gap: 0.8rem;
+        padding-right: 0.5rem;
+      }
       
       .music-player {
         left: 0.5rem;
@@ -1791,6 +1802,7 @@ const videoData = {
     function init() {
       createParticles();
       setupModeSelector();
+      setupMobileMoodSelector();
       setupMusicPlayer();
       setupVideoModal();
       setupVideoGridEvents();
@@ -1897,8 +1909,10 @@ const videoData = {
           loadMode(mode);
         });
       });
+    }
 
-      // Handle mobile mood selector
+    // Setup mobile mood selector
+    function setupMobileMoodSelector() {
       mobileMoodWords.forEach(word => {
         word.addEventListener('click', () => {
           const mode = word.dataset.mode;
@@ -1927,7 +1941,7 @@ const videoData = {
       mobileMoodWords.forEach(word => {
         word.classList.toggle('active', word.dataset.mode === mode);
       });
-      
+
       updateContent(mode);
       updateVideoGrid(mode);
       loadPlaylist(mode);
