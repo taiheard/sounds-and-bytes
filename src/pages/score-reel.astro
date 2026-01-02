@@ -457,10 +457,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             /* Prevent horizontal scrolling but ensure vertical scrolling works */
             html, body {
                 overflow-x: hidden;
-                overflow-y: visible;
+                overflow-y: auto;
                 width: 100%;
                 height: auto;
                 position: relative;
+                -webkit-overflow-scrolling: touch;
             }
 
             .hero h1 {
@@ -553,12 +554,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             }
             .skill-name {
                 font-size: 0.8rem;
-            }
-
-            /* Disable grain animation on mobile for better scroll performance */
-            .grain {
-                animation: none !important;
-                opacity: 0.04 !important;
             }
         }
     </style>
