@@ -1269,12 +1269,18 @@ const videoData = {
         display: none;
       }
 
-      /* Hide desktop mode selector on mobile */
-      .mode-selector {
-        display: block;
+      /* Desktop styles - ensure desktop selector is visible */
+      @media (min-width: 769px) {
+        .mode-selector {
+          display: block;
+        }
+
+        .mobile-mood-selector {
+          display: none !important;
+        }
       }
 
-      /* Show mobile mood selector and hide desktop selector on mobile */
+      /* Mobile styles - show mobile selector and hide desktop selector */
       @media (max-width: 768px) {
         .mobile-mood-selector {
           display: flex;
