@@ -679,42 +679,37 @@ const videoData = {
         letter-spacing: 0.5px;
       }
 
-      /* Mobile mood selector - only visible on mobile */
-      .mobile-mood-selector {
-        display: flex;
-        justify-content: center;
-        gap: 1.5rem;
-        margin-top: 0.5rem;
-        padding-top: 0.5rem;
-        border-top: 1px solid rgb(0, 0, 0);
-      }
+    /* Mobile mood selector - only visible on mobile */
+    .mobile-mood-selector {
+      display: none; /* Hidden on desktop */
+    }
 
-      .mood-word {
-        color: rgba(255, 255, 255, 0.5);
-        font-size: 0.7rem;
-        font-weight: 400;
-        letter-spacing: 0.5px;
-        text-transform: uppercase;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        user-select: none;
-        padding: 0.2rem 0.4rem;
-        border-radius: 4px;
-        opacity: 0.7;
-      }
+    .mood-word {
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      user-select: none;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      opacity: 0.7;
+    }
 
-      .mood-word:hover {
-        color: rgba(255, 255, 255, 0.8);
-        background: #000000;
-        opacity: 1;
-      }
+    .mood-word:hover {
+      color: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.03);
+      opacity: 1;
+    }
 
-      .mood-word.active {
-        color: var(--current-accent);
-        background: #000000;
-        font-weight: 500;
-        opacity: 1;
-      }
+    .mood-word.active {
+      color: var(--current-accent);
+      background: rgba(255, 255, 255, 0.08);
+      font-weight: 500;
+      opacity: 1;
+    }
 
     .progress-bar {
       flex: 1;
@@ -1182,6 +1177,11 @@ const videoData = {
         border-radius: 12px;
         height: auto;
         max-height: 120px;
+      }
+
+      /* Show mobile mood selector only on mobile */
+      .mobile-mood-selector {
+        display: flex;
       }
 
       .player-header {
@@ -1945,7 +1945,7 @@ const videoData = {
       mobileMoodWords.forEach(word => {
         word.classList.toggle('active', word.dataset.mode === mode);
       });
-      
+
       updateContent(mode);
       updateVideoGrid(mode);
       loadPlaylist(mode);
