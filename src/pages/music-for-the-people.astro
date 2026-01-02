@@ -1091,6 +1091,13 @@ const videoData = {
       letter-spacing: 0.3px;
     }
 
+    /* Desktop styles - hide mobile mood selector */
+    @media (min-width: 769px) {
+      .mobile-mood-selector {
+        display: none !important;
+      }
+    }
+
     /* Responsive Design */
     @media (max-width: 1024px) {
       .video-grid {
@@ -1144,12 +1151,43 @@ const videoData = {
         max-width: none;
         border-radius: 12px;
         height: auto;
-        max-height: 140px;
+        max-height: 120px;
       }
 
       .player-header {
         margin-bottom: 0.5rem;
         padding-bottom: 0.25rem;
+      }
+
+      /* Mobile mood selector - only visible on mobile */
+      .mobile-mood-selector {
+        display: flex;
+        gap: 1rem;
+        margin-top: 0.5rem;
+        justify-content: center;
+      }
+
+      .mood-word {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.85rem;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+      }
+
+      .mood-word:hover {
+        color: rgba(255, 255, 255, 0.9);
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .mood-word.active {
+        color: var(--current-accent);
+        background: rgba(255, 107, 107, 0.2);
+        font-weight: 600;
       }
 
       .control-btn {
@@ -1227,70 +1265,7 @@ const videoData = {
       .track-info p {
         font-size: 0.65rem;
       }
-
-      /* Mobile mood selector integrated into transport */
-      .mobile-mood-selector {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 0.3rem;
-      }
-
-      .mood-labels {
-        display: flex;
-        gap: 0.75rem;
-        font-size: 0.7rem;
-        letter-spacing: 0.5px;
-        text-transform: uppercase;
-        font-weight: 500;
-      }
-
-      .mood-label {
-        color: rgba(255, 255, 255, 0.6);
-        cursor: pointer;
-        transition: all 0.3s ease;
-        padding: 0.2rem 0.4rem;
-        border-radius: 4px;
-      }
-
-      .mood-label:hover {
-        color: rgba(255, 255, 255, 0.9);
-        background: rgba(255, 255, 255, 0.1);
-      }
-
-      .mood-label.active {
-        color: var(--current-accent);
-        background: rgba(255, 107, 107, 0.2);
-        font-weight: 600;
-      }
       
-      /* Mobile mood selector - hidden by default */
-      .mobile-mood-selector {
-        display: none;
-      }
-
-      /* Desktop styles - ensure desktop selector is visible */
-      @media (min-width: 769px) {
-        .mode-selector {
-          display: block;
-        }
-
-        .mobile-mood-selector {
-          display: none !important;
-        }
-      }
-
-      /* Mobile styles - show mobile selector and hide desktop selector */
-      @media (max-width: 768px) {
-        .mobile-mood-selector {
-          display: flex;
-        }
-
-        .mode-selector {
-          display: none !important;
-        }
-      }
-
       /* Mobile Video Modal */
       .video-modal-content {
         width: 95%;
@@ -1630,19 +1605,20 @@ const videoData = {
         <h3 id="trackTitle">Select a track...</h3>
         <p id="trackArtist">Taiwo Heard</p>
       </div>
-      <div class="mobile-mood-selector">
-        <div class="mood-labels">
-          <span class="mood-label active" data-mode="chill">Chill</span>
-          <span class="mood-label" data-mode="dance">Dance</span>
-          <span class="mood-label" data-mode="strange">Strange</span>
-        </div>
-        <label class="autoplay-toggle">
-          <span>Auto</span>
-          <input type="checkbox" id="autoplayCheck">
-          <div class="toggle-switch"></div>
-        </label>
-      </div>
+      <label class="autoplay-toggle">
+        <span>Auto</span>
+        <input type="checkbox" id="autoplayCheck">
+        <div class="toggle-switch"></div>
+      </label>
     </div>
+
+    <!-- Mobile Mood Selector - only visible on mobile -->
+    <div class="mobile-mood-selector">
+      <span class="mood-word active" data-mode="chill">Chill</span>
+      <span class="mood-word" data-mode="dance">Dance</span>
+      <span class="mood-word" data-mode="strange">Strange</span>
+    </div>
+
     <div class="player-controls">
       <button class="control-btn" id="prevBtn" aria-label="Previous Track">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 20L9 12L19 4V20ZM5 19H7V5H5V19Z" fill="currentColor"/></svg>
@@ -1803,7 +1779,7 @@ const videoData = {
     const body = document.body;
     const modeKnob = document.getElementById('modeKnob');
     const modeLabels = document.querySelectorAll('.mode-label');
-    const mobileMoodLabels = document.querySelectorAll('.mood-label');
+    const mobileMoodWords = document.querySelectorAll('.mood-word');
     const heroTitle = document.getElementById('heroTitle');
     const heroSubtitle = document.getElementById('heroSubtitle');
     const sectionTitle = document.getElementById('sectionTitle');
@@ -1820,7 +1796,7 @@ const videoData = {
     const progressBar = document.getElementById('progressBar');
     const currentTime = document.getElementById('currentTime');
     const duration = document.getElementById('duration');
-
+    
     // Video Modal Elements
     const videoModal = document.getElementById('videoModal');
     const modalVideoTitle = document.getElementById('modalVideoTitle');
@@ -1939,9 +1915,9 @@ const videoData = {
       });
 
       // Handle mobile mood selector
-      mobileMoodLabels.forEach(label => {
-        label.addEventListener('click', () => {
-          const mode = label.dataset.mode;
+      mobileMoodWords.forEach(word => {
+        word.addEventListener('click', () => {
+          const mode = word.dataset.mode;
           loadMode(mode);
         });
       });
@@ -1963,9 +1939,9 @@ const videoData = {
         label.classList.toggle('active', label.dataset.mode === mode);
       });
 
-      // Update mobile mood labels
-      mobileMoodLabels.forEach(label => {
-        label.classList.toggle('active', label.dataset.mode === mode);
+      // Update mobile mood words
+      mobileMoodWords.forEach(word => {
+        word.classList.toggle('active', word.dataset.mode === mode);
       });
       
       updateContent(mode);
