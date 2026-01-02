@@ -1111,61 +1111,50 @@ const videoData = {
         font-size: 1.1rem;
         margin-bottom: 2rem;
       }
+      /* Hide desktop knob selector on mobile */
       .mode-selector {
-        display: none; /* Hide original selector on mobile */
+        display: none;
       }
 
-      /* Mobile Mood Selector - positioned within player */
+      /* Mobile mood selector - simple words on player */
       .mobile-mood-selector {
-        display: flex; /* Only shown on mobile */
-        flex-direction: row;
-        gap: 0.75rem;
-        margin-top: 0.5rem;
+        display: flex;
         justify-content: center;
-        padding: 0.25rem 0;
+        gap: 1.5rem;
+        margin-top: 0.5rem;
+        padding-top: 0.5rem;
         border-top: 1px solid rgba(255, 255, 255, 0.08);
       }
 
       .mood-word {
-        color: rgba(255, 255, 255, 0.5);
-        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.8rem;
         font-weight: 500;
         letter-spacing: 0.5px;
         text-transform: uppercase;
         cursor: pointer;
         transition: all 0.3s ease;
-        padding: 0.15rem 0.4rem;
-        border-radius: 3px;
         user-select: none;
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
       }
 
       .mood-word:hover {
-        color: rgba(255, 255, 255, 0.8);
+        color: rgba(255, 255, 255, 0.9);
         background: rgba(255, 255, 255, 0.05);
       }
 
       .mood-word.active {
         color: var(--current-accent);
-        background: rgba(255, 107, 107, 0.1);
+        background: rgba(255, 255, 255, 0.1);
         font-weight: 600;
       }
 
-      /* Desktop styles - hide mobile mood selector */
+      /* Hide mobile mood selector on desktop */
       @media (min-width: 769px) {
         .mobile-mood-selector {
           display: none !important;
         }
-      }
-
-      .knob-container {
-        width: 50px;
-        height: 50px;
-      }
-
-      .mode-labels {
-        flex-direction: row;
-        gap: 0.8rem;
-        padding-right: 0.5rem;
       }
       
       .music-player {
@@ -1606,14 +1595,6 @@ const videoData = {
         <div class="toggle-switch"></div>
       </label>
     </div>
-
-    <!-- Mobile Mood Selector - only visible on mobile -->
-    <div class="mobile-mood-selector">
-      <span class="mood-word active" data-mode="chill">Chill</span>
-      <span class="mood-word" data-mode="dance">Dance</span>
-      <span class="mood-word" data-mode="strange">Strange</span>
-    </div>
-
     <div class="player-controls">
       <button class="control-btn" id="prevBtn" aria-label="Previous Track">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 20L9 12L19 4V20ZM5 19H7V5H5V19Z" fill="currentColor"/></svg>
@@ -1635,6 +1616,14 @@ const videoData = {
       </div>
       <span id="duration">0:00</span>
     </div>
+
+    <!-- Mobile Mood Selector - only visible on mobile -->
+    <div class="mobile-mood-selector">
+      <span class="mood-word active" data-mode="chill">Chill</span>
+      <span class="mood-word" data-mode="dance">Dance</span>
+      <span class="mood-word" data-mode="strange">Strange</span>
+    </div>
+
     <audio id="audioPlayer" preload="metadata"></audio>
   </div>
 
