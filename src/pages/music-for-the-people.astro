@@ -668,20 +668,26 @@ const videoData = {
       transform: rotate(180deg) translateY(-1px);
     }
     
-      .progress-container {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        font-size: 0.75rem;
-        color: rgba(255, 255, 255, 0.7);
-        font-weight: 500;
-        font-family: var(--font-mono);
-        letter-spacing: 0.5px;
-      }
+    .progress-container {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 500;
+      font-family: var(--font-mono);
+      letter-spacing: 0.5px;
+    }
 
     /* Mobile mood selector - only visible on mobile */
     .mobile-mood-selector {
       display: none; /* Hidden on desktop */
+      flex-direction: row;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 0.5rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .mood-word {
@@ -1631,7 +1637,6 @@ const videoData = {
       </div>
       <span id="duration">0:00</span>
     </div>
-
     <!-- Mobile Mood Selector - only visible on mobile -->
     <div class="mobile-mood-selector">
       <span class="mood-word active" data-mode="chill">Chill</span>
