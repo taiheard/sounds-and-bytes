@@ -463,12 +463,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 position: relative;
             }
 
-            /* Convert fixed background elements to absolute on mobile to prevent scroll interference */
-            .background,
-            .grain {
-                position: absolute !important;
-            }
-
             .hero h1 {
                 font-size: clamp(2.5rem, 12vw, 4rem);
                 letter-spacing: 2px;
@@ -559,6 +553,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             }
             .skill-name {
                 font-size: 0.8rem;
+            }
+
+            /* Disable grain animation on mobile for better scroll performance */
+            .grain {
+                animation: none !important;
+                opacity: 0.04 !important;
             }
         }
     </style>
