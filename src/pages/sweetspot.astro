@@ -171,6 +171,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             gap: 4rem;
         }
 
+        .mobile-placeholder {
+            display: none;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            margin: 2rem 0;
+        }
+
         .slider-mic-container {
             display: flex;
             align-items: flex-end;
@@ -466,18 +475,54 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 gap: 2rem;
             }
 
+            /* Hide slider container on mobile by default */
             .slider-mic-container {
-                flex-direction: column;
-                gap: 0.5rem;
-                margin-top: 1rem;
+                display: none;
             }
 
-            .mic-visual {
-                width: 30px !important;
-                height: 30px !important;
-                margin-top: 0.1rem;
-                margin-left: 0;
-                align-self: center;
+            /* Show mobile placeholder on mobile portrait */
+            .mobile-placeholder {
+                display: block;
+            }
+
+            /* Show slider when device is in landscape */
+            @media (orientation: landscape) {
+                .slider-mic-container {
+                    display: flex;
+                    flex-direction: row;
+                    gap: 0.5rem;
+                    margin-top: 1rem;
+                    align-items: flex-end;
+                    justify-content: center;
+                }
+
+                .mobile-placeholder {
+                    display: none;
+                }
+
+                .mic-visual {
+                    width: 40px !important;
+                    height: 40px !important;
+                    opacity: 0.8;
+                    transition: all 0.3s ease;
+                    align-self: flex-start;
+                    margin-top: 0.2rem;
+                    margin-left: -32px !important;
+                }
+
+                .distance-slider {
+                    width: 350px;
+                }
+
+                .distance-slider::before {
+                    left: 40px;
+                    width: 270px;
+                }
+
+                .gray-bar {
+                    width: 320px;
+                    height: 12px;
+                }
             }
 
             .sweetspot-circle {
@@ -488,20 +533,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             .color-dot {
                 width: 40px;
                 height: 40px;
-            }
-
-            .distance-slider {
-                width: 280px;
-            }
-
-            .distance-slider::before {
-                left: 30px;
-                width: 220px;
-            }
-
-            .gray-bar {
-                width: 240px;
-                height: 12px;
             }
 
             .content-grid {
@@ -585,9 +616,24 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                         <div class="color-dot" id="colorDot"></div>
                         <div class="distance-indicator" id="distanceText">Perfect Distance</div>
                     </div>
-                    
+
+                    <!-- Mobile Portrait Placeholder -->
+                    <div class="mobile-placeholder" id="mobilePlaceholder">
+                        <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--accent-playful)" stroke-width="2" style="opacity: 0.7;">
+                                <path d="M3 6l3 3m0 0l3-3m-3 3V3m0 0L9 9m6 0l3-3m-3 3V3m0 0l3 3"/>
+                            </svg>
+                            <p style="color: var(--accent-playful); font-family: var(--font-mono); font-size: 1.1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px;">
+                                Turn Phone Sideways
+                            </p>
+                            <p style="color: #888888; font-size: 0.9rem; max-width: 280px; line-height: 1.5;">
+                                Rotate your device to landscape mode to interact with the microphone distance simulator.
+                            </p>
+                        </div>
+                    </div>
+
                     <!-- Slider and mic container -->
-                    <div class="slider-mic-container">
+                    <div class="slider-mic-container" id="sliderContainer">
                         <div class="slider-section">
                             <div class="slider-wrapper">
                                 <div class="gray-bar"></div>
@@ -638,6 +684,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         const circle = document.getElementById('sweetspotCircle');
         const distanceText = document.getElementById('distanceText');
         const micIcon = document.getElementById('micIcon');
+        const sliderContainer = document.getElementById('sliderContainer');
+        const mobilePlaceholder = document.getElementById('mobilePlaceholder');
 
         function updateSweetspot(value) {
             if (value >= 75 && value <= 95) {
@@ -658,12 +706,37 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             }
         }
 
+        function checkOrientation() {
+            if (window.innerWidth <= 768) {
+                const isLandscape = window.innerWidth > window.innerHeight;
+                if (isLandscape) {
+                    sliderContainer.style.display = 'flex';
+                    mobilePlaceholder.style.display = 'none';
+                } else {
+                    sliderContainer.style.display = 'none';
+                    mobilePlaceholder.style.display = 'block';
+                }
+            }
+        }
+
+        // Initialize demo functionality
         if (slider) {
             slider.addEventListener('input', (e) => {
                 updateSweetspot(parseInt(e.target.value));
             });
             updateSweetspot(parseInt(slider.value));
         }
+
+        // Handle orientation changes
+        window.addEventListener('orientationchange', () => {
+            // Small delay to ensure dimensions are updated after orientation change
+            setTimeout(checkOrientation, 100);
+        });
+
+        window.addEventListener('resize', checkOrientation);
+
+        // Initial check
+        checkOrientation();
     </script>
 </BaseLayout>
 
