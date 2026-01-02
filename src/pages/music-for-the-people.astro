@@ -538,41 +538,6 @@ const videoData = {
       letter-spacing: 0.5px;
       font-size: 0.7rem;
     }
-
-    /* Mobile Mood Selector - positioned within player */
-    .mobile-mood-selector {
-      display: none; /* Hidden by default, shown only on mobile */
-      flex-direction: row;
-      gap: 0.75rem;
-      margin-top: 0.5rem;
-      justify-content: center;
-      padding: 0.25rem 0;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .mood-word {
-      color: rgba(255, 255, 255, 0.5);
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      padding: 0.15rem 0.4rem;
-      border-radius: 3px;
-      user-select: none;
-    }
-
-    .mood-word:hover {
-      color: rgba(255, 255, 255, 0.8);
-      background: rgba(255, 255, 255, 0.05);
-    }
-
-    .mood-word.active {
-      color: var(--current-accent);
-      background: rgba(255, 107, 107, 0.1);
-      font-weight: 600;
-    }
     
     .player-controls {
       display: flex;
@@ -1126,13 +1091,6 @@ const videoData = {
       letter-spacing: 0.3px;
     }
 
-    /* Desktop styles - hide mobile mood selector */
-    @media (min-width: 769px) {
-      .mobile-mood-selector {
-        display: none !important;
-      }
-    }
-
     /* Responsive Design */
     @media (max-width: 1024px) {
       .video-grid {
@@ -1154,18 +1112,51 @@ const videoData = {
         margin-bottom: 2rem;
       }
       .mode-selector {
-        top: auto;
-        bottom: 9rem;
-        right: 1rem;
-        transform: none;
-        flex-direction: row;
-        background: rgba(0, 0, 0, 0.5);
-        padding: 0.5rem;
-        border-radius: 50px;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        display: none; /* Hide original selector on mobile */
       }
-      
+
+      /* Mobile Mood Selector - positioned within player */
+      .mobile-mood-selector {
+        display: flex; /* Only shown on mobile */
+        flex-direction: row;
+        gap: 0.75rem;
+        margin-top: 0.5rem;
+        justify-content: center;
+        padding: 0.25rem 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .mood-word {
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        padding: 0.15rem 0.4rem;
+        border-radius: 3px;
+        user-select: none;
+      }
+
+      .mood-word:hover {
+        color: rgba(255, 255, 255, 0.8);
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .mood-word.active {
+        color: var(--current-accent);
+        background: rgba(255, 107, 107, 0.1);
+        font-weight: 600;
+      }
+
+      /* Desktop styles - hide mobile mood selector */
+      @media (min-width: 769px) {
+        .mobile-mood-selector {
+          display: none !important;
+        }
+      }
+
       .knob-container {
         width: 50px;
         height: 50px;
@@ -1266,14 +1257,9 @@ const videoData = {
         font-size: 1rem;
       }
 
-        .track-info p {
-          font-size: 0.65rem;
-        }
-
-        /* Mobile mood selector - only visible on mobile */
-        .mobile-mood-selector {
-          display: flex;
-        }
+      .track-info p {
+        font-size: 0.65rem;
+      }
       
       /* Mobile Video Modal */
       .video-modal-content {
@@ -1627,6 +1613,7 @@ const videoData = {
       <span class="mood-word" data-mode="dance">Dance</span>
       <span class="mood-word" data-mode="strange">Strange</span>
     </div>
+
     <div class="player-controls">
       <button class="control-btn" id="prevBtn" aria-label="Previous Track">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 20L9 12L19 4V20ZM5 19H7V5H5V19Z" fill="currentColor"/></svg>
