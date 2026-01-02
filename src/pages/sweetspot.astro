@@ -499,6 +499,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 .mobile-placeholder {
                     display: none;
                 }
+            }
+
+            /* Hide distance indicator text in portrait mode */
+            @media (orientation: portrait) {
+                .distance-indicator {
+                    display: none;
+                }
+            }
 
                 .mic-visual {
                     width: 40px !important;
