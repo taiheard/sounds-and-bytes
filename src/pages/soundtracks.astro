@@ -21,8 +21,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
         }
 
-        .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 2rem; position: relative; overflow: hidden; }
-        
+        .hero {
+            min-height: 100vh;
+            min-height: 100dvh; /* Use dynamic viewport height for mobile */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            width: 100vw;
+            box-sizing: border-box;
+        }
+
         .hero-bg {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -45,7 +58,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         .hero-svg-waves .wave1 { animation: waveMove 8s linear infinite alternate; }
         .hero-svg-waves .wave2 { animation: waveMove 12s linear infinite alternate-reverse; }
 
-        .hero-content { max-width: 1200px; margin: 0 auto; position: relative; z-index: 3; padding: 0 2rem; }
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 3;
+            padding: 0 2rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
 
         .hero h1 { 
             font-size: clamp(3.5rem, 10vw, 9rem); font-weight: 900; line-height: 0.9; text-transform: uppercase; 
@@ -98,13 +119,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         }
         @media (max-width: 768px) {
             .hero {
-                padding-top: 6rem;
-                min-height: auto;
-                padding-bottom: 4rem;
+                padding: 1.5rem 1rem;
+                min-height: 90vh; /* Reduce from 100vh for mobile */
+                min-height: 90dvh; /* Use dynamic viewport height */
             }
             .hero h1 { font-size: clamp(2.5rem, 12vw, 4rem); }
-            .hero-subtitle { font-size: 1.2rem; margin-bottom: 1.5rem; }
-            .hero-description { font-size: 1rem; line-height: 1.6; }
+            .hero-subtitle { font-size: 1.2rem; }
+            .hero-description { font-size: 1rem; }
             .soundtracks-grid { padding: 2rem 1rem; gap: 1.5rem; }
             .soundtrack-card { padding: 2rem; }
             .card-title { font-size: clamp(1.6rem, 8vw, 2.2rem); line-height: 1.1; }
