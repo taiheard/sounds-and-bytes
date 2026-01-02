@@ -445,53 +445,78 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         }
 
         @media (max-width: 768px) {
+            .hero {
+                padding-top: 6rem;
+                min-height: auto;
+                padding-bottom: 4rem;
+            }
+            .hero h1 {
+                font-size: clamp(2.5rem, 10vw, 4.5rem);
+            }
+            .hero-subtitle {
+                font-size: 1.1rem;
+                margin-bottom: 2rem;
+            }
+            .section-header h2 {
+                font-size: 1.5rem;
+            }
             .demo-container {
-                gap: 4rem;
+                gap: 2rem;
             }
 
             .slider-mic-container {
                 flex-direction: column;
                 gap: 0.5rem;
+                margin-top: 1rem;
             }
 
             .mic-visual {
-                width: 15px !important;
-                height: 15px !important;
+                width: 30px !important;
+                height: 30px !important;
                 margin-top: 0.1rem;
                 margin-left: 0;
+                align-self: center;
             }
 
             .sweetspot-circle {
-                width: 225px;
-                height: 225px;
+                width: 200px;
+                height: 200px;
             }
 
             .color-dot {
-                width: 30px;
-                height: 30px;
+                width: 40px;
+                height: 40px;
             }
 
             .distance-slider {
-                width: 340px;
+                width: 280px;
             }
 
             .distance-slider::before {
-                left: 45px;
-                width: 250px;
+                left: 30px;
+                width: 220px;
             }
 
             .gray-bar {
-                width: 300px;
+                width: 240px;
                 height: 12px;
             }
 
             .content-grid {
-                padding: 2rem 1rem;
-                gap: 2rem;
+                padding: 1rem;
+                gap: 1.5rem;
             }
 
             .section-card {
-                padding: 2rem;
+                padding: 1.5rem;
+            }
+            .tech-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .info-button {
+                width: 100%;
+                justify-content: center;
             }
         }
     </style>

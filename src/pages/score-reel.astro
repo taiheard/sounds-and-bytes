@@ -414,9 +414,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         @media (max-width: 1024px) {
             .hero {
                 grid-template-columns: 1fr;
-                gap: 4rem;
+                gap: 2rem;
                 text-align: center;
-                padding: 4rem var(--gutter);
+                padding: 6rem var(--gutter) 2rem;
+                min-height: auto;
             }
             
             .composition:nth-child(odd),
@@ -425,7 +426,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 gap: 2rem;
                 margin-bottom: 3rem;
                 min-height: auto;
-                padding: 2rem;
+                padding: 1.5rem;
             }
             .composition:nth-child(even) .comp-content,
             .composition:nth-child(even) .comp-media {
@@ -434,6 +435,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             
             .comp-media {
                 min-height: 250px;
+                aspect-ratio: 16/9;
             }
 
             .skills {
@@ -445,19 +447,32 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 gap: 1rem;
             }
 
+            .hero-reel {
+                min-height: auto;
+                aspect-ratio: 16/9;
+            }
         }
 
         @media (max-width: 768px) {
             .hero h1 {
-                font-size: clamp(2rem, 8vw, 3rem);
-                letter-spacing: 4px;
+                font-size: clamp(2.5rem, 12vw, 4rem);
+                letter-spacing: 2px;
+            }
+            .hero-subtitle {
+                font-size: 1.1rem;
             }
             .comp-content {
                 padding: 1.5rem;
             }
             .comp-title {
-                font-size: clamp(1.4rem, 6vw, 2rem);
+                font-size: 1.8rem;
                 letter-spacing: 2px;
+            }
+            .comp-description {
+                font-size: 1rem;
+            }
+            .section-header h2 {
+                font-size: 2rem;
             }
         }
     </style>

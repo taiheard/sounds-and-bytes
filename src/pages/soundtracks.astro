@@ -50,7 +50,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         .hero h1 { 
             font-size: clamp(3.5rem, 10vw, 9rem); font-weight: 900; line-height: 0.9; text-transform: uppercase; 
             background: linear-gradient(to right, #fff, #aaa); -webkit-background-clip: text; background-clip: text; color: transparent;
-            opacity: 0; animation: fadeInUp 1s 0.5s forwards; white-space: nowrap;
+            opacity: 0; animation: fadeInUp 1s 0.5s forwards;
+        }
+        @media (min-width: 769px) {
+            .hero h1 {
+                white-space: nowrap;
+            }
         }
         .hero h1 .playful { font-family: var(--font-playful); background: linear-gradient(90deg, var(--accent-playful2), var(--accent-playful), var(--accent-primary)); -webkit-background-clip: text; background-clip: text; color: transparent; font-size: 1.1em; display: inline-block; }
 
@@ -89,11 +94,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             .soundtracks-grid { grid-template-columns: 1fr; grid-template-rows: auto; padding: 4rem 2rem; }
             .score-reel, .music-people { grid-column: 1 / -1; grid-row: auto; min-height: 300px; }
             .floating-element { display: none; }
+            .hero { padding-top: 6rem; }
         }
         @media (max-width: 768px) {
-            .hero h1 { font-size: clamp(2.5rem, 8vw, 4rem); white-space: normal; }
+            .hero h1 { font-size: clamp(2.5rem, 12vw, 4rem); }
+            .hero-subtitle { font-size: 1.2rem; }
+            .hero-description { font-size: 1rem; }
             .soundtracks-grid { padding: 2rem 1rem; gap: 1.5rem; }
             .soundtrack-card { padding: 2rem; }
+            .card-title { font-size: 2rem; }
         }
     </style>
 

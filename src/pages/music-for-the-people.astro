@@ -1099,40 +1099,89 @@ const videoData = {
     }
     
     @media (max-width: 768px) {
+      .hero {
+        padding-top: 6rem;
+        min-height: auto;
+        padding-bottom: 4rem;
+      }
+      .hero h1 {
+        font-size: clamp(2.5rem, 12vw, 4.5rem);
+      }
+      .hero p {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+      }
       .mode-selector {
         top: auto;
-        bottom: 8rem;
+        bottom: 9rem;
         right: 1rem;
         transform: none;
+        flex-direction: row;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 0.5rem;
+        border-radius: 50px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
       }
       
       .knob-container {
-        width: 80px;
-        height: 80px;
+        width: 50px;
+        height: 50px;
+      }
+
+      .mode-labels {
+        flex-direction: row;
+        gap: 0.8rem;
+        padding-right: 0.5rem;
       }
       
       .music-player {
-        left: 1rem;
-        right: 1rem;
-        bottom: 1rem;
-        transform: none;
+        left: 0.5rem;
+        right: 0.5rem;
+        bottom: 0.5rem;
+        padding: 1rem;
         min-width: auto;
         max-width: none;
+        border-radius: 12px;
+      }
+
+      .player-header {
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+      }
+
+      .control-btn {
+        width: 40px;
+        height: 40px;
+      }
+
+      .control-btn.play-pause {
+        width: 48px;
+        height: 48px;
       }
       
       .video-grid {
         grid-template-columns: 1fr;
-        gap: 1rem;
+        gap: 1.5rem;
+        padding-bottom: 12rem; /* space for player and knob */
       }
 
       .bio-container {
-        padding: 2rem 1.5rem;
-        margin-top: 3rem;
+        padding: 0;
+        margin-top: 2rem;
+      }
+
+      .bio-content {
+        padding: 1.5rem;
+      }
+
+      .bio-image-wrapper {
+        height: 250px;
       }
 
       .bio-text {
         font-size: 1rem;
-        line-height: 1.7;
+        line-height: 1.6;
       }
       
       /* Mobile Video Modal */

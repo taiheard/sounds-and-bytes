@@ -148,7 +148,25 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         }
 
         @media (max-width: 1024px) {
-            .hero { grid-template-columns: 1fr; text-align: center; }
+            .hero { 
+                grid-template-columns: 1fr; 
+                text-align: center; 
+                padding: 6rem var(--gutter) 2rem;
+                min-height: auto;
+                gap: 2rem;
+            }
+            .hero h1 {
+                font-size: clamp(2.5rem, 12vw, 4rem);
+            }
+            .hero-list {
+                align-items: center;
+                text-align: left;
+                max-width: 400px;
+                margin: 2rem auto;
+            }
+            .hero-reel {
+                min-height: auto;
+            }
         }
     </style>
 

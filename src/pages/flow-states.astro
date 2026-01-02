@@ -240,12 +240,52 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         .reveal.visible { opacity: 1; transform: translateY(0); }
 
         @media (max-width: 980px) {
-            .chapter { grid-template-columns: 1fr; min-height: 100vh; }
-            .chapter-header { grid-column: 1 / -1; }
-            .chapter-media { grid-column: 1 / -1; height: 54vh; position: relative; }
-            .chapter-content { grid-column: 1 / -1; }
-            .media-frame { width: calc(54vh * 16 / 9); height: 54vh; }
+            .hero {
+                padding-top: 6rem;
+                min-height: auto;
+                padding-bottom: 4rem;
+            }
+            .hero h1 {
+                font-size: clamp(2.5rem, 10vw, 4rem);
+            }
+            .hero p {
+                margin: 2rem auto;
+                font-size: 1.1rem;
+            }
+            .cta {
+                margin-top: 2rem;
+            }
+            .chapter { 
+                grid-template-columns: 1fr; 
+                min-height: auto; 
+                margin: 4rem 0;
+                padding: 1rem;
+            }
+            .chapter-header { 
+                grid-column: 1 / -1; 
+                margin-top: 2rem;
+                text-align: center;
+            }
+            .chapter-media { 
+                grid-column: 1 / -1; 
+                height: 30vh; 
+                position: relative; 
+                order: -1;
+            }
+            .chapter-content { 
+                grid-column: 1 / -1; 
+                margin-top: 1rem;
+                padding: 1.2rem;
+            }
+            .media-frame { 
+                width: calc(30vh * 16 / 9); 
+                height: 30vh; 
+            }
             .progress { display: none; }
+            .chapter:nth-child(even) .chapter-header,
+            .chapter:nth-child(even) .chapter-content {
+                grid-column: 1 / -1;
+            }
         }
     </style>
 
