@@ -681,7 +681,7 @@ const videoData = {
 
       /* Mobile mood selector - only visible on mobile */
       .mobile-mood-selector {
-        display: none; /* Hidden by default, shown on mobile */
+        display: flex;
         justify-content: center;
         gap: 2rem;
         margin-top: 0.75rem;
@@ -1260,11 +1260,6 @@ const videoData = {
 
       .track-info p {
         font-size: 0.65rem;
-      }
-
-      /* Show mobile mood selector only on mobile */
-      .mobile-mood-selector {
-        display: flex;
       }
       
       /* Mobile Video Modal */
@@ -1947,7 +1942,7 @@ const videoData = {
       mobileMoodWords.forEach(word => {
         word.classList.toggle('active', word.dataset.mode === mode);
       });
-      
+
       updateContent(mode);
       updateVideoGrid(mode);
       loadPlaylist(mode);
