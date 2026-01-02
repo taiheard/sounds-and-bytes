@@ -52,24 +52,24 @@
                 data.posts.forEach(post => {
                     const article = document.createElement('article');
                     article.className = 'article-card fade-in';
+                    article.setAttribute('data-astro-cid-vxkndcup', '');
                     
-                    const tagsHtml = post.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+                    const tagsHtml = post.tags.map(tag => `<span class="tag" data-astro-cid-vxkndcup>${tag}</span>`).join('');
                     const linkTarget = post.external ? 'target="_blank"' : '';
                     const linkText = post.external ? 'Read on Medium' : 'Read More';
                     
                     article.innerHTML = `
-                        <div class="article-image">
-                            <img src="${post.image}" alt="${post.imageAlt}" loading="lazy">
+                        <div class="article-image" data-astro-cid-vxkndcup>
+                            <img src="${post.image}" alt="${post.imageAlt}" loading="lazy" data-astro-cid-vxkndcup>
                         </div>
-                        <div class="article-content">
-                            <div class="article-meta">
-                                <span class="article-date">${post.date}</span>
-                                <span class="article-readtime">${post.readTime}</span>
+                        <div class="article-content" data-astro-cid-vxkndcup>
+                            <div class="article-meta" data-astro-cid-vxkndcup>
+                                <span class="article-date" data-astro-cid-vxkndcup>${post.date}</span>
+                                <span class="article-readtime" data-astro-cid-vxkndcup>${post.readTime}</span>
                             </div>
-                            <h2 class="article-title">${post.title}</h2>
-                            <p class="article-excerpt">${post.excerpt}</p>
-                            <div class="article-tags">${tagsHtml}</div>
-                            <a href="${post.link}" class="read-more" ${linkTarget}>${linkText}</a>
+                            <h2 class="article-title" data-astro-cid-vxkndcup>${post.title}</h2>
+                            <p class="article-excerpt" data-astro-cid-vxkndcup>${post.excerpt}</p>
+                            <a href="${post.link}" class="read-more" data-astro-cid-vxkndcup ${linkTarget}>${linkText}</a>
                         </div>
                     `;
                     articlesContainer.appendChild(article);
@@ -83,6 +83,6 @@
                 console.error('Error loading blog content:', error);
             }
         }
-        
+
         document.addEventListener('DOMContentLoaded', loadBlogContent);
     </script>  <footer> <p>© 2026 Taiwo Heard. All rights reserved.</p> <p style="margin-top: 10px; opacity: 0.5;">Designed with Code & Sound.</p> </footer> <script src="/sounds-and-bytes/js/common.js"></script> </body> </html>
