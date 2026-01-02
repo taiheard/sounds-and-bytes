@@ -170,7 +170,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 padding: 1.5rem;
             }
             .card-content h2 {
-                font-size: 1.5rem;
+                font-size: clamp(1.4rem, 6vw, 1.8rem);
+            }
+            .card-desc {
+                font-size: 0.95rem;
+                line-height: 1.6;
+            }
+            .card-arrow {
+                font-size: 0.8rem;
             }
             .card-badge {
                 top: 15px;

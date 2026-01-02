@@ -145,10 +145,35 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 padding: 1.5rem;
             }
             .project-title {
-                font-size: 1.8rem;
+                font-size: clamp(1.6rem, 8vw, 2.2rem);
+                line-height: 1.1;
             }
             .project-desc {
-                font-size: 1rem;
+                font-size: 0.95rem;
+                line-height: 1.6;
+            }
+            .project-meta {
+                font-size: 0.8rem;
+                margin-bottom: 1rem;
+            }
+            .badge {
+                font-size: 0.65rem;
+                padding: 3px 10px;
+                margin-bottom: 1rem;
+            }
+            .project-links {
+                gap: 1rem;
+            }
+            .project-link {
+                font-size: 0.8rem;
+            }
+            .project-icon-wrapper {
+                height: 120px;
+                margin-bottom: 1rem;
+            }
+            .project-icon-wrapper svg {
+                width: 40px;
+                height: 40px;
             }
             .section-header h2 {
                 font-size: 1.8rem;

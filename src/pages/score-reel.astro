@@ -459,20 +459,75 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 letter-spacing: 2px;
             }
             .hero-subtitle {
-                font-size: 1.1rem;
+                font-size: 1.05rem;
+                margin-bottom: 1.5rem;
+            }
+            .hero-reel {
+                min-height: auto;
+                aspect-ratio: 16/9;
+                margin-top: 1rem;
+            }
+            .compositions {
+                margin: 4rem auto;
+            }
+            .section-header {
+                margin-bottom: 3rem;
+            }
+            .section-header h2 {
+                font-size: clamp(1.8rem, 8vw, 2.5rem);
+                letter-spacing: 3px;
+            }
+            .section-header p {
+                font-size: 1rem;
+            }
+            .composition {
+                padding: 1.5rem;
+                margin-bottom: 2.5rem;
+                border-radius: 16px;
             }
             .comp-content {
                 padding: 1.5rem;
             }
             .comp-title {
-                font-size: 1.8rem;
+                font-size: clamp(1.4rem, 6vw, 1.8rem);
                 letter-spacing: 2px;
+                margin-bottom: 0.8rem;
+            }
+            .comp-genre {
+                font-size: 0.75rem;
+                padding: 0.4rem 0.8rem;
+                margin-bottom: 1rem;
             }
             .comp-description {
-                font-size: 1rem;
+                font-size: 0.95rem;
+                line-height: 1.6;
+                margin-bottom: 1.5rem;
             }
-            .section-header h2 {
-                font-size: 2rem;
+            .comp-media {
+                min-height: 200px;
+            }
+            .play-button {
+                padding: 0.8rem 1.4rem;
+                font-size: 0.9rem;
+            }
+            .play-icon {
+                border-left-width: 14px;
+                border-top-width: 9px;
+                border-bottom-width: 9px;
+            }
+            .skills {
+                margin: 4rem 1rem;
+                padding: 2rem 1.5rem;
+            }
+            .skills h3 {
+                font-size: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+            .skill-item {
+                padding: 1rem;
+            }
+            .skill-name {
+                font-size: 0.8rem;
             }
         }
     </style>

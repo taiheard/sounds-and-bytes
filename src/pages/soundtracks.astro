@@ -97,12 +97,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             .hero { padding-top: 6rem; }
         }
         @media (max-width: 768px) {
+            .hero {
+                padding-top: 6rem;
+                min-height: auto;
+                padding-bottom: 4rem;
+            }
             .hero h1 { font-size: clamp(2.5rem, 12vw, 4rem); }
-            .hero-subtitle { font-size: 1.2rem; }
-            .hero-description { font-size: 1rem; }
+            .hero-subtitle { font-size: 1.2rem; margin-bottom: 1.5rem; }
+            .hero-description { font-size: 1rem; line-height: 1.6; }
             .soundtracks-grid { padding: 2rem 1rem; gap: 1.5rem; }
             .soundtrack-card { padding: 2rem; }
-            .card-title { font-size: 2rem; }
+            .card-title { font-size: clamp(1.6rem, 8vw, 2.2rem); line-height: 1.1; }
+            .card-description { font-size: 0.95rem; line-height: 1.6; }
+            .card-subtitle { margin-bottom: 1rem; font-size: 0.9rem; }
         }
     </style>
 
