@@ -47,10 +47,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
         .hero-content { max-width: 1200px; margin: 0 auto; position: relative; z-index: 3; padding: 0 2rem; }
 
-        .hero h1 { 
-            font-size: clamp(3.5rem, 10vw, 9rem); font-weight: 900; line-height: 0.9; text-transform: uppercase; 
+        .hero h1 {
+            font-size: clamp(3.5rem, 10vw, 9rem); font-weight: 900; line-height: 0.9; text-transform: uppercase;
             background: linear-gradient(to right, #fff, #aaa); -webkit-background-clip: text; background-clip: text; color: transparent;
             opacity: 0; animation: fadeInUp 1s 0.5s forwards;
+            text-align: center;
+            margin: 0 auto;
         }
         @media (min-width: 769px) {
             .hero h1 {
