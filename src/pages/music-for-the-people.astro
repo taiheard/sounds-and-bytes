@@ -1111,72 +1111,28 @@ const videoData = {
         font-size: 1.1rem;
         margin-bottom: 2rem;
       }
-      /* Simplified mobile mode selector - 3 clickable words */
       .mode-selector {
-        position: static;
         top: auto;
-        right: auto;
-        bottom: auto;
+        bottom: 9rem;
+        right: 1rem;
         transform: none;
         flex-direction: row;
-        gap: 0;
-        background: transparent;
-        padding: 0;
-        border-radius: 0;
-        backdrop-filter: none;
-        border: none;
-        margin-bottom: 0.5rem;
-        justify-content: center;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 0.5rem;
+        border-radius: 50px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
       }
-
+      
       .knob-container {
-        display: none;
+        width: 50px;
+        height: 50px;
       }
 
       .mode-labels {
         flex-direction: row;
-        gap: 1rem;
-        padding: 0;
-        width: 100%;
-        justify-content: center;
-      }
-
-      .mode-label {
-        font-size: 0.85rem;
-        font-weight: 600;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        padding: 0.25rem 0.75rem;
-        border-radius: 20px;
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        transition: all 0.3s ease;
-        cursor: pointer;
-        backdrop-filter: blur(10px);
-      }
-
-      .mode-label.active {
-        background: var(--current-accent);
-        border-color: var(--current-accent);
-        color: #000;
-        font-weight: 700;
-        box-shadow: 0 0 15px var(--current-accent);
-      }
-
-      /* Mobile mode selector wrapper */
-      .mobile-mode-selector {
-        display: none;
-      }
-
-      @media (max-width: 768px) {
-        .mobile-mode-selector {
-          display: block;
-        }
-
-        /* Hide the original desktop mode selector on mobile */
-        .mode-selector:not(.mobile-mode-selector .mode-selector) {
-          display: none;
-        }
+        gap: 0.8rem;
+        padding-right: 0.5rem;
       }
       
       .music-player {
@@ -1188,7 +1144,7 @@ const videoData = {
         max-width: none;
         border-radius: 12px;
         height: auto;
-        max-height: 120px;
+        max-height: 140px;
       }
 
       .player-header {
@@ -1271,7 +1227,64 @@ const videoData = {
       .track-info p {
         font-size: 0.65rem;
       }
+
+      /* Mobile mood selector integrated into transport */
+      .mobile-mood-selector {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.3rem;
+      }
+
+      .mood-labels {
+        display: flex;
+        gap: 0.75rem;
+        font-size: 0.7rem;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        font-weight: 500;
+      }
+
+      .mood-label {
+        color: rgba(255, 255, 255, 0.6);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+      }
+
+      .mood-label:hover {
+        color: rgba(255, 255, 255, 0.9);
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .mood-label.active {
+        color: var(--current-accent);
+        background: rgba(255, 107, 107, 0.2);
+        font-weight: 600;
+      }
       
+      /* Mobile mood selector - hidden by default */
+      .mobile-mood-selector {
+        display: none;
+      }
+
+      /* Hide desktop mode selector on mobile */
+      .mode-selector {
+        display: block;
+      }
+
+      /* Show mobile mood selector and hide desktop selector on mobile */
+      @media (max-width: 768px) {
+        .mobile-mood-selector {
+          display: flex;
+        }
+
+        .mode-selector {
+          display: none !important;
+        }
+      }
+
       /* Mobile Video Modal */
       .video-modal-content {
         width: 95%;
@@ -1606,27 +1619,23 @@ const videoData = {
 
   <!-- Music Player -->
   <div class="music-player">
-    <!-- Mobile Mode Selector -->
-    <div class="mobile-mode-selector">
-      <div class="mode-selector">
-        <div class="mode-labels">
-          <div class="mode-label active" data-mode="chill">Chill</div>
-          <div class="mode-label" data-mode="dance">Dance</div>
-          <div class="mode-label" data-mode="strange">Strange</div>
-        </div>
-      </div>
-    </div>
-
     <div class="player-header">
       <div class="track-info">
         <h3 id="trackTitle">Select a track...</h3>
         <p id="trackArtist">Taiwo Heard</p>
       </div>
-      <label class="autoplay-toggle">
-        <span>Auto</span>
-        <input type="checkbox" id="autoplayCheck">
-        <div class="toggle-switch"></div>
-      </label>
+      <div class="mobile-mood-selector">
+        <div class="mood-labels">
+          <span class="mood-label active" data-mode="chill">Chill</span>
+          <span class="mood-label" data-mode="dance">Dance</span>
+          <span class="mood-label" data-mode="strange">Strange</span>
+        </div>
+        <label class="autoplay-toggle">
+          <span>Auto</span>
+          <input type="checkbox" id="autoplayCheck">
+          <div class="toggle-switch"></div>
+        </label>
+      </div>
     </div>
     <div class="player-controls">
       <button class="control-btn" id="prevBtn" aria-label="Previous Track">
@@ -1788,6 +1797,7 @@ const videoData = {
     const body = document.body;
     const modeKnob = document.getElementById('modeKnob');
     const modeLabels = document.querySelectorAll('.mode-label');
+    const mobileMoodLabels = document.querySelectorAll('.mood-label');
     const heroTitle = document.getElementById('heroTitle');
     const heroSubtitle = document.getElementById('heroSubtitle');
     const sectionTitle = document.getElementById('sectionTitle');
@@ -1804,7 +1814,7 @@ const videoData = {
     const progressBar = document.getElementById('progressBar');
     const currentTime = document.getElementById('currentTime');
     const duration = document.getElementById('duration');
-    
+
     // Video Modal Elements
     const videoModal = document.getElementById('videoModal');
     const modalVideoTitle = document.getElementById('modalVideoTitle');
@@ -1921,6 +1931,14 @@ const videoData = {
           loadMode(mode);
         });
       });
+
+      // Handle mobile mood selector
+      mobileMoodLabels.forEach(label => {
+        label.addEventListener('click', () => {
+          const mode = label.dataset.mode;
+          loadMode(mode);
+        });
+      });
     }
 
     // Load and transition to new mode
@@ -1936,6 +1954,11 @@ const videoData = {
       updateBackgroundVideos(mode);
       
       modeLabels.forEach(label => {
+        label.classList.toggle('active', label.dataset.mode === mode);
+      });
+
+      // Update mobile mood labels
+      mobileMoodLabels.forEach(label => {
         label.classList.toggle('active', label.dataset.mode === mode);
       });
       
