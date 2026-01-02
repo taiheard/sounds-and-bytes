@@ -668,16 +668,50 @@ const videoData = {
       transform: rotate(180deg) translateY(-1px);
     }
     
-    .progress-container {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      font-size: 0.75rem;
-      color: rgba(255, 255, 255, 0.7);
-      font-weight: 500;
-      font-family: var(--font-mono);
-      letter-spacing: 0.5px;
-    }
+      .progress-container {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.7);
+        font-weight: 500;
+        font-family: var(--font-mono);
+        letter-spacing: 0.5px;
+      }
+
+      /* Mobile mood selector - only visible on mobile */
+      .mobile-mood-selector {
+        display: none; /* Hidden by default, shown on mobile */
+        justify-content: center;
+        gap: 2rem;
+        margin-top: 0.75rem;
+        padding-top: 0.75rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .mood-word {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        user-select: none;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+      }
+
+      .mood-word:hover {
+        color: rgba(255, 255, 255, 0.9);
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .mood-word.active {
+        color: var(--current-accent);
+        background: rgba(255, 255, 255, 0.1);
+        font-weight: 600;
+      }
 
     .progress-bar {
       flex: 1;
@@ -1111,52 +1145,19 @@ const videoData = {
         font-size: 1.1rem;
         margin-bottom: 2rem;
       }
-      /* Hide desktop knob selector on mobile */
       .mode-selector {
-        display: none;
+        top: auto;
+        bottom: 9rem;
+        right: 1rem;
+        transform: none;
+        flex-direction: row;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 0.5rem;
+        border-radius: 50px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
       }
-
-      /* Mobile mood selector - simple words on player */
-      .mobile-mood-selector {
-        display: flex;
-        justify-content: center;
-        gap: 1.5rem;
-        margin-top: 0.5rem;
-        padding-top: 0.5rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
-      }
-
-      .mood-word {
-        color: rgba(255, 255, 255, 0.6);
-        font-size: 0.8rem;
-        font-weight: 500;
-        letter-spacing: 0.5px;
-        text-transform: uppercase;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        user-select: none;
-        padding: 0.2rem 0.4rem;
-        border-radius: 4px;
-      }
-
-      .mood-word:hover {
-        color: rgba(255, 255, 255, 0.9);
-        background: rgba(255, 255, 255, 0.05);
-      }
-
-      .mood-word.active {
-        color: var(--current-accent);
-        background: rgba(255, 255, 255, 0.1);
-        font-weight: 600;
-      }
-
-      /* Hide mobile mood selector on desktop */
-      @media (min-width: 769px) {
-        .mobile-mood-selector {
-          display: none !important;
-        }
-      }
-
+      
       .knob-container {
         width: 50px;
         height: 50px;
@@ -1259,6 +1260,11 @@ const videoData = {
 
       .track-info p {
         font-size: 0.65rem;
+      }
+
+      /* Show mobile mood selector only on mobile */
+      .mobile-mood-selector {
+        display: flex;
       }
       
       /* Mobile Video Modal */
@@ -1941,7 +1947,7 @@ const videoData = {
       mobileMoodWords.forEach(word => {
         word.classList.toggle('active', word.dataset.mode === mode);
       });
-
+      
       updateContent(mode);
       updateVideoGrid(mode);
       loadPlaylist(mode);
