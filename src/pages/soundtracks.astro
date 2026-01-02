@@ -94,31 +94,38 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             .soundtracks-grid { grid-template-columns: 1fr; grid-template-rows: auto; padding: 4rem 2rem; }
             .score-reel, .music-people { grid-column: 1 / -1; grid-row: auto; min-height: 300px; }
             .floating-element { display: none; }
-            .hero { padding-top: 6rem; }
+            .hero {
+                padding-top: 6rem;
+                min-height: auto;
+                padding-bottom: 4rem;
+            }
         }
         @media (max-width: 768px) {
             .hero {
-                padding: 6rem 1rem 2rem 1rem;
+                padding-top: 8rem; /* Increased to account for header overlap */
+                min-height: calc(100vh - 80px); /* Account for fixed header */
+                padding-bottom: 4rem;
+                display: flex;
+                flex-direction: column;
                 justify-content: center;
                 align-items: center;
-                min-height: 100vh;
+                text-align: center;
             }
             .hero-content {
                 padding: 0 1rem;
+                max-width: 100%;
             }
             .hero h1 {
-                font-size: clamp(2.2rem, 10vw, 3.5rem);
+                font-size: clamp(2.5rem, 12vw, 4rem);
                 margin-bottom: 1rem;
             }
             .hero-subtitle {
-                font-size: 1rem;
-                margin-bottom: 1rem;
-                margin-top: 1rem;
+                font-size: 1.2rem;
+                margin-bottom: 1.5rem;
             }
             .hero-description {
-                font-size: 0.9rem;
+                font-size: 1rem;
                 margin-bottom: 2rem;
-                line-height: 1.6;
             }
             .soundtracks-grid { padding: 2rem 1rem; gap: 1.5rem; }
             .soundtrack-card { padding: 2rem; }
