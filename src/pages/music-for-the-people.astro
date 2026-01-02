@@ -1111,28 +1111,72 @@ const videoData = {
         font-size: 1.1rem;
         margin-bottom: 2rem;
       }
+      /* Simplified mobile mode selector - 3 clickable words */
       .mode-selector {
+        position: static;
         top: auto;
-        bottom: 9rem;
-        right: 1rem;
+        right: auto;
+        bottom: auto;
         transform: none;
         flex-direction: row;
-        background: rgba(0, 0, 0, 0.5);
-        padding: 0.5rem;
-        border-radius: 50px;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        gap: 0;
+        background: transparent;
+        padding: 0;
+        border-radius: 0;
+        backdrop-filter: none;
+        border: none;
+        margin-bottom: 0.5rem;
+        justify-content: center;
       }
-      
+
       .knob-container {
-        width: 50px;
-        height: 50px;
+        display: none;
       }
 
       .mode-labels {
         flex-direction: row;
-        gap: 0.8rem;
-        padding-right: 0.5rem;
+        gap: 1rem;
+        padding: 0;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .mode-label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        backdrop-filter: blur(10px);
+      }
+
+      .mode-label.active {
+        background: var(--current-accent);
+        border-color: var(--current-accent);
+        color: #000;
+        font-weight: 700;
+        box-shadow: 0 0 15px var(--current-accent);
+      }
+
+      /* Mobile mode selector wrapper */
+      .mobile-mode-selector {
+        display: none;
+      }
+
+      @media (max-width: 768px) {
+        .mobile-mode-selector {
+          display: block;
+        }
+
+        /* Hide the original desktop mode selector on mobile */
+        .mode-selector:not(.mobile-mode-selector .mode-selector) {
+          display: none;
+        }
       }
       
       .music-player {
@@ -1562,6 +1606,17 @@ const videoData = {
 
   <!-- Music Player -->
   <div class="music-player">
+    <!-- Mobile Mode Selector -->
+    <div class="mobile-mode-selector">
+      <div class="mode-selector">
+        <div class="mode-labels">
+          <div class="mode-label active" data-mode="chill">Chill</div>
+          <div class="mode-label" data-mode="dance">Dance</div>
+          <div class="mode-label" data-mode="strange">Strange</div>
+        </div>
+      </div>
+    </div>
+
     <div class="player-header">
       <div class="track-info">
         <h3 id="trackTitle">Select a track...</h3>
