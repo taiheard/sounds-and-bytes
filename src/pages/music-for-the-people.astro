@@ -679,44 +679,6 @@ const videoData = {
       letter-spacing: 0.5px;
     }
 
-    /* Mobile mood selector - only visible on mobile */
-    .mobile-mood-selector {
-      display: none; /* Hidden on desktop */
-      flex-direction: row;
-      gap: 1rem;
-      justify-content: center;
-      margin-top: 0.5rem;
-      padding-top: 0.5rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .mood-word {
-      color: rgba(255, 255, 255, 0.5);
-      font-size: 0.7rem;
-      font-weight: 400;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      user-select: none;
-      padding: 0.2rem 0.4rem;
-      border-radius: 4px;
-      opacity: 0.7;
-    }
-
-    .mood-word:hover {
-      color: rgba(255, 255, 255, 0.8);
-      background: rgba(255, 255, 255, 0.03);
-      opacity: 1;
-    }
-
-    .mood-word.active {
-      color: var(--current-accent);
-      background: rgba(255, 255, 255, 0.08);
-      font-weight: 500;
-      opacity: 1;
-    }
-
     .progress-bar {
       flex: 1;
       height: 6px;
@@ -1150,16 +1112,7 @@ const videoData = {
         margin-bottom: 2rem;
       }
       .mode-selector {
-        top: auto;
-        bottom: 9rem;
-        right: 1rem;
-        transform: none;
-        flex-direction: row;
-        background: rgba(0, 0, 0, 0.5);
-        padding: 0.5rem;
-        border-radius: 50px;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        display: none; /* Hidden on mobile - replaced with inline words */
       }
       
       .knob-container {
@@ -1185,14 +1138,39 @@ const videoData = {
         max-height: 120px;
       }
 
-      /* Show mobile mood selector only on mobile */
-      .mobile-mood-selector {
-        display: flex;
-      }
-
       .player-header {
         margin-bottom: 0.5rem;
         padding-bottom: 0.25rem;
+        position: relative;
+      }
+
+      .mobile-mode-selector {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+        margin: 0 0.5rem;
+      }
+
+      .mode-word {
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.6);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: lowercase;
+        letter-spacing: 0.5px;
+        font-weight: 500;
+        opacity: 0.7;
+      }
+
+      .mode-word:hover {
+        color: rgba(255, 255, 255, 0.9);
+        opacity: 1;
+      }
+
+      .mode-word.active {
+        color: var(--current-accent);
+        opacity: 1;
+        font-weight: 600;
       }
 
       .control-btn {
@@ -1610,6 +1588,11 @@ const videoData = {
         <h3 id="trackTitle">Select a track...</h3>
         <p id="trackArtist">Taiwo Heard</p>
       </div>
+      <div class="mobile-mode-selector">
+        <span class="mode-word active" data-mode="chill">chill</span>
+        <span class="mode-word" data-mode="dance">dance</span>
+        <span class="mode-word" data-mode="strange">strange</span>
+      </div>
       <label class="autoplay-toggle">
         <span>Auto</span>
         <input type="checkbox" id="autoplayCheck">
@@ -1637,13 +1620,6 @@ const videoData = {
       </div>
       <span id="duration">0:00</span>
     </div>
-    <!-- Mobile Mood Selector - only visible on mobile -->
-    <div class="mobile-mood-selector">
-      <span class="mood-word active" data-mode="chill">Chill</span>
-      <span class="mood-word" data-mode="dance">Dance</span>
-      <span class="mood-word" data-mode="strange">Strange</span>
-    </div>
-
     <audio id="audioPlayer" preload="metadata"></audio>
   </div>
 
@@ -1783,7 +1759,6 @@ const videoData = {
     const body = document.body;
     const modeKnob = document.getElementById('modeKnob');
     const modeLabels = document.querySelectorAll('.mode-label');
-    const mobileMoodWords = document.querySelectorAll('.mood-word');
     const heroTitle = document.getElementById('heroTitle');
     const heroSubtitle = document.getElementById('heroSubtitle');
     const sectionTitle = document.getElementById('sectionTitle');
@@ -1811,7 +1786,6 @@ const videoData = {
     function init() {
       createParticles();
       setupModeSelector();
-      setupMobileMoodSelector();
       setupMusicPlayer();
       setupVideoModal();
       setupVideoGridEvents();
@@ -1918,11 +1892,10 @@ const videoData = {
           loadMode(mode);
         });
       });
-    }
 
-    // Setup mobile mood selector
-    function setupMobileMoodSelector() {
-      mobileMoodWords.forEach(word => {
+      // Setup mobile mode selector words
+      const mobileModeWords = document.querySelectorAll('.mode-word');
+      mobileModeWords.forEach(word => {
         word.addEventListener('click', () => {
           const mode = word.dataset.mode;
           loadMode(mode);
@@ -1946,11 +1919,12 @@ const videoData = {
         label.classList.toggle('active', label.dataset.mode === mode);
       });
 
-      // Update mobile mood words
-      mobileMoodWords.forEach(word => {
+      // Update mobile mode words active state
+      const mobileModeWords = document.querySelectorAll('.mode-word');
+      mobileModeWords.forEach(word => {
         word.classList.toggle('active', word.dataset.mode === mode);
       });
-
+      
       updateContent(mode);
       updateVideoGrid(mode);
       loadPlaylist(mode);
