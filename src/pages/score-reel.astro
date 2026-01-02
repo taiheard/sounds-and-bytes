@@ -179,7 +179,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
         /* Kinetic Typography */
         .kinetic-text {
-            overflow: hidden;
+            overflow: visible;
         }
         .kinetic-text .line {
             display: block;
@@ -454,10 +454,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         }
 
         @media (max-width: 768px) {
-            /* Prevent horizontal scrolling */
+            /* Prevent horizontal scrolling but ensure vertical scrolling works */
             html, body {
                 overflow-x: hidden;
+                overflow-y: visible;
                 width: 100%;
+                height: auto;
+                position: relative;
             }
 
             .hero h1 {
@@ -723,6 +726,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         // Kinetic typography animation trigger
         function initKineticText() {
             const kineticElements = document.querySelectorAll('.kinetic-text');
+
+            // For mobile devices, trigger animation immediately to avoid scroll blocking
+            if (window.innerWidth <= 768) {
+                kineticElements.forEach(el => {
+                    setTimeout(() => el.classList.add('animate'), 100);
+                });
+                return;
+            }
+
+            // For desktop, use intersection observer
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -730,7 +743,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     }
                 });
             }, { threshold: 0.3 });
-            
+
             kineticElements.forEach(el => observer.observe(el));
         }
 
@@ -816,7 +829,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             }
         }
 
-        window.addEventListener('scroll', requestParallaxTick, { passive: true });
+        // Only enable parallax on larger screens to avoid scroll interference on mobile
+        if (window.innerWidth > 768) {
+            window.addEventListener('scroll', requestParallaxTick, { passive: true });
+        }
     </script>
 </BaseLayout>
 
