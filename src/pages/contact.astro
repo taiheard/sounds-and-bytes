@@ -271,9 +271,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             .hero h1 {
                 font-size: clamp(2.5rem, 12vw, 4.5rem);
             }
-            .contact-grid { 
-                grid-template-columns: 1fr; 
-                gap: 1.5rem; 
+            .scroll-indicator {
+                display: none;
+            }
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
             }
             .contact-section, .contact-form {
                 padding: 1.5rem;
@@ -281,9 +284,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             .main-container {
                 padding: 1rem;
             }
-            .social-links { 
-                flex-direction: column; 
-                gap: 1.5rem; 
+            .social-links {
+                flex-direction: column;
+                gap: 1.5rem;
             }
             .section-title {
                 font-size: 1.3rem;
