@@ -454,14 +454,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         }
 
         @media (max-width: 768px) {
+            /* Hide the hero video reel on mobile */
+            .hero-reel {
+                display: none;
+            }
+
             /* Prevent horizontal scrolling but ensure vertical scrolling works */
             html, body {
                 overflow-x: hidden;
-                overflow-y: auto;
+                overflow-y: visible;
                 width: 100%;
                 height: auto;
                 position: relative;
-                -webkit-overflow-scrolling: touch;
             }
 
             .hero h1 {
