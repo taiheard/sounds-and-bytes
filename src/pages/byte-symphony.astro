@@ -130,6 +130,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2.5rem;
+            justify-items: center;
         }
 
         @media (max-width: 768px) {
@@ -598,7 +599,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </a>
 
         <div class="section-header" style="grid-column: 1 / -1; margin-top: 2rem;">
-            <h2>In Progress</h2>
+            <h2>Current Projects</h2>
         </div>
 
         <!-- Biographer -->
@@ -619,30 +620,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <div class="project-meta">Alpha Development</div>
         </div>
 
-        <!-- Octopus Agent -->
-        <div class="project-card animate" style="animation-delay: 0.9s;">
-            <div class="project-icon-wrapper octopus-icon">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 4C8.5 4 6 6.5 6 10C6 12.5 7.5 14.5 10 15.5V17H14V15.5C16.5 14.5 18 12.5 18 10C18 6.5 15.5 4 12 4Z" fill="currentColor" fill-opacity="0.1" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-                    <path d="M8 15L4 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                    <path d="M10 17L7 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                    <path d="M12 17V22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                    <path d="M14 17L17 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                    <path d="M16 15L20 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                    <path d="M6 10H2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                    <path d="M18 10H22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                    <path d="M12 4V2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                    <circle cx="9.5" cy="9.5" r="1.5" stroke="currentColor" stroke-width="1"/>
-                    <circle cx="14.5" cy="9.5" r="1.5" stroke="currentColor" stroke-width="1"/>
-                </svg>
-            </div>
-            <div class="badge">AI Persona</div>
-            <h2 class="project-title">Octopus Agent</h2>
-            <p class="project-desc">
-                A chatbot designed to provide unique multi-perspective experiences. The goal: move beyond simple Q&A into complex perspective-taking that helps users see problems from multiple angles.
-            </p>
-            <div class="project-meta">Concept & Prototyping</div>
-        </div>
 
         <!-- Mixa -->
         <div class="project-card animate" style="animation-delay: 1.0s;">

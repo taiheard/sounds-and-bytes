@@ -124,3 +124,4 @@ Real-time microphone positioning trainer simulation featuring:
 *Built with ❤️ using Astro and modern web technologies*
 
 [View Live Site](https://taiheard.github.io/sounds-and-bytes/)
+

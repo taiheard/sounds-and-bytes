@@ -217,7 +217,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
         @media (min-width: 1300px) {
             .card.byte-symphony {
-                grid-column: 2;
+                grid-column: 3;
+            }
+            .card.scribbles {
+                grid-column: span 3;
+                max-width: 600px;
+                margin: 0 auto;
             }
         }
 
@@ -316,7 +321,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 <span>Audio • Data • R&D</span>
                 <span class="playful">Sounds &amp; Bytes</span>
             </h1>
-            <p class="hero-subtitle">Building at the intersection of sound and creative technology.</p>
+            <p class="hero-subtitle">Taiwo Heard: Creative Technologist (Audio × Data × AI). Engineering the space where signal meets code.</p>
         </div>
         <div class="scroll-indicator">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
@@ -339,16 +344,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             </div>
             <div class="card-arrow" style="margin-top: -1rem;">Explore Tool</div>
         </a>
-        <!-- Scribbles -->
-        <a href="/sounds-and-bytes/scribbles" class="card scribbles">
+        <!-- Byte Symphony -->
+        <a href="/sounds-and-bytes/byte-symphony" class="card byte-symphony">
             <div class="card-content">
-                <h2>SCRIBBLES</h2>
-                <p>Blog & Musings</p>
+                <h2>BYTE SYMPHONY</h2>
+                <p>Development & Analytics</p>
                 <div class="card-desc">
-                    Honest takes on coding adventures, audio production, and the random thoughts that come with creating digital things.
+                    Tools, experiments, and data-driven projects. The highlight? <strong>Dreamy</strong>—a chatbot that actually understands YouTube metrics and tells you what they mean in plain English.
                 </div>
             </div>
-            <div class="card-arrow">Read Blog</div>
+            <div class="card-arrow">Explore Projects</div>
         </a>
         <!-- Post Audio -->
         <a href="/sounds-and-bytes/post-production-audio-reel" class="card post-audio">
@@ -383,16 +388,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             </div>
             <div class="card-arrow">Start Journey</div>
         </a>
-        <!-- Byte Symphony -->
-        <a href="/sounds-and-bytes/byte-symphony" class="card byte-symphony">
+        <!-- Scribbles -->
+        <a href="/sounds-and-bytes/scribbles" class="card scribbles">
             <div class="card-content">
-                <h2>BYTE SYMPHONY</h2>
-                <p>Development & Analytics</p>
+                <h2>SCRIBBLES</h2>
+                <p>Blog & Musings</p>
                 <div class="card-desc">
-                    Tools, experiments, and data-driven projects. The highlight? <strong>Dreamy</strong>—a chatbot that actually understands YouTube metrics and tells you what they mean in plain English.
+                    Honest takes on coding adventures, audio production, and the random thoughts that come with creating digital things.
                 </div>
             </div>
-            <div class="card-arrow">Explore Projects</div>
+            <div class="card-arrow">Read Blog</div>
         </a>
     </main>
 </BaseLayout>
