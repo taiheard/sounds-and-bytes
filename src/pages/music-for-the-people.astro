@@ -1558,12 +1558,12 @@ const videoData = {
   <!-- Mode Selector Knob -->
   <div class="mode-selector">
     <div class="knob-container">
-      <div class="knob" id="modeKnob" data-rotation="0"></div>
+      <div class="knob" id="modeKnob" data-rotation="0" tabindex="0" aria-label="Mode selector knob - press Enter or Space to switch between Chill, Dance, and Strange modes"></div>
     </div>
     <div class="mode-labels">
-      <div class="mode-label active" data-mode="chill">Chill</div>
-      <div class="mode-label" data-mode="dance">Dance</div>
-      <div class="mode-label" data-mode="strange">Strange</div>
+      <div class="mode-label active" data-mode="chill" tabindex="0" aria-label="Switch to Chill mode">Chill</div>
+      <div class="mode-label" data-mode="dance" tabindex="0" aria-label="Switch to Dance mode">Dance</div>
+      <div class="mode-label" data-mode="strange" tabindex="0" aria-label="Switch to Strange mode">Strange</div>
     </div>
   </div>
 
@@ -1596,13 +1596,13 @@ const videoData = {
         <p id="trackArtist">Taiwo Heard</p>
       </div>
       <div class="mobile-mode-selector">
-        <span class="mode-word active" data-mode="chill">chill</span>
-        <span class="mode-word" data-mode="dance">dance</span>
-        <span class="mode-word" data-mode="strange">strange</span>
+        <span class="mode-word active" data-mode="chill" tabindex="0" aria-label="Switch to Chill mode">chill</span>
+        <span class="mode-word" data-mode="dance" tabindex="0" aria-label="Switch to Dance mode">dance</span>
+        <span class="mode-word" data-mode="strange" tabindex="0" aria-label="Switch to Strange mode">strange</span>
       </div>
       <label class="autoplay-toggle">
-        <span>Auto</span>
-        <input type="checkbox" id="autoplayCheck">
+        <span>Autoplay</span>
+        <input type="checkbox" id="autoplayCheck" aria-label="Enable autoplay for music tracks">
         <div class="toggle-switch"></div>
       </label>
     </div>
@@ -1622,7 +1622,7 @@ const videoData = {
     </div>
     <div class="progress-container">
       <span id="currentTime">0:00</span>
-      <div class="progress-bar" id="progressBar">
+      <div class="progress-bar" id="progressBar" role="progressbar" aria-label="Audio playback progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
         <div class="progress-fill" id="progressFill"></div>
       </div>
       <span id="duration">0:00</span>
@@ -1637,12 +1637,15 @@ const videoData = {
     <div class="video-grid" id="videoGrid">
       {Object.entries(videoData).map(([mode, videos]) => 
         videos.map((video, index) => (
-          <div 
-            class={`video-card mode-${mode} ${mode === 'chill' ? 'active' : ''} ${mode === 'chill' ? `chill-tint-${index + 1}` : ''}`} 
+          <div
+            class={`video-card mode-${mode} ${mode === 'chill' ? 'active' : ''} ${mode === 'chill' ? `chill-tint-${index + 1}` : ''}`}
             data-mode={mode}
             data-video-id={video.id}
             data-video-title={video.title}
             data-video-description={video.description}
+            tabindex="0"
+            aria-label={`Watch video: ${video.title} - ${video.description}`}
+            role="button"
           >
             <Image 
               src={video.thumbnail} 
@@ -1893,10 +1896,26 @@ const videoData = {
         moveToNextPosition();
       });
 
+      modeKnob.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          e.stopPropagation();
+          moveToNextPosition();
+        }
+      });
+
       modeLabels.forEach(label => {
         label.addEventListener('click', () => {
           const mode = label.dataset.mode;
           loadMode(mode);
+        });
+
+        label.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            const mode = label.dataset.mode;
+            loadMode(mode);
+          }
         });
       });
 
@@ -1906,6 +1925,14 @@ const videoData = {
         word.addEventListener('click', () => {
           const mode = word.dataset.mode;
           loadMode(mode);
+        });
+
+        word.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            const mode = word.dataset.mode;
+            loadMode(mode);
+          }
         });
       });
     }
@@ -2036,6 +2063,18 @@ const videoData = {
           };
           openVideoModal(video);
         });
+
+        card.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            const video = {
+              id: card.dataset.videoId,
+              title: card.dataset.videoTitle,
+              description: card.dataset.videoDescription
+            };
+            openVideoModal(video);
+          }
+        });
       });
     }
 
@@ -2137,6 +2176,7 @@ const videoData = {
       trackArtist.textContent = track.artist;
 
       progressFill.style.width = '0%';
+      progressBar.setAttribute('aria-valuenow', '0');
       currentTime.textContent = '0:00';
       duration.textContent = '0:00';
 
@@ -2257,6 +2297,7 @@ const videoData = {
       if (audioPlayer.duration) {
         const percent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
         progressFill.style.width = percent + '%';
+        progressBar.setAttribute('aria-valuenow', Math.round(percent));
         currentTime.textContent = formatTime(audioPlayer.currentTime);
       }
     }
