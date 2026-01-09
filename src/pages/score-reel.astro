@@ -370,45 +370,70 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
         /* Stats/Skills section */
         .skills {
-            background: var(--panel-bg);
-            border: 1px solid var(--panel-stroke);
-            border-radius: 20px;
+            background: rgba(8,8,15,0.4);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
             padding: 3rem;
             margin: 8rem auto;
             max-width: var(--container-max);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(8px);
             text-align: center;
         }
         .skills h3 {
             font-size: clamp(1.8rem, 3.5vw, 2.5rem);
-            font-weight: 200;
-            letter-spacing: 4px;
-            margin: 0 0 2rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            margin: 0 0 3rem;
             text-transform: uppercase;
+            color: #d1d5db;
         }
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
             margin-top: 2rem;
         }
         .skill-item {
-            padding: 1.5rem;
-            background: rgba(255,255,255,0.02);
-            border: 1px solid var(--panel-stroke);
-            border-radius: 12px;
-            transition: all 300ms ease;
-        }
-        .skill-item:hover {
-            background: rgba(255,107,53,0.05);
-            border-color: var(--accent);
-            transform: translateY(-5px);
+            padding: 2rem 1.5rem;
+            background: rgba(255,255,255,0.01);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 8px;
         }
         .skill-name {
-            font-weight: 600;
-            letter-spacing: 2px;
+            font-weight: 500;
+            letter-spacing: 1px;
             text-transform: uppercase;
-            color: var(--accent-soft);
+            color: #9ca3af;
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+        }
+        .skill-details {
+            font-size: 0.85rem;
+            color: #6b7280;
+            line-height: 1.4;
+            font-weight: 400;
+        }
+
+        /* Availability section */
+        .availability {
+            text-align: center;
+            margin: 4rem auto;
+            max-width: var(--container-max);
+            padding: 0 var(--gutter);
+        }
+        .availability-content {
+            background: rgba(8,8,15,0.3);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 2rem;
+            backdrop-filter: blur(6px);
+        }
+        .availability-text {
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            color: #9ca3af;
+            letter-spacing: 1px;
+            margin: 0;
+            font-weight: 400;
         }
 
         @media (max-width: 1024px) {
@@ -443,7 +468,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 padding: 2rem;
             }
             .skills-grid {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
                 gap: 1rem;
             }
 
@@ -554,10 +579,24 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 margin-bottom: 1.5rem;
             }
             .skill-item {
-                padding: 1rem;
+                padding: 1.5rem 1rem;
             }
             .skill-name {
                 font-size: 0.8rem;
+            }
+            .skill-details {
+                font-size: 0.75rem;
+                line-height: 1.3;
+            }
+            .availability {
+                margin: 3rem var(--gutter);
+                padding: 0;
+            }
+            .availability-content {
+                padding: 1.5rem;
+            }
+            .availability-text {
+                font-size: 0.95rem;
             }
         }
     </style>
@@ -712,18 +751,31 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <h3>Composition Expertise</h3>
         <div class="skills-grid">
             <div class="skill-item">
-                <div class="skill-name">Orchestral</div>
+                <div class="skill-name">Orchestral Arranging</div>
+                <div class="skill-details">Full score composition • Ensemble balancing • Orchestral techniques</div>
             </div>
             <div class="skill-item">
-                <div class="skill-name">Electronic</div>
+                <div class="skill-name">Electronic Music</div>
+                <div class="skill-details">Synthesizer programming • Beat production • Sound layering</div>
             </div>
             <div class="skill-item">
                 <div class="skill-name">Hybrid Scoring</div>
+                <div class="skill-details">Live/orchestral blending • Electronic orchestration • Genre fusion</div>
             </div>
-
             <div class="skill-item">
-                <div class="skill-name">Commercial Music</div>
+                <div class="skill-name">Sound Design</div>
+                <div class="skill-details">Foley recording • Hardware synthesis • Audio manipulation</div>
             </div>
+            <div class="skill-item">
+                <div class="skill-name">Music Production</div>
+                <div class="skill-details">Mixing engineering • Mastering • Post-production audio</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="availability reveal">
+        <div class="availability-content">
+            <p class="availability-text">Available for Scoring: Film • Games • Advertising</p>
         </div>
     </section>
 

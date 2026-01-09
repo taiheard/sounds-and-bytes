@@ -135,6 +135,49 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             .card-description { font-size: 0.95rem; line-height: 1.6; }
             .card-subtitle { margin-bottom: 1rem; font-size: 0.9rem; }
         }
+
+        /* Footer CTA Styles */
+        .footer-cta {
+            padding: 4rem 2rem 6rem;
+            text-align: center;
+            position: relative;
+            z-index: 3;
+        }
+
+        .cta-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .cta-text {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .cta-link {
+            color: var(--accent-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+            opacity: 0.9;
+        }
+
+        .cta-link:hover {
+            color: var(--accent-primary);
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .footer-cta {
+                padding: 3rem 1rem 5rem;
+            }
+
+            .cta-text {
+                font-size: 1.1rem;
+            }
+        }
     </style>
 
     <div class="main-background"></div>
@@ -184,6 +227,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             </p>
         </a>
     </main>
+
+    <!-- Footer CTA -->
+    <section class="footer-cta">
+        <div class="cta-content">
+            <p class="cta-text">Need music for your project? <a href="/sounds-and-bytes/contact" class="cta-link">Let's talk</a></p>
+        </div>
+    </section>
 
     <script is:inline>
         // Intersection Observer for progressive reveal

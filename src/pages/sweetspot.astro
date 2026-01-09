@@ -589,7 +589,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <div class="tech-grid">
                 <div class="tech-item">
                     <h4>Audio Processing</h4>
-                    <p>30 FPS real-time RMS calculation using NumPy delivers surgical precision for voice level detection—far more reliable than peak detection, which misses the subtle dynamics of speech.</p>
+                    <p>30 FPS real-time RMS calculation using NumPy delivers consistent, frame-accurate voice level detection—far more reliable than peak detection, which misses the subtle dynamics of speech and reacts to transient noise.</p>
                 </div>
                 <div class="tech-item">
                     <h4>Smart Averaging</h4>
@@ -662,17 +662,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 <h3 style="color: #4ade80; margin-bottom: 1rem; font-family: var(--font-heading); font-weight: 700;">User Experience Design</h3>
                 <ul style="margin-left: 1.5rem; margin-bottom: 2rem; list-style-type: none;">
                     <li style="margin-bottom: 0.5rem;"><span style="color: var(--accent-playful);">▹</span> <strong>Instant Visual Feedback:</strong> Universal color language means zero learning curve. Green means perfect, red or blue means adjust—your brain understands it instinctively.</li>
-                    <li style="margin-bottom: 0.5rem;"><span style="color: var(--accent-playful);">▹</span> <strong>Zero-Distraction Interface:</strong> Clean, minimal design keeps you focused on your performance, not fumbling with sliders and settings. The interface vanishes when you don't need it.</li>
+                    <li style="margin-bottom: 0.5rem;"><span style="color: var(--accent-playful);">▹</span> <strong>Zero-Distraction Interface:</strong> Clean, minimal design keeps you focused on your performance, not fumbling with sliders and settings. The interface stays out of your way until you need it.</li>
                     <li style="margin-bottom: 0.5rem;"><span style="color: var(--accent-playful);">▹</span> <strong>Plug-and-Play Ready:</strong> Automatically detects every microphone on your system—USB, XLR interface, built-in laptop mic, wireless—just launch, select from the dropdown, and go.</li>
                     <li style="margin-bottom: 0.5rem;"><span style="color: var(--accent-playful);">▹</span> <strong>Invisible When You Need It:</strong> Minimized mode shrinks to a tiny color indicator in your screen corner—get real-time feedback without cluttering your recording workspace or blocking your DAW.</li>
                 </ul>
 
                 <h3 style="color: #4ade80; margin-bottom: 1rem; font-family: var(--font-heading); font-weight: 700;">Audio Engineering</h3>
                 <ul style="margin-left: 1.5rem; list-style-type: none;">
-                    <li style="margin-bottom: 0.5rem;"><span style="color: var(--accent-playful2);">▹</span> <strong>Smart Voice Analysis:</strong> Unlike peak detection that reacts to every mouth click and breath, RMS focuses on the even, sustained energy that actually matters for sound quality and speech intelligibility.</li>
+                    <li style="margin-bottom: 0.5rem;"><span style="color: var(--accent-playful2);">▹</span> <strong>Smart Voice Analysis:</strong> Unlike peak detection that reacts to every mouth click and breath, RMS focuses on the sustained energy that actually matters for speech intelligibility and consistent recording levels.</li>
                     <li style="margin-bottom: 0.5rem;"><span style="color: var(--accent-playful2);">▹</span> <strong>Human-Tuned Scaling:</strong> Logarithmic processing mirrors your ear's natural response to loudness changes. What you hear is what you get—no confusing linear meters that don't match your perception.</li>
-                    <li style="margin-bottom: 0.5rem;"><span style="color: var(--accent-playful2);">▹</span> <strong>Intelligent Noise Rejection:</strong> Automatically filters out background noise below -50dB. The real magic: Sweetspot focuses purely on your voice, ignoring AC hum, computer fans, and room tone that might trigger false positives.</li>
-                    <li style="margin-bottom: 0.5rem;"><span style="color: var(--accent-playful2);">▹</span> <strong>Lightning-Fast Response:</strong> Ultra-low latency processing delivers feedback so fast it feels like a natural extension of your voice. No lag, no delay—just instant guidance that keeps you in flow state.</li>
+                    <li style="margin-bottom: 0.5rem;"><span style="color: var(--accent-playful2);">▹</span> <strong>Intelligent Noise Rejection:</strong> Automatically filters out background noise below -50dB threshold. The result: Sweetspot focuses purely on your voice, ignoring AC hum, computer fans, and room tone that might trigger false positives.</li>
+                    <li style="margin-bottom: 0.5rem;"><span style="color: var(--accent-playful2);">▹</span> <strong>Sub-Frame Response Time:</strong> At 30 FPS processing, feedback updates every ~33ms—fast enough to feel immediate and keep you in flow state without perceptible lag.</li>
                 </ul>
             </div>
         </section>
