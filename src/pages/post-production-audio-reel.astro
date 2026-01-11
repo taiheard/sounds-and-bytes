@@ -120,13 +120,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             margin: 0 auto;
             padding: 0 var(--gutter);
             position: relative;
-            top: -2rem;
+            top: 0rem;
+            z-index: 4;
         }
         .bio-section p {
             font-size: 1.125rem;
             line-height: 1.6;
             color: var(--text-muted);
             margin-bottom: 1rem;
+        }
+        .bio-section a {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+        .bio-section a:hover {
+            opacity: 0.8;
         }
 
         .play-button { 
@@ -245,7 +253,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
 
         <div class="bio-section">
-            <p>Tai Heard is a sound designer and re-recording mixer with credits on 23 films and TV projects (IMDB). He recently mixed The Magic Flute for San Francisco Pocket Opera's <a href="https://www.operaamerica.org/get-involved/about-us/press-room/2024/opera-america-announces-winners-of-the-2024-awards-for-digital-excellence-in-opera/" target="_blank">award winning</a> mixed-media production, and has done post-production work for everything from historical dramas to podcasts.</p>
+            <p>Tai Heard is a sound designer and re-recording mixer with credits on 23 films and TV projects (IMDB). He recently mixed The Magic Flute for San Francisco Pocket Opera's <a href="https://www.operaamerica.org/get-involved/about-us/press-room/2024/opera-america-announces-winners-of-the-2024-awards-for-digital-excellence-in-opera/" target="_blank">award-winning</a> mixed-media production, and has done post-production work for everything from historical dramas to podcasts.</p>
         </div>
     </section>
 
