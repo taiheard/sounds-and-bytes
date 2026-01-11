@@ -475,7 +475,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <main class="blog-container">
         <!-- Introduction -->
         <section class="blog-intro">
-            <p>Direct accounts from building apps, making music, exploring new technologies, and general reflections on the intersection of creativity and code. Real stories from the trenches of both audio work and software development.</p>
+            <p>Notes from the workbench—making apps, mixing tracks, breaking things, fixing them. Where audio engineering collides with code: something interesting is bound to happen.</p>
         </section>
 
         <div class="section-header">
@@ -555,9 +555,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     article.setAttribute('data-astro-cid-vxkndcup', '');
                     
                     const tagsHtml = post.tags.map(tag => `<span class="tag" data-astro-cid-vxkndcup>${tag}</span>`).join('');
-                    const linkTarget = post.external ? 'target="_blank"' : '';
                     const linkText = post.external ? 'Read on Medium' : 'Read More';
-                    
+                    const linkAttributes = post.external ? ' target="_blank" rel="noopener noreferrer"' : '';
+
                     article.innerHTML = `
                         <div class="article-image" data-astro-cid-vxkndcup>
                             <img src="${post.image}" alt="${post.imageAlt}" loading="lazy" data-astro-cid-vxkndcup>
@@ -568,7 +568,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                             </div>
                             <h2 class="article-title" data-astro-cid-vxkndcup>${post.title}</h2>
                             <p class="article-excerpt" data-astro-cid-vxkndcup>${post.excerpt}</p>
-                            <a href="${post.link}" class="read-more" data-astro-cid-vxkndcup ${linkTarget}>${linkText}</a>
+                            <a href="${post.link}" class="read-more"${linkAttributes} data-astro-cid-vxkndcup>${linkText}</a>
                         </div>
                     `;
                     articlesContainer.appendChild(article);

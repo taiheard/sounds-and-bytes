@@ -131,6 +131,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2.5rem;
             justify-items: center;
+            align-items: start;
         }
 
         @media (max-width: 768px) {
@@ -192,6 +193,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             padding: 3rem;
             display: flex;
             flex-direction: column;
+            align-self: start;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
@@ -521,7 +523,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
         .expandable-card.expanded .expand-arrow {
             transform: rotate(180deg);
-            margin-top: 1.5rem;
+            margin-top: 3.5rem;
         }
 
         .expandable-card.expanded .expand-text {
@@ -669,7 +671,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <div class="project-card expandable-card collapsed animate" style="animation-delay: 0.8s;" data-card="music-people">
             <div class="badge">Interactive Experience</div>
             <h2 class="project-title">Music for the People</h2>
-            <div class="project-meta">Interactive Web Experience</div>
+            <div class="project-meta">Vanilla JS • CSS Grid • Audio API</div>
             <p class="project-desc">
                 A morphing audio-visual playground built to demonstrate advanced front-end architecture in service of emotional impact.
             </p>
@@ -685,6 +687,40 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     <li><strong>Performance Optimization</strong> — Lazy-loaded thumbnails with quality fallbacks, reduced motion support, and intelligent video relay system</li>
                 </ul>
                 <a href="/sounds-and-bytes/music-for-the-people" class="project-link">Experience It Live →</a>
+            </div>
+
+            <button class="expand-toggle" aria-label="Toggle card details">
+                <span class="expand-text">See more</span>
+                <svg class="expand-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M6 9l6 6 6-6"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Flow States -->
+        <div class="project-card expandable-card collapsed animate" style="animation-delay: 1.0s;" data-card="flow-states">
+            <div class="badge">Interactive Narrative</div>
+            <h2 class="project-title">Flow States</h2>
+            <div class="project-meta">Astro • Vanilla JS</div>
+            <p class="project-desc">
+                An experiment in scroll-based storytelling that explores how pacing, media, and interaction design can work together on the web. The content is meditative—breathing exercises, ambient video loops, gentle storytelling.
+            </p>
+
+            <div class="expandable-content">
+                <p class="project-desc" style="font-size: 0.95rem; opacity: 0.8;">
+                    <strong>Technical Highlights:</strong>
+                </p>
+                <ul style="font-size: 0.95rem; opacity: 0.8; margin-bottom: 1.5rem; padding-left: 1rem;">
+                    <li><strong>Scroll-Triggered Reveals:</strong> IntersectionObserver fires chapter animations as they enter the viewport—no scroll-jacking, just progressive disclosure</li>
+                    <li><strong>Lazy Video Proxy:</strong> YouTube embeds load on-click via a custom proxy pattern—thumbnails load first, iframes only when requested</li>
+                    <li><strong>Sticky Media Frames:</strong> CSS Grid + position: sticky keeps video anchored while text scrolls past on desktop</li>
+                    <li><strong>Mouse-Driven Parallax:</strong> Layered star field responds to cursor position for subtle depth</li>
+                    <li><strong>Accessibility Built In:</strong> Keyboard nav (arrow keys), prefers-reduced-motion support, ARIA labels on progress dots</li>
+                </ul>
+                <p class="project-desc" style="font-size: 0.95rem; opacity: 0.8;">
+                    <strong>Built With:</strong> Astro • Vanilla JS • CSS Grid • IntersectionObserver • YouTube Embed API
+                </p>
+                <a href="/sounds-and-bytes/flow-states" class="project-link">View the Demo →</a>
             </div>
 
             <button class="expand-toggle" aria-label="Toggle card details">
@@ -775,7 +811,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         const expandToggles = document.querySelectorAll('.expand-toggle');
 
         expandToggles.forEach(toggle => {
-            toggle.addEventListener('click', () => {
+            toggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+
                 const card = toggle.closest('.expandable-card');
                 const isExpanded = card.classList.contains('expanded');
 
