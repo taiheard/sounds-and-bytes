@@ -7,9 +7,18 @@ export default defineConfig({
   base: '/sounds-and-bytes/',
   image: {
     domains: ['img.youtube.com'],
+    // Enable image optimization
+    service: {
+      entrypoint: 'astro/assets/services/sharp',
+    },
   },
   security: {
     checkOrigin: true,
+  },
+  // Performance optimizations
+  compressHTML: true,
+  build: {
+    inlineStylesheets: 'auto',
   },
   // Add Content Security Policy headers
   headers: {

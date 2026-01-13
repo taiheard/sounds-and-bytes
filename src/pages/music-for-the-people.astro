@@ -2,6 +2,53 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { Image } from 'astro:assets';
 
+// Dynamically load all music tracks from the filesystem
+const musicFiles = import.meta.glob('/public/Music tracks/**/*.mp3', { as: 'url' });
+const musicFilesM4a = import.meta.glob('/public/Music tracks/**/*.m4a', { as: 'url' });
+
+// Combine all music files
+const allMusicFiles = { ...musicFiles, ...musicFilesM4a };
+
+// Generate musicData object dynamically
+const musicData = {
+  chill: [],
+  dance: [],
+  strange: []
+};
+
+// Process each music file
+for (const [filePath, fileUrl] of Object.entries(allMusicFiles)) {
+  // Extract category and filename from path
+  // filePath format: /public/Music tracks/Chill/filename.mp3
+  const pathParts = filePath.split('/');
+  const category = pathParts[3]?.toLowerCase(); // 'chill', 'dance rave', 'strange'
+  const fullFilename = pathParts[4]; // 'filename.mp3' or 'filename.m4a'
+
+  // Map category names to our data structure
+  let categoryKey;
+  if (category === 'chill') categoryKey = 'chill';
+  else if (category === 'dance rave') categoryKey = 'dance';
+  else if (category === 'strange') categoryKey = 'strange';
+
+  if (categoryKey && fullFilename) {
+    // Remove file extension for title
+    const title = fullFilename.replace(/\.(mp3|m4a)$/i, '');
+    // Convert file path to web-accessible URL
+    const webPath = filePath.replace('/public', '/sounds-and-bytes');
+
+    musicData[categoryKey].push({
+      file: webPath,
+      title: title,
+      artist: 'Taiwo Heard'
+    });
+  }
+}
+
+// Sort tracks alphabetically by title within each category
+Object.keys(musicData).forEach(category => {
+  musicData[category].sort((a, b) => a.title.localeCompare(b.title));
+});
+
 const videoData = {
   chill: [
     { 
@@ -1694,34 +1741,8 @@ const videoData = {
     </div>
   </div>
 
-  <script is:inline>
-    // Music and Video Data
-    const musicData = {
-      chill: [
-        { file: '/sounds-and-bytes/Music tracks/Chill/Hearts in the Wild ( Master ) 48kHz 24Bit.m4a', title: 'Hearts in the Wild', artist: 'Taiwo Heard' },
-        { file: '/sounds-and-bytes/Music tracks/Chill/04 Eternal Night.mp3', title: 'Eternal Night', artist: 'Taiwo Heard' },
-        { file: '/sounds-and-bytes/Music tracks/Chill/DL acoustic Feb 5.mp3', title: 'DL Acoustic', artist: 'Taiwo Heard' },
-        { file: '/sounds-and-bytes/Music tracks/Chill/How To Survive.mp3', title: 'How To Survive', artist: 'Taiwo Heard' },
-        { file: '/sounds-and-bytes/Music tracks/Chill/I Cling To The Light.mp3', title: 'I Cling To The Light', artist: 'Taiwo Heard' },
-        { file: '/sounds-and-bytes/Music tracks/Chill/ToTheLightAcoustic.mp3', title: 'To The Light (Acoustic)', artist: 'Taiwo Heard' }
-      ],
-      dance: [
-        { file: '/sounds-and-bytes/Music tracks/Dance Rave/AVALON ver.2 (YouTube).mp3', title: 'Avalon v2', artist: 'Taiwo Heard' },
-        { file: '/sounds-and-bytes/Music tracks/Dance Rave/01 Cyclone.mp3', title: 'Cyclone', artist: 'Taiwo Heard' },
-        { file: '/sounds-and-bytes/Music tracks/Dance Rave/03 Ticket.mp3', title: 'Ticket', artist: 'Taiwo Heard' },
-        { file: '/sounds-and-bytes/Music tracks/Dance Rave/AVALON ( Master ) 48kHz 24Bit.m4a', title: 'Avalon', artist: 'Taiwo Heard' },
-        { file: '/sounds-and-bytes/Music tracks/Dance Rave/Cyclone Dance_astro.m4a', title: 'Cyclone Dance', artist: 'Taiwo Heard' },
-        { file: '/sounds-and-bytes/Music tracks/Dance Rave/Treasure ( Master ) 48kHz 24Bit.m4a', title: 'Treasure', artist: 'Taiwo Heard' }
-      ],
-      strange: [
-        { file: '/sounds-and-bytes/Music tracks/Strange/KISSES LIE  - INSTRUMENTAL.m4a', title: 'Kisses Lie (Instrumental)', artist: 'Taiwo Heard' },
-        { file: '/sounds-and-bytes/Music tracks/Strange/8-BIT MORE FINAL.mp3', title: '8-Bit More', artist: 'Taiwo Heard' },
-        { file: '/sounds-and-bytes/Music tracks/Strange/Good Other 8-bit final.mp3', title: 'Good Other 8-bit', artist: 'Taiwo Heard' },
-        { file: '/sounds-and-bytes/Music tracks/Strange/Spacewalk.mp3', title: 'Spacewalk', artist: 'Taiwo Heard' },
-        { file: '/sounds-and-bytes/Music tracks/Strange/TaiwoCamiloSynthJam.mp3', title: 'Synth Jam', artist: 'Taiwo Heard' },
-        { file: '/sounds-and-bytes/Music tracks/Strange/AnanthamaJamStudioB.m4a', title: 'Ananthama Jam', artist: 'Taiwo Heard' }
-      ]
-    };
+  <script is:inline define:vars={{ musicData }}>
+    // Music data is generated dynamically from filesystem
 
     // --- Optimized Video Logic (Relay & Thumbnails) ---
     function toggleBackgroundVideos(shouldPlay) {
@@ -1807,7 +1828,7 @@ const videoData = {
         autoplayCheck.checked = autoplayEnabled;
         autoplayCheck.addEventListener('change', (e) => {
           autoplayEnabled = e.target.checked;
-          localStorage.setItem('autoplayEnabled', autoplayEnabled);
+          localStorage.setItem('autoplayEnabled', autoplayEnabled ? 'true' : 'false');
         });
       }
 
@@ -1824,9 +1845,11 @@ const videoData = {
       // Add parallax effect
       setupParallax();
 
-      // Attempt initial autoplay after everything is loaded
+      // Attempt initial autoplay after everything is loaded (only if enabled)
       setTimeout(() => {
-        attemptAutoPlay();
+        if (autoplayEnabled) {
+          attemptAutoPlay();
+        }
       }, 1000);
     }
 
@@ -1964,7 +1987,7 @@ const videoData = {
       loadPlaylist(mode);
 
       setTimeout(() => {
-        if (!isPlaying) {
+        if (!isPlaying && autoplayEnabled) {
           attemptAutoPlay();
         }
       }, 500);
@@ -2139,8 +2162,8 @@ const videoData = {
     // Setup music player functionality
     function setupMusicPlayer() {
       playBtn.addEventListener('click', togglePlay);
-      prevBtn.addEventListener('click', () => previousTrack(true));
-      nextBtn.addEventListener('click', () => nextTrack(true));
+      prevBtn.addEventListener('click', () => previousTrack(false));
+      nextBtn.addEventListener('click', () => nextTrack(false));
       shuffleBtn.addEventListener('click', toggleShuffle);
       
       progressBar.addEventListener('click', (e) => {
@@ -2151,7 +2174,7 @@ const videoData = {
       
       audioPlayer.addEventListener('timeupdate', updateProgress);
       audioPlayer.addEventListener('loadedmetadata', updateDuration);
-      audioPlayer.addEventListener('ended', () => nextTrack(false));
+      audioPlayer.addEventListener('ended', () => nextTrack(true));
     }
 
     // Load playlist for current mode
@@ -2165,7 +2188,7 @@ const videoData = {
     }
 
     // Load specific track
-    function loadTrack(index, forcePlay = false) {
+    function loadTrack(index, autoAdvance = false) {
       if (!currentPlaylist[index]) return;
 
       const track = currentPlaylist[index];
@@ -2184,9 +2207,16 @@ const videoData = {
         duration.textContent = formatTime(audioPlayer.duration);
         audioPlayer.removeEventListener('loadedmetadata', onLoaded);
 
-        if (forcePlay || (wasPlaying && autoplayEnabled)) {
+        // Auto-play logic:
+        // 1. If auto-advancing (track ended) and autoplay enabled → play
+        // 2. If user was playing and autoplay enabled → play
+        // 3. Otherwise → don't auto-play
+        const shouldAutoPlay = (autoAdvance && autoplayEnabled) || (wasPlaying && autoplayEnabled);
+
+        if (shouldAutoPlay) {
           setTimeout(() => attemptAutoPlay(true), 50);
         } else if (wasPlaying && !autoplayEnabled) {
+          // User was playing but autoplay is disabled now - pause
           isPlaying = false;
           updatePlayPauseUI(false);
           audioPlayer.pause();
@@ -2212,7 +2242,6 @@ const videoData = {
       if (!audioPlayer.src) return;
 
       if (!autoplayEnabled && !force) {
-        console.log('Autoplay prevented by user preference');
         return;
       }
 
@@ -2258,15 +2287,15 @@ const videoData = {
     }
 
     // Next track
-    function nextTrack(forcePlay = false) {
+    function nextTrack(autoAdvance = false) {
       currentTrackIndex = (currentTrackIndex + 1) % currentPlaylist.length;
-      loadTrack(currentTrackIndex, forcePlay);
+      loadTrack(currentTrackIndex, autoAdvance);
     }
 
     // Previous track
-    function previousTrack(forcePlay = false) {
+    function previousTrack(autoAdvance = false) {
       currentTrackIndex = currentTrackIndex === 0 ? currentPlaylist.length - 1 : currentTrackIndex - 1;
-      loadTrack(currentTrackIndex, forcePlay);
+      loadTrack(currentTrackIndex, autoAdvance);
     }
 
     // Toggle shuffle

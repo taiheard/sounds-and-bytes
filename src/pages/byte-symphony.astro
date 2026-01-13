@@ -199,6 +199,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             overflow: hidden;
             text-decoration: none;
             color: inherit;
+            min-height: 600px;
+        }
+
+        .project-card > *:last-child {
+            margin-top: auto;
         }
 
         .project-card:hover {
@@ -496,7 +501,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         .expand-toggle {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             gap: 8px;
             width: 100%;
             padding: 0.5rem 0;
@@ -632,15 +637,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
 
         <!-- Sweetspot -->
-        <a href="/sounds-and-bytes/sweetspot" class="project-card animate" style="animation-delay: 0.5s;">
+        <div class="project-card animate" style="animation-delay: 0.5s;">
             <div class="badge">Audio Tech</div>
             <h2 class="project-title">Sweetspot</h2>
             <div class="project-meta">Python • PyQt5 • NumPy</div>
             <p class="project-desc">
                 Real-time microphone distance trainer using audio level analysis and visual color feedback. Helps podcasters and vocalists build muscle memory for optimal mic technique.
             </p>
-            <div class="project-link">View Project</div>
-        </a>
+            <a href="/sounds-and-bytes/sweetspot" class="project-link">View Project</a>
+        </div>
 
         <!-- BayesQuest -->
         <div class="project-card animate" style="animation-delay: 0.6s;">
@@ -657,15 +662,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
 
         <!-- Cognate Analysis -->
-        <a href="https://taiheard.github.io/english-spanish-cognate-analysis-site/index.html" target="_blank" class="project-card animate" style="animation-delay: 0.7s;">
+        <div class="project-card animate" style="animation-delay: 0.7s;">
             <div class="badge">Data Analysis</div>
             <h2 class="project-title">Cognate Analysis</h2>
             <div class="project-meta">NLP • Linguistics • Data Vis</div>
             <p class="project-desc">
                 A deep dive into linguistic overlaps between English and Spanish. Analyzes cognates to uncover patterns in language evolution and accelerate exploration through data visualization.
             </p>
-            <div class="project-link">Explore Data</div>
-        </a>
+            <a href="https://taiheard.github.io/english-spanish-cognate-analysis-site/index.html" target="_blank" class="project-link">Explore Data</a>
+        </div>
 
         <!-- Music for the People -->
         <div class="project-card expandable-card collapsed animate" style="animation-delay: 0.8s;" data-card="music-people">
@@ -686,7 +691,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     <li><strong>Audio API Integration</strong> — Custom HTML5 audio player with progress tracking, autoplay detection, and smart resource allocation (pausing background videos during YouTube playback)</li>
                     <li><strong>Performance Optimization</strong> — Lazy-loaded thumbnails with quality fallbacks, reduced motion support, and intelligent video relay system</li>
                 </ul>
-                <a href="/sounds-and-bytes/music-for-the-people" class="project-link">Experience It Live →</a>
+                <a href="/sounds-and-bytes/music-for-the-people" class="project-link">Experience It Live</a>
             </div>
 
             <button class="expand-toggle" aria-label="Toggle card details">
@@ -720,7 +725,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 <p class="project-desc" style="font-size: 0.95rem; opacity: 0.8;">
                     <strong>Built With:</strong> Astro • Vanilla JS • CSS Grid • IntersectionObserver • YouTube Embed API
                 </p>
-                <a href="/sounds-and-bytes/flow-states" class="project-link">View the Demo →</a>
+                <a href="/sounds-and-bytes/flow-states" class="project-link">View the Demo</a>
             </div>
 
             <button class="expand-toggle" aria-label="Toggle card details">

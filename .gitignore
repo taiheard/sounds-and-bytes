@@ -9,24 +9,33 @@ dist/
 .env
 .env.local
 .env.production
+.env.development
 
 # IDE
 .vscode/
 .idea/
 *.swp
 *.swo
+*.sublime-*
 Website July.code-workspace
 
 # OS
 .DS_Store
 Thumbs.db
-
-# Logs
 *.log
 
 # Temporary files
 *.tmp
 *.temp
+.cache/
+*.tgz
+*.tar.gz
+
+# Testing
+coverage/
+.nyc_output/
+test-results/
+playwright-report/
 
 # Documentation
 README-blog-maintenance.md
