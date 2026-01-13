@@ -3,8 +3,8 @@ import { defineConfig } from 'astro/config';
 // https://astro.build/config
 export default defineConfig({
   // Configure for GitHub Pages project repository
-  site: 'https://taiheard.github.io',
-  base: '/sounds-and-bytes/',
+  site: 'https://taiheard.github.io/sounds-and-bytes/',
+  base: '/',
   image: {
     domains: ['img.youtube.com'],
     // Enable image optimization
