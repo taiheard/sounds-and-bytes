@@ -116,7 +116,7 @@ Real-time microphone positioning trainer simulation featuring:
 ### GitHub Pages Integration
 - **Automated Builds**: GitHub Actions CI/CD pipeline
 - **Asset Optimization**: Automatic image compression and minification
-- **SEO Sitemaps**: Auto-generated XML sitemaps for search engines
+- **SEO Sitemaps**: Manually maintained XML sitemaps for search engines
 - **CORS Configuration**: Proper cross-origin resource handling
 
 ---
